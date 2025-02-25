@@ -29,7 +29,7 @@ export class Factory extends DocFactory<ReturnByAssetDecision.Action> {
     const request = await this.getRequest(data.request_id, data.block_num)
 
     const decision = await this.getDecision(coop, data.coopname, data.decision_id, meta.created_at)
-    const commonUser = this.getCommonUser(user.data)
+    const commonUser = this.getCommonUser(user)
 
     const combinedData: ReturnByAssetDecision.Model = {
       meta,
