@@ -23,6 +23,12 @@ import * as InvestMembershipConvertation from './1010.InvestMembershipConvertati
 
 import * as SosediAgreement from './699.SosediAgreement'
 
+import * as AnnualGeneralMeetingAgenda from './300.AnnualGeneralMeetingAgenda'
+import * as SovietDecisionOnAnnualMeeting from './301.SovietDecisionOnAnnualMeeting'
+import * as AnnualMeetingNotification from './302.AnnualMeetingNotification'
+import * as VotingBallot from './303.VotingBallot'
+import * as AnnualGeneralMeetingDecision from './304.AnnualGeneralMeetingDecision'
+
 export const Registry = {
   1: WalletAgreement,
   2: RegulationElectronicSignaturet,
@@ -31,6 +37,11 @@ export const Registry = {
   50: CoopenomicsAgreement,
   100: ParticipantApplication,
   101: SelectBranchStatement,
+  300: AnnualGeneralMeetingAgenda,
+  301: SovietDecisionOnAnnualMeeting,
+  302: AnnualMeetingNotification,
+  303: VotingBallot,
+  304: AnnualGeneralMeetingDecision,
   501: DecisionOfParticipantApplication,
   599: ProjectFreeDecision,
   600: FreeDecision,
