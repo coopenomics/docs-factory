@@ -4,13 +4,13 @@ import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.UserAgreement.registry_id
+export const registry_id = Cooperative.Registry.AnnualGeneralMeetingDecision.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.UserAgreement.Action
+export type Action = Cooperative.Registry.AnnualGeneralMeetingDecision.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.UserAgreement.Model
+export type Model = Cooperative.Registry.AnnualGeneralMeetingDecision.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -19,22 +19,15 @@ export const Schema: JSONSchemaType<Model> = {
     meta: IMetaJSONSchema,
     coop: CooperativeSchema,
     vars: VarsSchema,
-    user: {
-      type: 'object',
-      properties: {
-        full_name: { type: 'string' },
-      },
-      required: ['full_name'],
-    },
   },
-  required: ['meta', 'coop', 'vars', 'user'],
+  required: ['meta', 'coop', 'vars'],
   additionalProperties: true,
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.UserAgreement.title,
-  description: Cooperative.Registry.UserAgreement.description,
+  title: Cooperative.Registry.AnnualGeneralMeetingDecision.title,
+  description: Cooperative.Registry.AnnualGeneralMeetingDecision.description,
   model: Schema,
-  context: Cooperative.Registry.UserAgreement.context,
-  translations: Cooperative.Registry.UserAgreement.translations,
+  context: Cooperative.Registry.AnnualGeneralMeetingDecision.context,
+  translations: Cooperative.Registry.AnnualGeneralMeetingDecision.translations,
 }
