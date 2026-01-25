@@ -22,8 +22,23 @@ export class Factory extends DocFactory<GenerationMoneyReturnUnusedStatement.Act
     }
 
     const meta: IMetaDocument = await this.getMeta({ title: template.title, ...data })
+    const vars = await super.getVars(data.coopname, data.block_num)
+    const userData = await super.getUser(data.username, data.block_num)
+    const common_user = super.getCommonUser(userData)
 
-    const combinedData: GenerationMoneyReturnUnusedStatement.Model = { meta }
+    const combinedData: GenerationMoneyReturnUnusedStatement.Model = {
+      meta,
+      vars,
+      common_user,
+      contributor_hash: data.contributor_hash,
+      contributor_short_hash: super.constructUHDContractNumber(data.contributor_hash),
+      contributor_created_at: data.contributor_created_at,
+      generator_agreement_hash: data.generator_agreement_hash,
+      generator_agreement_short_hash: this.getShortHash(data.generator_agreement_hash),
+      generator_agreement_created_at: data.generator_agreement_created_at,
+      project_hash: data.project_hash,
+      amount: data.amount,
+    }
 
     await this.validate(combinedData, template.model)
 
