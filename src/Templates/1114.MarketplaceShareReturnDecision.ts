@@ -5,16 +5,14 @@ import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, decisionSchema } from '../Schema'
 import { CommonRequestSchema } from '../Schema/CommonRequestSchema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
+import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.ReturnByAssetDecision.registry_id
+export const registry_id = Cooperative.Registry.MarketplaceShareReturnDecision.registry_id
 
-// Модель действия для генерации
-export type Action = Cooperative.Registry.ReturnByAssetDecision.Action
+export type Action = Cooperative.Registry.MarketplaceShareReturnDecision.Action
 
-// Модель данных
-export type Model = Cooperative.Registry.ReturnByAssetDecision.Model
+export type Model = Cooperative.Registry.MarketplaceShareReturnDecision.Model
 
-// Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
   properties: {
@@ -24,15 +22,16 @@ export const Schema: JSONSchemaType<Model> = {
     request: CommonRequestSchema,
     user: CommonUserSchema,
     decision: decisionSchema,
+    program: CommonProgramSchema,
   },
-  required: ['meta', 'coop', 'vars', 'request', 'user', 'decision'],
+  required: ['meta', 'coop', 'vars', 'request', 'user', 'decision', 'program'],
   additionalProperties: true,
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ReturnByAssetDecision.title,
-  description: Cooperative.Registry.ReturnByAssetDecision.description,
+  title: Cooperative.Registry.MarketplaceShareReturnDecision.title,
+  description: Cooperative.Registry.MarketplaceShareReturnDecision.description,
   model: Schema,
-  context: Cooperative.Registry.ReturnByAssetDecision.context,
-  translations: Cooperative.Registry.ReturnByAssetDecision.translations,
+  context: Cooperative.Registry.MarketplaceShareReturnDecision.context,
+  translations: Cooperative.Registry.MarketplaceShareReturnDecision.translations,
 }

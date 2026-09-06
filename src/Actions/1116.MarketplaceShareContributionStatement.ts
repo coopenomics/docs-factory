@@ -1,25 +1,25 @@
 import { DraftContract } from 'cooptypes'
-import { MarketplaceReturnStatement } from '../Templates'
+import { MarketplaceShareContributionStatement } from '../Templates'
 import { DocFactory } from '../Factory'
 import type { IGeneratedDocument, IGenerationOptions, IMetaDocument, ITemplate } from '../Interfaces'
 import type { MongoDBConnector } from '../Services/Databazor'
 import type { ExternalOrganizationData } from '../Models'
 
-export { MarketplaceReturnStatement as Template } from '../Templates'
+export { MarketplaceShareContributionStatement as Template } from '../Templates'
 
-export class Factory extends DocFactory<MarketplaceReturnStatement.Action> {
+export class Factory extends DocFactory<MarketplaceShareContributionStatement.Action> {
   constructor(storage: MongoDBConnector) {
     super(storage)
   }
 
-  async generateDocument(data: MarketplaceReturnStatement.Action, options?: IGenerationOptions): Promise<IGeneratedDocument> {
-    let template: ITemplate<MarketplaceReturnStatement.Model>
+  async generateDocument(data: MarketplaceShareContributionStatement.Action, options?: IGenerationOptions): Promise<IGeneratedDocument> {
+    let template: ITemplate<MarketplaceShareContributionStatement.Model>
 
     if (process.env.SOURCE === 'local') {
-      template = MarketplaceReturnStatement.Template
+      template = MarketplaceShareContributionStatement.Template
     }
     else {
-      template = await this.getTemplate(DraftContract.contractName.production, MarketplaceReturnStatement.registry_id, data.block_num)
+      template = await this.getTemplate(DraftContract.contractName.production, MarketplaceShareContributionStatement.registry_id, data.block_num)
     }
 
     const meta: IMetaDocument = await this.getMeta({ title: template.title, ...data })
@@ -33,7 +33,7 @@ export class Factory extends DocFactory<MarketplaceReturnStatement.Action> {
     // стороне controller'а), а не из getRequest(): та заглушка возвращает
     // фиксированные тестовые данные независимо от order_id (см. review
     // 2026-07-27 — во всех заявлениях показывало «Молоко Бурёнка» и цену 1000).
-    const request: MarketplaceReturnStatement.Model['request'] = {
+    const request: MarketplaceShareContributionStatement.Model['request'] = {
       hash: data.sku,
       title: data.product_title,
       unit_of_measurement: data.unit_of_measurement,
@@ -53,9 +53,9 @@ export class Factory extends DocFactory<MarketplaceReturnStatement.Action> {
       branch = await this.getOrganization(data.braname, data.block_num)
 
     // Имя ЦПП фиксировано для стола заказов (не из заглушки реестра).
-    const program: MarketplaceReturnStatement.Model['program'] = { name: 'Стол заказов' }
+    const program: MarketplaceShareContributionStatement.Model['program'] = { name: 'Стол заказов' }
 
-    const combinedData: MarketplaceReturnStatement.Model = {
+    const combinedData: MarketplaceShareContributionStatement.Model = {
       meta,
       coop,
       vars,

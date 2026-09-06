@@ -7,11 +7,11 @@ import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { CommonRequestSchema } from '../Schema/CommonRequestSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceReturnStatement.registry_id
+export const registry_id = Cooperative.Registry.MarketplaceShareContributionStatement.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceReturnStatement.Action
+export type Action = Cooperative.Registry.MarketplaceShareContributionStatement.Action
 
-export type Model = Cooperative.Registry.MarketplaceReturnStatement.Model
+export type Model = Cooperative.Registry.MarketplaceShareContributionStatement.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -33,9 +33,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceReturnStatement.title,
-  description: Cooperative.Registry.MarketplaceReturnStatement.description,
+  title: Cooperative.Registry.MarketplaceShareContributionStatement.title,
+  description: Cooperative.Registry.MarketplaceShareContributionStatement.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceReturnStatement.context,
-  translations: Cooperative.Registry.MarketplaceReturnStatement.translations,
+  context: Cooperative.Registry.MarketplaceShareContributionStatement.context,
+  translations: Cooperative.Registry.MarketplaceShareContributionStatement.translations,
 }

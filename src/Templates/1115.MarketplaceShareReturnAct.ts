@@ -8,15 +8,12 @@ import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { FirstLastMiddleNameSchema } from '../Schema/FirstLastMiddleNameSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.ReturnByAssetAct.registry_id
+export const registry_id = Cooperative.Registry.MarketplaceShareReturnAct.registry_id
 
-// Модель действия для генерации
-export type Action = Cooperative.Registry.ReturnByAssetAct.Action
+export type Action = Cooperative.Registry.MarketplaceShareReturnAct.Action
 
-// Модель данных
-export type Model = Cooperative.Registry.ReturnByAssetAct.Model
+export type Model = Cooperative.Registry.MarketplaceShareReturnAct.Model
 
-// Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
   properties: {
@@ -36,9 +33,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ReturnByAssetAct.title,
-  description: Cooperative.Registry.ReturnByAssetAct.description,
+  title: Cooperative.Registry.MarketplaceShareReturnAct.title,
+  description: Cooperative.Registry.MarketplaceShareReturnAct.description,
   model: Schema,
-  context: Cooperative.Registry.ReturnByAssetAct.context,
-  translations: Cooperative.Registry.ReturnByAssetAct.translations,
+  context: Cooperative.Registry.MarketplaceShareReturnAct.context,
+  translations: Cooperative.Registry.MarketplaceShareReturnAct.translations,
 }
