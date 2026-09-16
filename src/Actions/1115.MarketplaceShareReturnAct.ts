@@ -1,25 +1,26 @@
 import { DraftContract } from 'cooptypes'
-import { MarketplaceAplIssuance } from '../Templates'
+import type { Cooperative } from 'cooptypes'
+import { MarketplaceShareReturnAct } from '../Templates'
 import { DocFactory } from '../Factory'
 import type { IGeneratedDocument, IGenerationOptions, IMetaDocument, ITemplate } from '../Interfaces'
 import type { MongoDBConnector } from '../Services/Databazor'
 import type { ExternalOrganizationData } from '../Models'
 
-export { MarketplaceAplIssuance as Template } from '../Templates'
+export { MarketplaceShareReturnAct as Template } from '../Templates'
 
-export class Factory extends DocFactory<MarketplaceAplIssuance.Action> {
+export class Factory extends DocFactory<MarketplaceShareReturnAct.Action> {
   constructor(storage: MongoDBConnector) {
     super(storage)
   }
 
-  async generateDocument(data: MarketplaceAplIssuance.Action, options?: IGenerationOptions): Promise<IGeneratedDocument> {
-    let template: ITemplate<MarketplaceAplIssuance.Model>
+  async generateDocument(data: MarketplaceShareReturnAct.Action, options?: IGenerationOptions): Promise<IGeneratedDocument> {
+    let template: ITemplate<MarketplaceShareReturnAct.Model>
 
     if (process.env.SOURCE === 'local') {
-      template = MarketplaceAplIssuance.Template
+      template = MarketplaceShareReturnAct.Template
     }
     else {
-      template = await this.getTemplate(DraftContract.contractName.production, MarketplaceAplIssuance.registry_id, data.block_num)
+      template = await this.getTemplate(DraftContract.contractName.production, MarketplaceShareReturnAct.registry_id, data.block_num)
     }
 
     const meta: IMetaDocument = await this.getMeta({ title: template.title, ...data })
@@ -29,8 +30,8 @@ export class Factory extends DocFactory<MarketplaceAplIssuance.Action> {
     // `user` = пайщик-получатель имущества (USERNAME = data.username).
     const user = await this.getUser(data.username, data.block_num)
 
-    // `transmitter` = USERNAME оператора КУ (передающая сторона от кооператива,
-    // «Выдал»).
+    // `transmitter` = USERNAME председателя КУ, доверенного или оператора
+    // (передающая сторона от кооператива, закрывающая подпись).
     const transmitter = await this.getUser(data.transmitter, data.block_num)
 
     // request строится напрямую из данных заказа в Action (а не из заглушки
@@ -40,7 +41,7 @@ export class Factory extends DocFactory<MarketplaceAplIssuance.Action> {
       const n = Number.parseFloat(s)
       return Number.isFinite(n) ? String(n) : s
     }
-    const request: MarketplaceAplIssuance.Model['request'] = {
+    const request: MarketplaceShareReturnAct.Model['request'] = {
       hash: data.sku,
       title: data.product_title,
       unit_of_measurement: data.unit_of_measurement,
@@ -63,22 +64,18 @@ export class Factory extends DocFactory<MarketplaceAplIssuance.Action> {
 
     // Имя ЦПП фиксировано для стола заказов (не из реестра программ —
     // там может стоять пилотное имя кооператива). Согласовано с пользователем.
-    const program: MarketplaceAplIssuance.Model['program'] = { name: 'Стол заказов' }
+    const program: MarketplaceShareReturnAct.Model['program'] = { name: 'Стол заказов' }
 
-    // Акт выдачи в Marketplace не сопровождается отдельным протоколом совета —
-    // поле `decision` заполняем заглушкой для совместимости с моделью. Реальное
-    // основание выдачи — консолидированная заявка cycle_id, она попадает в meta.
-    const decision = {
-      id: 0,
-      date: meta.created_at.split(' ')[0] ?? '',
-      time: meta.created_at.split(' ')[1] ?? '',
-      votes_for: 0,
-      votes_against: 0,
-      votes_abstained: 0,
-      voters_percent: 0,
-    }
+    // Акт составляется во исполнение протокола совета о возврате паевого
+    // взноса имуществом: номер, дата и голоса — из цепи по decision_id.
+    const decision: Cooperative.Document.IDecisionData = await this.getDecision(
+      coop,
+      data.coopname,
+      data.decision_id,
+      meta.created_at,
+    )
 
-    const combinedData: MarketplaceAplIssuance.Model = {
+    const combinedData: MarketplaceShareReturnAct.Model = {
       meta,
       coop,
       vars,
