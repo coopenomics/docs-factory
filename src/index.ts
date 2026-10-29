@@ -5,6 +5,12 @@ export * from './Schema'
 export * from './Storage'
 export { documentMetaKey } from './Utils/documentMetaKey'
 export * from './Builder/version'
+/**
+ * Версия пакета фабрики. Приложение-хозяин сверяет её с объявленной в своём
+ * package.json при старте: забытый `pnpm install` после обновления версии
+ * виден сразу, а не по странному документу (решение 15 PRD).
+ */
+export { version as DOCS_FACTORY_VERSION } from '../package.json'
 export { formatCreatedAt, isIsoCreatedAt, isLegacyCreatedAt, nowCreatedAt, parseCreatedAt, splitCreatedAt } from './Utils/documentCreatedAt'
 
 import { type Cooperative as CooperativeModel, DraftContract } from 'cooptypes'
