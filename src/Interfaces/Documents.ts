@@ -5,7 +5,12 @@ import type { CooperativeData } from '../Models/Cooperative'
 import type { ExternalEntrepreneurData, ExternalIndividualData, ExternalOrganizationData } from '../Models'
 
 // Определение базового интерфейса для мета-информации
-export type IMetaDocument = Cooperative.Document.IMetaDocument
+/**
+ * Мета документа. Поле `builder` (версия сборщика, шаг 7) объявлено и здесь:
+ * `cooptypes` приходит от приложения-хозяина, и его выпуск может быть старше
+ * пакета фабрики.
+ */
+export type IMetaDocument = Cooperative.Document.IMetaDocument & { builder?: string }
 
 export interface IGeneratedDocument {
   full_title: string

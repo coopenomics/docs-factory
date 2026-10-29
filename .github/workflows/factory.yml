@@ -1,0 +1,154 @@
+name: Factory
+
+# Проверки фабрики документов на каждый пуш и как переиспользуемый шаг выпуска.
+#
+#  - сборка с проверкой типов (`prebuild` → `tsc --noEmit`);
+#  - тесты и сверка эталонов `test/golden/*` (GOLDEN_PDF=1: хэш PDF тоже
+#    сверяется; WeasyPrint 67 и шрифт Arial закреплены, как в образе контроллера);
+#  - полнота экспорта сборщиков, чтения на блок, заморозка версий сборщиков,
+#    x-builder редакций, полнота эталонов, время сборки.
+#
+# Режим обновления эталонов: ветка `ci/update` или ручной запуск с
+# `update=true`. Тогда vitest идёт с `-u`, снимки пересоздаются и
+# выкладываются артефактом `factory-golden`; их забирают в ветку и коммитят.
+# Локально набор не запускается — только здесь.
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+    inputs:
+      update:
+        description: 'Пересоздать эталоны (vitest -u)'
+        type: boolean
+        default: false
+  workflow_call:
+
+concurrency:
+  group: factory-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  factory:
+    runs-on: ubuntu-latest
+
+    # Хранилище фабрики в наборе — PostgreSQL; сервис на 127.0.0.1:5432 (job
+    # идёт на VM раннера, имя `postgres` не резолвится). Таблицы создаёт
+    # глобальная подготовка набора (`ensureSchema`).
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Зависимости
+        run: pnpm install --frozen-lockfile
+
+      # prebuild — проверка типов: unbuild сам типы не проверяет.
+      - name: Сборка с проверкой типов
+        run: pnpm run build
+
+      - name: WeasyPrint и шрифт Arial (как в образе контроллера)
+        timeout-minutes: 8
+        run: |
+          sudo apt-get -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::Retries=3 install -y --no-install-recommends \
+            python3-venv libpango-1.0-0 libpangoft2-1.0-0 libjpeg-dev \
+            libopenjp2-7-dev libffi-dev libharfbuzz-dev libcairo2 fontconfig
+          sudo python3 -m venv /venv
+          sudo /venv/bin/pip install --no-cache-dir --retries 3 --timeout 60 WeasyPrint==67
+          sudo install -D assets/fonts/arial.ttf /usr/share/fonts/truetype/arial/arial.ttf
+          sudo fc-cache -f
+
+      - name: Режим обновления эталонов
+        id: mode
+        run: |
+          if [ "${{ github.event.inputs.update }}" = "true" ] || [ "${{ github.ref_name }}" = "ci/update" ]; then
+            echo "update=-u" >> "$GITHUB_OUTPUT"
+            echo "Эталоны будут пересозданы (vitest -u)"
+          else
+            echo "update=" >> "$GITHUB_OUTPUT"
+          fi
+
+      # SKIP_BLOCK_FETCH=TRUE: без похода в цепь за номером блока.
+      # SOURCE=local: тексты шаблонов из пакета, а не из цепи.
+      - name: Тесты фабрики и эталоны
+        env:
+          SOURCE: local
+          NODE_ENV: test
+          SKIP_BLOCK_FETCH: 'TRUE'
+          POSTGRES_HOST: 127.0.0.1
+          GOLDEN_PDF: '1'
+          GOLDEN_TIMING_FILE: ${{ runner.temp }}/golden-timing.jsonl
+        run: pnpm run test ${{ steps.mode.outputs.update }}
+
+      # Проба детерминизма PDF между процессами — сигнал, а не блок.
+      - name: Проба детерминизма PDF (seed 0 и без seed)
+        if: always()
+        continue-on-error: true
+        run: |
+          long=$(ls test/golden/1/*.html | head -1)
+          short=$(ls test/golden/1090/*.html | head -1)
+          echo "=== длинный документ 1, PYTHONHASHSEED=0"; node scripts/pdf-determinism-probe.mjs "$long" || true
+          echo "=== длинный документ 1, без seed"; node scripts/pdf-determinism-probe.mjs "$long" --no-seed || true
+          echo "=== короткий документ 1090, PYTHONHASHSEED=0"; node scripts/pdf-determinism-probe.mjs "$short" || true
+          echo "=== короткий документ 1090, без seed"; node scripts/pdf-determinism-probe.mjs "$short" --no-seed || true
+
+      - name: Полнота экспорта сборщиков
+        if: always()
+        run: node scripts/actions-index-check.mjs
+
+      - name: Чтения сборщиков на блок
+        if: always()
+        run: node scripts/reads-on-block-check.mjs
+
+      - name: Заморозка версий сборщиков
+        if: always()
+        run: node scripts/builders-freeze-check.mjs
+
+      - name: x-builder редакций шаблонов
+        if: always()
+        run: node scripts/x-builder-check.mjs
+
+      - name: Полнота эталонов
+        if: always()
+        run: node scripts/golden-coverage.mjs --report "${{ runner.temp }}/golden-coverage.json"
+
+      - name: Время сборки документов
+        if: always()
+        run: |
+          if [ -f "${{ runner.temp }}/golden-timing.jsonl" ]; then
+            node scripts/golden-timing-report.mjs "${{ runner.temp }}/golden-timing.jsonl" --json "${{ runner.temp }}/golden-timing.json"
+          else
+            echo "Замеров нет: набор не дошёл до сборки документов"
+          fi
+
+      - name: Артефакт эталонов и отчётов
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factory-golden
+          if-no-files-found: ignore
+          path: |
+            test/golden
+            ${{ runner.temp }}/golden-timing.jsonl
+            ${{ runner.temp }}/golden-timing.json
+            ${{ runner.temp }}/golden-coverage.json

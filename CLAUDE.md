@@ -1,4 +1,4 @@
-# @coopenomics/factory — конвенции
+# @coopenomics/docs-factory — конвенции
 
 > Детальное описание движка — в `AGENTS.md`. Здесь — правила, которые легко
 > нарушить при правке `Actions/*`.
@@ -60,8 +60,9 @@ branch по `is_branched`, signature-логика) и гварды — на ме
 
 ## Шрифт PDF — системный, не base64
 
-Arial встроен СИСТЕМНО в образ controller'а (`controller/Dockerfile` →
-fontconfig + `fc-cache`), а НЕ через `@font-face data:base64` в html. base64
+Arial встроен СИСТЕМНО в образ контроллера монорепозитория
+(`components/controller/Dockerfile` → fontconfig + `fc-cache`); в CI этого
+репозитория тот же файл — `assets/fonts/arial.ttf`, а НЕ через `@font-face data:base64` в html. base64
 заставлял weasyprint парсить ~270 КБ TTF на КАЖДЫЙ рендер (≈1.3 с).
 `Services/Generator/index.ts` ставит только `font-family: 'Arial'`. Не
 возвращать base64-встраивание. `.gitattributes` держит `*.ttf binary` —
@@ -74,9 +75,9 @@ fontconfig + `fc-cache`), а НЕ через `@font-face data:base64` в html. b
 поведение фабрики до рефакторинга: расхождение означает, что вывод старого
 документа изменился, и это ошибка, а не повод обновить снимок.
 
-- Набор запускается только в CI: workflow `Factory` (`.github/workflows/factory.yaml`),
-  пуш в `ci/factory` или `ci/factory-*`. Локально тесты фабрики не гонять.
-- Пересоздать снимки: пуш в `ci/factory-update` (режим `-u`), забрать артефакт
+- Набор запускается только в CI: workflow `Factory` (`.github/workflows/factory.yml`)
+  на каждый пуш в любую ветку. Локально тесты фабрики не гонять.
+- Пересоздать снимки: пуш в ветку `ci/update` (режим `-u`), забрать артефакт
   `factory-golden`, положить в `test/golden/` и закоммитить. Делается только
   при осознанной смене вывода.
 - `scripts/golden-coverage.mjs` падает, если у вида документа из `src/Actions`
@@ -159,4 +160,28 @@ udata, приватные данные, подписи, собрания, гол
   `x-builder` не сменился внутри редакции и у объявленного `major` есть сборщик.
 - `IMetaJSONSchema` поле `builder` не описывает намеренно: схема вшита в
   модели шаблонов, и правка переписала бы их в цепи через `drafts:sync`.
+
+## Репозиторий, выпуск и монорепозиторий (шаг 6а, решение 15 PRD)
+
+Пакет `@coopenomics/docs-factory` живёт в `C9S/docs-factory` (Gitea, зеркало
+`coopenomics/docs-factory` на GitHub для CI). История перенесена из
+`components/factory` монорепозитория (`git subtree split`).
+
+- Версия — семантическая, своя: `1.0.0` — первый выпуск. Ось версий
+  сборщиков (`major.minor` в `src/Actions`) — отдельная, с версией пакета не
+  связана.
+- `cooptypes` — зависимость хозяина (`peerDependencies`): пакет берёт тот
+  выпуск, что стоит в приложении. Для сборки и тестов здесь закреплена точная
+  версия в `devDependencies`. Новое поле типа, которое нужно фабрике раньше,
+  чем выйдет `cooptypes`, объявляется в `src/Interfaces` (так сделано с
+  `meta.builder`).
+- Выпуск: поднять `version` в `package.json`, коммит, тег `vX.Y.Z` → workflow
+  `Release`: проверки Factory, сверка тега с версией, публикация в npm
+  (`NPM_TOKEN`; предварительная `vX.Y.Z-dev.N` — с меткой `next`), робот
+  открывает PR в `C9S/mono` → `dev` с новой точной версией во всех
+  `package.json` и `pnpm-lock.yaml` (`GITEA_TOKEN`). Руками версию в монорепе
+  не поднимают.
+- Совместная правка с монорепой — `pnpm factory:link` в монорепе подключает
+  этот чекаут (`~/docs-factory`), `pnpm factory:unlink` возвращает версию из
+  npm; подключённый чекаут гейт монорепы закоммитить не даёт.
 

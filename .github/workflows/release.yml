@@ -1,29 +1,132 @@
 name: Release
 
-permissions:
-  contents: write
-
+# Выпуск фабрики документов (решение 15 PRD компонента 71).
+#
+# По тегу `vX.Y.Z` (или предварительному `vX.Y.Z-dev.N`):
+#   1. полный прогон workflow Factory — эталоны, типы, заморозка версий;
+#   2. тег обязан совпасть с версией в package.json;
+#   3. публикация в npm (`NPM_TOKEN`); предварительная версия — с меткой `next`;
+#   4. робот открывает PR в C9S/mono → dev: новая точная версия пакета во всех
+#      package.json монорепозитория и обновлённый pnpm-lock.yaml. Слияние PR —
+#      после зелёной проверки монорепозитория; руками версию никто не поднимает.
+#
+# Секреты репозитория: NPM_TOKEN (публикация), GITEA_TOKEN (PR в монорепу).
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ['v*']
 
 jobs:
-  release:
+  checks:
+    uses: ./.github/workflows/factory.yml
+
+  publish:
+    needs: checks
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
         with:
-          fetch-depth: 0
+          version: 10.33.0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Set node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
 
-      - run: npx changelogithub
+      - name: Тег совпадает с версией пакета
+        id: version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "v$version" != "${GITHUB_REF_NAME}" ]; then
+            echo "Тег ${GITHUB_REF_NAME} не совпадает с версией пакета $version" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          case "$version" in *-*) echo "prerelease=true" >> "$GITHUB_OUTPUT" ;; *) echo "prerelease=false" >> "$GITHUB_OUTPUT" ;; esac
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Публикация в npm
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          tag=latest
+          [ "${{ steps.version.outputs.prerelease }}" = "true" ] && tag=next
+          pnpm publish --access public --no-git-checks --tag "$tag"
+
+  bump-mono:
+    needs: publish
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.publish.outputs.version }}
+      GITEA_URL: https://git.coopenomics.world
+      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+    steps:
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Пакет только что опубликован; реестр npm отдаёт его не сразу.
+      - name: Дождаться версии в npm
+        run: |
+          for i in $(seq 1 30); do
+            npm view "@coopenomics/docs-factory@${VERSION}" version >/dev/null 2>&1 && exit 0
+            sleep 10
+          done
+          echo "Версия ${VERSION} не появилась в npm за 5 минут" >&2
+          exit 1
+
+      - name: Ветка с новой версией в монорепозитории
+        run: |
+          git clone --depth 50 --branch dev "https://docs-factory-bot:${GITEA_TOKEN}@git.coopenomics.world/C9S/mono.git" mono
+          cd mono
+          branch="deps/docs-factory-v${VERSION}"
+          git checkout -b "$branch"
+          # Точная версия во всех package.json, где пакет объявлен.
+          node -e '
+            const fs = require("fs"), path = require("path");
+            const v = process.env.VERSION;
+            const files = require("child_process").execSync("git ls-files \"package.json\" \"**/package.json\"").toString().trim().split("\n");
+            let changed = 0;
+            for (const f of files) {
+              const p = JSON.parse(fs.readFileSync(f, "utf8"));
+              let touched = false;
+              for (const k of ["dependencies", "devDependencies", "peerDependencies"]) {
+                if (p[k] && p[k]["@coopenomics/docs-factory"] !== undefined && p[k]["@coopenomics/docs-factory"] !== v) {
+                  p[k]["@coopenomics/docs-factory"] = v; touched = true;
+                }
+              }
+              if (touched) { fs.writeFileSync(f, JSON.stringify(p, null, 2) + "\n"); changed++; console.log("версия обновлена:", f); }
+            }
+            if (!changed) { console.log("версия уже стоит везде"); fs.writeFileSync("/tmp/nothing", "1"); }
+          '
+          if [ -f /tmp/nothing ]; then exit 0; fi
+          pnpm install --lockfile-only --ignore-scripts
+          git config user.name "docs-factory-bot"
+          git config user.email "docs-factory-bot@coopenomics.world"
+          git add -A
+          git commit -m "[deps][@docs-factory-bot] config: @coopenomics/docs-factory ${VERSION} — зачем: выпуск фабрики документов; слияние после зелёной проверки монорепозитория"
+          git push origin "$branch"
+          echo "BRANCH=$branch" >> "$GITHUB_ENV"
+
+      - name: PR в C9S/mono → dev
+        if: env.BRANCH != ''
+        run: |
+          body=$(node -e '
+            const v = process.env.VERSION, pre = v.includes("-");
+            console.log(JSON.stringify({
+              base: "dev", head: process.env.BRANCH,
+              title: `${pre ? "[предварительная] " : ""}@coopenomics/docs-factory ${v}`,
+              body: `Выпуск фабрики документов ${v} (тег v${v} в C9S/docs-factory). Эталоны всех документов в репозитории фабрики прошли до публикации.\n\nПеред слиянием: зелёные Typecheck, Check и Tests монорепозитория (полигон ci/tests).${pre ? "\n\nПредварительная версия — для проверки на стенде; в выпуск монорепозитория не сливать." : ""}`
+            }))')
+          curl -sf -X POST -H "Authorization: token ${GITEA_TOKEN}" -H "Content-Type: application/json" \
+            "${GITEA_URL}/api/v1/repos/C9S/mono/pulls" -d "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log("PR", r.number, r.html_url)})'
