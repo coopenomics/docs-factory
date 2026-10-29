@@ -59,6 +59,15 @@ jobs:
           [ "${{ steps.version.outputs.prerelease }}" = "true" ] && tag=next
           pnpm publish --access public --no-git-checks --tag "$tag"
 
+      # Прежнее имя пакета (до выноса из монорепозитория) — устаревшее.
+      # Повтор на каждом выпуске безвреден: пометка просто подтверждается.
+      - name: Прежний @coopenomics/factory — устаревший
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm deprecate @coopenomics/factory "Пакет переименован: используйте @coopenomics/docs-factory (репозиторий C9S/docs-factory)" \
+            || echo "пометка не поставлена — проверьте права токена на @coopenomics/factory"
+
   bump-mono:
     needs: publish
     runs-on: ubuntu-latest
