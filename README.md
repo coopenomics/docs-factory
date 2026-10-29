@@ -1,117 +1,88 @@
-# 📄 @coopenomics/factory
+# @coopenomics/docs-factory
 
-Фабрика документов кооператива — библиотека для генерации юридически значимых документов (PDF). Объединяет шаблоны из блокчейна, приватные данные из хранилища и рендерит HTML через Handlebars/Nunjucks с последующей генерацией PDF через WeasyPrint.
+Фабрика документов цифрового кооператива. Собирает юридически значимые документы
+по шаблонам из цепи и данным пайщиков: модель документа → HTML (Nunjucks) → PDF
+(WeasyPrint 67). Хэш документа — SHA-256 PDF; повторная сборка по метаданным даёт
+тот же документ байт в байт.
 
-## Основные возможности
+Пакет вынесен из монорепозитория `C9S/mono` 29.10.2026 (шаг 6а фабрики v2).
+Прежнее имя `@coopenomics/factory` устарело.
 
-- Более 60 шаблонов юридических документов (заявления, протоколы, решения, договоры, акты)
-- Рендеринг HTML из шаблонов Handlebars и Nunjucks
-- Генерация PDF через WeasyPrint
-- Валидация данных по JSON Schema
-- Электронная подпись документов через EOSIO-ключи
-- Хранение документов и метаданных в MongoDB
-- Сборка как ES-модуль и CommonJS (unbuild)
+## Что внутри
+
+- **Сборщики всех видов документов** цифрового кооператива — 92 вида (`src/Actions`).
+  Сборщик — объявление: какие данные прочитать на блок документа и как собрать
+  из них модель (`defineBuilder`, `src/Builder`).
+- **Версии сборщиков** `major.minor`. Версия пишется в `meta.builder` нового
+  документа; пересборка идёт ровно той версией, что записана в мете. Выпущенная
+  версия заморожена: исправление — новый `minor` рядом.
+- **Шаблоны и реестр шаблонов** (`src/Templates`) с номерами редакций; ключ
+  `x-builder` в схеме редакции объявляет, под какой `major` сборщика она написана.
+- **Порт хранилища** `IFactoryStorage` и реализации: PostgreSQL
+  (`PostgresFactoryStorage`, Kysely) и память (`MemoryFactoryStorage`).
+- **Порт данных цепи** `IChainDataSource`: шаблоны, таблицы и действия на блок.
 
 ## Установка
 
-Компонент является частью монорепозитория. Установка зависимостей из корня проекта:
-
 ```bash
-pnpm install
+pnpm add @coopenomics/docs-factory cooptypes
 ```
 
-Или только для этого компонента:
+`cooptypes` — зависимость приложения (`peerDependencies`): фабрика берёт тот
+выпуск, что стоит у приложения.
 
-```bash
-pnpm install --filter @coopenomics/factory
+Для PDF нужен WeasyPrint 67 в `/venv/bin/python3` и системный шрифт Arial —
+как в образе контроллера (`components/controller/Dockerfile` в `C9S/mono`).
+
+## Использование
+
+```ts
+import { Generator, PostgresFactoryStorage } from '@coopenomics/docs-factory'
+
+const generator = new Generator(chainDataSource) // реализация IChainDataSource
+await generator.connect(new PostgresFactoryStorage({ host, port, user, password, database }))
+
+// Новая сборка: версия сборщика — по объявлению действующей редакции шаблона
+const document = await generator.generate({ registry_id: 1, coopname: 'voskhod', username: 'ant', lang: 'ru' })
+
+// Пересборка по метаданным подписанного документа — тем же сборщиком
+const same = await generator.generate({ ...document.meta }, { skip_save: true })
 ```
 
-### Системные зависимости
+Таблицы хранилища на узле создаёт миграция контроллера; отдельному приложению —
+`await storage.ensureSchema()`.
 
-Для генерации PDF необходим [WeasyPrint](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation).
+## Разработка
 
-## Скрипты
+Тесты и эталоны запускаются только в CI (workflow `Factory`, `.github/workflows/factory.yml`)
+на каждый пуш. Локально — сборка и проверки сборщиков:
 
-| Скрипт | Команда | Описание |
-|--------|---------|----------|
-| `build` | `pnpm run build` | Сборка библиотеки (unbuild) |
-| `dev` | `pnpm run dev` | Режим разработки с автопересборкой (nodemon) |
-| `test` | `pnpm run test` | Запуск тестов (Vitest) |
-| `lint` | `pnpm run lint` | Проверка кода (ESLint) |
-| `typecheck` | `pnpm run typecheck` | Проверка типов TypeScript |
-| `setup-indexes` | `pnpm run setup-indexes` | Настройка индексов MongoDB |
+| Команда | Что делает |
+|---|---|
+| `pnpm build` | сборка (unbuild) с проверкой типов |
+| `pnpm lint` | ESLint |
+| `pnpm check` | полнота экспорта сборщиков, чтения на блок, заморозка версий |
+| `node scripts/x-builder-check.mjs` | `x-builder` не меняется внутри редакции (после `pnpm build`) |
+| `node scripts/golden-coverage.mjs` | у каждого вида документа есть эталон |
 
-Из корня монорепозитория:
+Эталоны — `test/golden/<номер>/<случай>.{html,meta.json,pdf.sha256}`. Пересоздать —
+пуш в ветку `ci/update`, забрать артефакт `factory-golden`, закоммитить; только
+при осознанной смене вывода. Правила для сборщиков — `CLAUDE.md`.
 
-```bash
-pnpm run build:lib       # Сборка factory + cooptypes
-pnpm run dev:lib         # Режим разработки factory + cooptypes
-pnpm run test:component  # Компонентные тесты factory
-```
+Совместная правка с монорепозиторием: в `C9S/mono` — `pnpm factory:link`
+(подключает этот чекаут, ожидается в `~/docs-factory`) и `pnpm factory:unlink`.
 
-## Конфигурация
+## Выпуск
 
-Хранилище фабрики — порт `IFactoryStorage`; реализации — PostgreSQL (`PostgresFactoryStorage`) и память. Для набора тестов нужен PostgreSQL. Переменные окружения:
+1. Поднять `version` в `package.json` (семантическая версия), коммит в `main`.
+2. Тег `vX.Y.Z` (предварительный — `vX.Y.Z-dev.N`) в `C9S/docs-factory`.
+3. Workflow `Release`: проверки Factory → сверка тега с версией → публикация в npm
+   (предварительная — с меткой `next`) → робот открывает PR в `C9S/mono` → `dev`
+   с новой точной версией во всех `package.json` и `pnpm-lock.yaml`.
 
-- `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_USERNAME`, `POSTGRES_PASSWORD`, `POSTGRES_DATABASE` — база набора тестов
-- `SOURCE` — источник данных (`local` для тестов)
-
-Подробное описание переменных — в файле `.env-example`.
-
-## Тестирование
-
-```bash
-SOURCE=local NODE_ENV=test pnpm --filter @coopenomics/factory run test
-```
-
-Тестовый набор покрывает генерацию документов различных типов. Тесты требуют запущенный MongoDB и используют таймаут 240 секунд.
-
-Файлы тестов:
-
-| Файл | Описание |
-|------|----------|
-| `test/index.test.ts` | Основные тесты генерации документов |
-| `test/wallet.test.ts` | Тесты документов кошелька |
-| `test/meet.test.ts` | Тесты документов собраний |
-| `test/blagorost.test.ts` | Тесты документов программы «Благорост» |
-| `test/market.test.ts` | Тесты документов маркетплейса |
-| `test/search.test.ts` | Тесты поиска документов |
-| `test/udata.test.ts` | Тесты пользовательских данных |
-| `test/documents-1000-plus.test.ts` | Тесты документов с registry_id > 1000 |
-
-## Архитектура
-
-```
-src/
-├── index.ts               # Точка входа библиотеки
-├── config.ts              # Конфигурация подключений
-├── Actions/               # Генераторы документов (по registry_id)
-│   ├── 1.WalletAgreement.ts
-│   ├── 100.ParticipantApplication.ts
-│   ├── 300.AnnualGeneralMeetingAgenda.ts
-│   ├── 600.FreeDecision.ts
-│   ├── 1001.GenerationContract.ts
-│   └── ...                # Более 60 шаблонов
-├── Factory/               # Ядро фабрики документов
-├── Models/                # Модели данных MongoDB
-│   ├── Cooperative.ts
-│   ├── Individual.ts
-│   ├── Organization.ts
-│   ├── Document.ts
-│   └── ...
-└── templates/             # HTML-шаблоны (Nunjucks/Handlebars)
-test/                      # Тесты (Vitest)
-```
-
-### Процесс генерации документа
-
-1. Загрузка шаблона и JSON Schema из блокчейна
-2. Получение приватных данных из хранилища (MongoDB)
-3. Валидация данных по JSON Schema (Ajv)
-4. Конструирование контекста для шаблона
-5. Рендеринг HTML из Nunjucks/Handlebars-шаблона
-6. Подпись хеша документа EOSIO-ключом
-7. Генерация PDF через WeasyPrint
+Монорепозиторий поднимает версию только этим PR: гейт `pnpm check` держит
+точную и одну версию, контроллер при старте сверяет установленную фабрику с
+объявленной.
 
 ## Приватные данные документа: `doc_data`
 
@@ -121,7 +92,7 @@ test/                      # Тесты (Vitest)
 
 1. Контроллер собирает приватный payload и вызывает `generator.saveDocData(payload, registry_id)` — возвращается `{ hash }` (sha256, идемпотентный).
 2. `hash` передаётся on-chain в Action под зарезервированным именем `doc_data_hash`.
-3. При генерации/регенерации фабрика подгружает payload из `doc_private_data` через `generator.getDocData(hash)` и подставляет в `combinedData.doc_data`.
+3. При сборке и пересборке фабрика подгружает payload из хранилища (`getDocData(hash)`) и подставляет в модель документа как `doc_data`.
 4. Шаблон документа использует приватные поля как `{{ doc_data.<field> }}`.
 
 ### Пример
@@ -146,14 +117,17 @@ await generator.generate({
 })
 ```
 
-Фабрика (`src/Actions/1103.MarketplaceTransportNote.ts`):
+Сборщик (`src/Actions/1103.MarketplaceTransportNote.ts`) объявляет чтение, каркас его выполняет:
 
 ```ts
-const doc_data = await this.loadDocData<TransportNoteDocData>(data)
-const combinedData = { ...base, doc_data }
+reads: ({ data, f }) => ({
+  docData: () => f.loadDocData<TransportNoteDocData>(data),
+  // …
+}),
+assemble: ({ meta, reads: { docData } }) => ({ meta, doc_data: docData, /* … */ }),
 ```
 
-Шаблон (`Templates/1103.MarketplaceTransportNote/index.ts`):
+Шаблон (`src/Templates/1103.MarketplaceTransportNote.ts`):
 
 ```html
 <tr><th>Экспедитор</th><td>{{ doc_data.expeditor_full_name }}</td></tr>
@@ -174,21 +148,12 @@ const combinedData = { ...base, doc_data }
 
 ### Graceful degradation
 
-Если запись в `doc_private_data` удалена (например, по запросу пайщика), документ остаётся **верифицируемым по хэшу подписи** (хэш зафиксирован on-chain), но не регенерируется. Это явное архитектурное решение: ценность блокчейн-подписи сохраняется; восстановление PDF — обратимо deprecated.
+Если приватные данные удалены (например, по запросу пайщика), документ остаётся **верифицируемым по хэшу подписи** (хэш зафиксирован on-chain), но не регенерируется. Это явное архитектурное решение: ценность блокчейн-подписи сохраняется; восстановление PDF — обратимо deprecated.
 
 ### Когда применять
 
 - **Новые документы** с персональными данными — сразу через `doc_data`.
 - **Существующие документы** (700-1099, 300-304 и т.д.) — остаются без изменений. Паттерн прогрессивный, переводить старые документы при отсутствии необходимости не нужно.
-
-## Ключевые зависимости
-
-- **nunjucks / handlebars** — шаблонизаторы
-- **ajv** — валидация JSON Schema
-- **mongodb** — хранилище данных
-- **eosjs-ecc** — криптографические операции EOSIO
-- **pdf-lib** — работа с PDF
-- **unbuild** — сборка библиотеки
 
 ## Лицензия
 
