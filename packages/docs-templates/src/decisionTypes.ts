@@ -2,6 +2,7 @@ import {
   AnnualGeneralMeetingSovietDecision, // 300
   BranchEstablishmentSovietDecision, // 325
   BranchFinancialAidProtocol, // 1112
+  CapitalizationPropertyInvestDecision, // 1071
   DecisionOfParticipantApplication, // 501
   DecisionOfParticipantExit, // 201
   EducationGuaranteeDecision, // 3014
@@ -140,6 +141,13 @@ export const decisionTypesRegistry: Record<string, IDecisionTypeInfo> = {
     title: 'Приём результата интеллектуальной деятельности',
     description: 'Заявление о внесении результата интеллектуальной деятельности из задания.',
     protocol_registry_id: ResultContributionDecision.registry_id,
+    extension: 'capital',
+  },
+  createpgprp: {
+    type: 'createpgprp',
+    title: 'Приём паевого взноса имуществом в программу «Благорост»',
+    description: 'Заявление пайщика о внесении паевого взноса имуществом по программе «Благорост», одобренное председателем.',
+    protocol_registry_id: CapitalizationPropertyInvestDecision.registry_id,
     extension: 'capital',
   },
   eduacptrid: {
