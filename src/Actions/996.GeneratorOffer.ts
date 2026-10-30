@@ -1,5 +1,4 @@
-import { Cooperative } from 'cooptypes'
-import { Registry } from '@coopenomics/docs-templates'
+import { Registry, UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { GeneratorOffer } from '../Templates'
@@ -14,13 +13,13 @@ export const Factory = defineBuilder<GeneratorOffer.Action, GeneratorOffer.Model
   registry_id: GeneratorOffer.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       vars: () => f.getVars(data.coopname, data.block_num),
       coop: () => f.getCooperative(data.coopname, data.block_num),
       user: () => f.getUser(data.username, data.block_num),
-      generatorAgreementUdata: udata(Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER),
-      generatorAgreementCreatedAtUdata: udata(Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_CREATED_AT),
+      generatorAgreementUdata: udata(UdataKey.GENERATOR_AGREEMENT_NUMBER),
+      generatorAgreementCreatedAtUdata: udata(UdataKey.GENERATOR_AGREEMENT_CREATED_AT),
       docData: () => f.loadDocData<GeneratorOffer.Model['doc_data']>(data),
     }
   },

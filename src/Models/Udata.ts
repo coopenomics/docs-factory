@@ -1,4 +1,5 @@
 import type { Cooperative } from 'cooptypes'
+import { type IUdata, UdataKey } from '@coopenomics/docs-templates'
 import type { ValidateResult } from '../Services/Validator'
 import { Validator } from '../Services/Validator'
 import DataService from '../Services/Databazor/DataService'
@@ -7,8 +8,8 @@ import { udataSchema } from '../Schema/UdataSchema'
 import { getCurrentBlock } from '../Utils/getCurrentBlock'
 
 // Используем типы из cooptypes
-export type ExternalUdata = Cooperative.Model.IUdata
-export type FactoryDataEnum = Cooperative.Model.UdataKey
+export type ExternalUdata = IUdata
+export type FactoryDataEnum = UdataKey
 export type InternalUdata = ExternalUdata
 
 export class Udata {

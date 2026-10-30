@@ -3,7 +3,8 @@
  * вопросы повестки (шаг 2 фабрики v2). Чистые функции над уже прочитанными
  * данными; чтение голосов и строк собрания — в слое источников.
  */
-import type { Cooperative, Interfaces, MeetContract } from 'cooptypes'
+import type { Interfaces, MeetContract } from 'cooptypes'
+import type { IDecisionData, IMeetExtended, IQuestionExtended } from '@coopenomics/docs-templates'
 import type { IDecisionVotes } from '../Sources'
 import { formatDateTime } from '../Utils'
 import { splitCreatedAt } from '../Utils/documentCreatedAt'
@@ -14,7 +15,7 @@ import { splitCreatedAt } from '../Utils/documentCreatedAt'
  * проголосовал, записан воздержавшимся, поэтому участников столько же,
  * сколько членов совета, и кворум составляет 100 %.
  */
-export function decisionData(votes: IDecisionVotes, totalMembers: number, decision_id: number, created_at: string, timezone: string): Cooperative.Document.IDecisionData {
+export function decisionData(votes: IDecisionVotes, totalMembers: number, decision_id: number, created_at: string, timezone: string): IDecisionData {
   const { votes_for, votes_against } = votes
   const total_voters = votes_for + votes_against
   const votes_abstained = totalMembers - total_voters
@@ -38,7 +39,7 @@ export function decisionData(votes: IDecisionVotes, totalMembers: number, decisi
  * Решение общего собрания: кворум берётся из собрания, а голоса «за» и
  * «против» лежат в каждом вопросе отдельно, поэтому здесь они нулевые.
  */
-export function generalMeetingDecisionData(meet: Interfaces.Meet.IMeet, created_at: string, timezone: string): Cooperative.Document.IDecisionData {
+export function generalMeetingDecisionData(meet: Interfaces.Meet.IMeet, created_at: string, timezone: string): IDecisionData {
   const { date, time } = splitCreatedAt(created_at, timezone)
 
   return {
@@ -53,7 +54,7 @@ export function generalMeetingDecisionData(meet: Interfaces.Meet.IMeet, created_
 }
 
 /** Строка собрания с датами для человека и именами председателя и секретаря. */
-export function extendMeet(meet: MeetContract.Tables.Meets.IOutput, presiderFullName: string, secretaryFullName: string): Cooperative.Model.IMeetExtended {
+export function extendMeet(meet: MeetContract.Tables.Meets.IOutput, presiderFullName: string, secretaryFullName: string): IMeetExtended {
   return {
     ...meet,
     current_quorum_percent: Number(Number(meet.current_quorum_percent).toFixed(1)),
@@ -65,7 +66,7 @@ export function extendMeet(meet: MeetContract.Tables.Meets.IOutput, presiderFull
 }
 
 /** Вопросы собрания с итогами: доли голосов и признак принятия (больше половины «за»). */
-export function extendQuestions(questions: MeetContract.Tables.Questions.IOutput[]): Cooperative.Model.IQuestionExtended[] {
+export function extendQuestions(questions: MeetContract.Tables.Questions.IOutput[]): IQuestionExtended[] {
   return questions.map((question) => {
     const votesFor = Number(question.counter_votes_for)
     const votesAgainst = Number(question.counter_votes_against)
@@ -82,7 +83,7 @@ export function extendQuestions(questions: MeetContract.Tables.Questions.IOutput
       votes_against_percent: percent(votesAgainst),
       votes_abstained_percent: percent(votesAbstained),
       is_accepted: votesTotal > 0 && votesFor > votesTotal / 2,
-    } as Cooperative.Model.IQuestionExtended
+    } as IQuestionExtended
   })
 }
 

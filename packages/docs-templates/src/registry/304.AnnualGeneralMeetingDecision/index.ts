@@ -1,5 +1,5 @@
-import type { IDecisionData, IGenerate, IMetaDocument } from '../../types'
-import type { ICooperativeData, IMeetExtended, IQuestionExtended, IVars } from '../../types'
+import type { IDecisionData, IGenerate, IMetaDocument } from '../../document'
+import type { ICooperativeData, IMeetExtended, IQuestionExtended, IVars } from '../../model'
 
 export const registry_id = 304
 

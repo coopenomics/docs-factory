@@ -1,4 +1,4 @@
-import type { Cooperative } from 'cooptypes'
+import type { IProjectData } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import { FreeDecision } from '../Templates'
 
@@ -14,7 +14,7 @@ export const Factory = defineBuilder<FreeDecision.Action, FreeDecision.Model>()(
     return {
       user: () => f.getUser(data.username, data.block_num),
       coop: () => f.getCooperative(data.coopname, data.block_num),
-      project: () => f.getProject(data.project_id, data.block_num) as Promise<Cooperative.Document.IProjectData>,
+      project: () => f.getProject(data.project_id, data.block_num) as Promise<IProjectData>,
       vars: () => f.getVars(data.coopname, data.block_num),
     }
   },

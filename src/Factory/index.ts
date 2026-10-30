@@ -1,4 +1,5 @@
 import type { Cooperative, Interfaces, MeetContract } from 'cooptypes'
+import type { ICommonUser, IDecisionData, IFirstLastMiddleName, IMeetExtended, IQuestionExtended } from '@coopenomics/docs-templates'
 import { DraftContract } from 'cooptypes'
 import type { IBankAccount, ICombinedData, IGeneratedDocument, IMetaDocument, IMetaDocumentPartial, ITemplate, ITranslations, externalDataTypes } from '../Interfaces'
 import type { IFactoryStorage } from '../Storage'
@@ -214,16 +215,16 @@ export abstract class DocFactory<T extends IGenerate> {
     return this.sources.vars(coopname, block_num)
   }
 
-  async getGeneralMeetingDecision(meet: Interfaces.Meet.IMeet, created_at: string, timezone: string): Promise<Cooperative.Document.IDecisionData> {
+  async getGeneralMeetingDecision(meet: Interfaces.Meet.IMeet, created_at: string, timezone: string): Promise<IDecisionData> {
     return Format.generalMeetingDecisionData(meet, created_at, timezone)
   }
 
-  async getDecision(coop: CooperativeData, coopname: string, decision_id: number, created_at: string, timezone: string): Promise<Cooperative.Document.IDecisionData> {
+  async getDecision(coop: CooperativeData, coopname: string, decision_id: number, created_at: string, timezone: string): Promise<IDecisionData> {
     const votes = await this.sources.decisionVotes(coopname, decision_id)
     return Format.decisionData(votes, coop.totalMembers, decision_id, created_at, timezone)
   }
 
-  async getApprovedDecision(coop: CooperativeData, coopname: string, decision_id: number): Promise<Cooperative.Document.IDecisionData> {
+  async getApprovedDecision(coop: CooperativeData, coopname: string, decision_id: number): Promise<IDecisionData> {
     // Принятое решение — из действия authorize: в нём мета документа решения с датой.
     const decision = await this.sources.authorizedDecision(coopname, decision_id)
 
@@ -255,14 +256,14 @@ export abstract class DocFactory<T extends IGenerate> {
     return this.getDecision(coop, coopname, decision_id, decisionCreatedAt, decisionTimezone)
   }
 
-  async getMeet(coopname: string, meet_hash: string, block_num?: number): Promise<Cooperative.Model.IMeetExtended> {
+  async getMeet(coopname: string, meet_hash: string, block_num?: number): Promise<IMeetExtended> {
     const meet = await this.sources.meetRow(coopname, meet_hash, block_num)
     const presider = await this.getUser(meet.presider, block_num)
     const secretary = await this.getUser(meet.secretary, block_num)
     return Format.extendMeet(meet, Format.fullParticipantName(presider.data), Format.fullParticipantName(secretary.data))
   }
 
-  async getMeetQuestions(coopname: string, meet_id: number, block_num?: number): Promise<Cooperative.Model.IQuestionExtended[]> {
+  async getMeetQuestions(coopname: string, meet_id: number, block_num?: number): Promise<IQuestionExtended[]> {
     return Format.extendQuestions(await this.sources.meetQuestionRows(coopname, meet_id, block_num))
   }
 
@@ -306,7 +307,7 @@ export abstract class DocFactory<T extends IGenerate> {
     return Format.fullParticipantName(data)
   }
 
-  getFirstLastMiddleName(data: externalDataTypes): Cooperative.Model.IFirstLastMiddleName {
+  getFirstLastMiddleName(data: externalDataTypes): IFirstLastMiddleName {
     return Format.firstLastMiddleName(data)
   }
 
@@ -326,7 +327,7 @@ export abstract class DocFactory<T extends IGenerate> {
     return Format.uhdContractNumber(contributor_hash)
   }
 
-  getCommonUser(input: InternalGetUserResult): Cooperative.Model.ICommonUser {
+  getCommonUser(input: InternalGetUserResult): ICommonUser {
     return Format.commonUser(input)
   }
 

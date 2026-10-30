@@ -1,5 +1,5 @@
 import { beforeAll, describe, it, vi } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -52,14 +52,14 @@ beforeAll(async () => {
 
   // Устанавливаем необходимые Udata для тестов
   const udatas = [
-    { key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER, value: 'GEN-2026-001' },
-    { key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_CREATED_AT, value: '15.01.2026' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER, value: 'BLG-2026-001' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_CREATED_AT, value: '16.01.2026' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER, value: 'UHD-2026-001' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_CREATED_AT, value: '17.01.2026' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_STORAGE_AGREEMENT_NUMBER, value: 'STR-2026-001' },
-    { key: Cooperative.Model.UdataKey.BLAGOROST_STORAGE_AGREEMENT_CREATED_AT, value: '18.01.2026' },
+    { key: UdataKey.GENERATOR_AGREEMENT_NUMBER, value: 'GEN-2026-001' },
+    { key: UdataKey.GENERATOR_AGREEMENT_CREATED_AT, value: '15.01.2026' },
+    { key: UdataKey.BLAGOROST_AGREEMENT_NUMBER, value: 'BLG-2026-001' },
+    { key: UdataKey.BLAGOROST_AGREEMENT_CREATED_AT, value: '16.01.2026' },
+    { key: UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER, value: 'UHD-2026-001' },
+    { key: UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_CREATED_AT, value: '17.01.2026' },
+    { key: UdataKey.BLAGOROST_STORAGE_AGREEMENT_NUMBER, value: 'STR-2026-001' },
+    { key: UdataKey.BLAGOROST_STORAGE_AGREEMENT_CREATED_AT, value: '18.01.2026' },
   ]
 
   for (const data of udatas) {

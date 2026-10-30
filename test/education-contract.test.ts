@@ -1,6 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
-import { Registry } from '@coopenomics/docs-templates'
+import { Registry, UdataKey } from '@coopenomics/docs-templates'
 import type { IGeneratedDocument } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -41,8 +40,8 @@ describe('договор УХД преподавателя по ЦПП «Обр�
     await generator.connect(testStorage())
     await generator.update('vars', { coopname: 'voskhod' }, { education_contract_template: PROTOCOL })
     for (const [key, value] of [
-      [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_NUMBER, CONTRACT_NUMBER],
-      [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_CREATED_AT, CONTRACT_DATE],
+      [UdataKey.EDUCATION_CONTRACT_NUMBER, CONTRACT_NUMBER],
+      [UdataKey.EDUCATION_CONTRACT_CREATED_AT, CONTRACT_DATE],
     ] as const) {
       await generator.save('udata', { coopname: 'voskhod', username: 'ant', key, value })
     }

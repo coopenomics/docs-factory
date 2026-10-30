@@ -1,5 +1,5 @@
-import type { IGenerate, IMetaDocument, IProjectData } from '../../types'
-import type { ICooperativeData, IVars } from '../../types'
+import type { IGenerate, IMetaDocument, IProjectData } from '../../document'
+import type { ICooperativeData, IVars } from '../../model'
 
 export const registry_id = 599
 

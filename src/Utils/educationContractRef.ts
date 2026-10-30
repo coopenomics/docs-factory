@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import type { FactorySources } from '../Sources'
 
 export interface EducationContractRef {
@@ -16,8 +16,8 @@ export async function getEducationContractRef(
   data: { coopname: string, username: string, block_num?: number },
 ): Promise<EducationContractRef> {
   const [number, createdAt] = await Promise.all([
-    sources.udata({ coopname: data.coopname, username: data.username, key: Cooperative.Model.UdataKey.EDUCATION_CONTRACT_NUMBER, block_num: data.block_num }),
-    sources.udata({ coopname: data.coopname, username: data.username, key: Cooperative.Model.UdataKey.EDUCATION_CONTRACT_CREATED_AT, block_num: data.block_num }),
+    sources.udata({ coopname: data.coopname, username: data.username, key: UdataKey.EDUCATION_CONTRACT_NUMBER, block_num: data.block_num }),
+    sources.udata({ coopname: data.coopname, username: data.username, key: UdataKey.EDUCATION_CONTRACT_CREATED_AT, block_num: data.block_num }),
   ])
   if (!number?.value || !createdAt?.value)
     throw new Error('Номер и дата договора участия в хозяйственной деятельности преподавателя не найдены в Udata')

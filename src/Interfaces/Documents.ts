@@ -1,16 +1,11 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { IMetaDocument } from '@coopenomics/docs-templates'
 import type { Registry } from '../Templates/registry'
 import type { CooperativeData } from '../Models/Cooperative'
 import type { ExternalEntrepreneurData, ExternalIndividualData, ExternalOrganizationData } from '../Models'
 
-// Определение базового интерфейса для мета-информации
-/**
- * Мета документа. Поле `builder` (версия сборщика, шаг 7) объявлено и здесь:
- * `cooptypes` приходит от приложения-хозяина, и его выпуск может быть старше
- * пакета фабрики.
- */
-export type IMetaDocument = Cooperative.Document.IMetaDocument & { builder?: string }
+/** Мета документа, вход сборщика и параметры сборки — из пакета шаблонов. */
+export type { IGenerate, IGenerationOptions, IMetaDocument } from '@coopenomics/docs-templates'
 
 export interface IGeneratedDocument {
   full_title: string
@@ -54,9 +49,7 @@ export interface IMetaDocumentPartial extends Partial<IMetaDocument> {
   title: string
 }
 
-export type IGenerate = Cooperative.Document.IGenerate
 
-export type IGenerationOptions = Cooperative.Document.IGenerationOptions
 
 /**
  * Вход сборки бланка: документ без данных события — только шаблон из цепи и

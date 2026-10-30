@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { ICommonUser } from '@coopenomics/docs-templates'
 
-export const CommonUserSchema: JSONSchemaType<Cooperative.Model.ICommonUser> = {
+export const CommonUserSchema: JSONSchemaType<ICommonUser> = {
   type: 'object',
   properties: {
     full_name_or_short_name: { type: 'string' },

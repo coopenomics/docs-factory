@@ -16,6 +16,7 @@
  * хранилище на порты контроллера, не меняя вызывающих.
  */
 import type { Cooperative, MeetContract } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { DraftContract, SovietContract } from 'cooptypes'
 import type { JSONSchemaType } from 'ajv'
 import type { IBankAccount, ITemplate, ITranslations, externalDataTypes } from '../Interfaces'
@@ -46,7 +47,7 @@ export interface IUserAt { type: string, data: externalDataTypes }
 export interface IUdataFilter {
   coopname: string
   username: string
-  key: Cooperative.Model.UdataKey
+  key: UdataKey
   block_num?: number
 }
 

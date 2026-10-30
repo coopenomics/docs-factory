@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { ICommonProgram } from '@coopenomics/docs-templates'
 
-export const CommonProgramSchema: JSONSchemaType<Cooperative.Model.ICommonProgram> = {
+export const CommonProgramSchema: JSONSchemaType<ICommonProgram> = {
   type: 'object',
   properties: {
     name: { type: 'string' },

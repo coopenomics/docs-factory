@@ -1,8 +1,9 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative, Interfaces } from 'cooptypes'
+import type { Interfaces } from 'cooptypes'
+import type { IMeetExtended, IQuestionExtended } from '@coopenomics/docs-templates'
 
 // Схема для IMeetExtended
-export const MeetSchema: JSONSchemaType<Cooperative.Model.IMeetExtended> = {
+export const MeetSchema: JSONSchemaType<IMeetExtended> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -210,7 +211,7 @@ export const QuestionSchema: JSONSchemaType<Interfaces.Meet.IQuestion> = {
 }
 
 // Схема для расширенного IQuestionExtended (используется в 304 документе)
-export const QuestionExtendedSchema: JSONSchemaType<Cooperative.Model.IQuestionExtended> = {
+export const QuestionExtendedSchema: JSONSchemaType<IQuestionExtended> = {
   type: 'object',
   properties: {
     id: { type: 'string' },

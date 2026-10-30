@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { ICommonRequest } from '@coopenomics/docs-templates'
 
-export const CommonRequestSchema: JSONSchemaType<Cooperative.Model.ICommonRequest> = {
+export const CommonRequestSchema: JSONSchemaType<ICommonRequest> = {
   type: 'object',
   properties: {
     hash: { type: 'string' },

@@ -1,7 +1,7 @@
-import type { IGenerate, IMetaDocument } from '../../types'
-import type { ICooperativeData, IVars } from '../../types'
-import type { IBankAccount } from '../../types'
-import type { IEntrepreneurData, IIndividualData, IOrganizationData } from '../../types'
+import type { IGenerate, IMetaDocument } from '../../document'
+import type { ICooperativeData, IVars } from '../../model'
+import type { IBankAccount } from '../../payments'
+import type { IEntrepreneurData, IIndividualData, IOrganizationData } from '../../users'
 
 export const registry_id = 100
 

@@ -1,5 +1,5 @@
-import type { IDocDataRef, IGenerate, IMetaDocument } from '../../types'
-import type { ICooperativeData, IVars } from '../../types'
+import type { IDocDataRef, IGenerate, IMetaDocument } from '../../document'
+import type { ICooperativeData, IVars } from '../../model'
 import type { CapitalProgramPrivateData } from '../capitalProgramPrivateData'
 
 export const registry_id = 998

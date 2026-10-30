@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { EducationParticipationContract } from '../Templates'
@@ -13,13 +13,13 @@ export const Factory = defineBuilder<EducationParticipationContract.Action, Educ
   registry_id: EducationParticipationContract.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       coop: () => f.getCooperative(data.coopname, data.block_num),
       vars: () => f.getVars(data.coopname, data.block_num),
       userData: () => f.getUser(data.username, data.block_num),
-      numberRow: () => (data.contract_number ? Promise.resolve(null) : udata(Cooperative.Model.UdataKey.EDUCATION_CONTRACT_NUMBER)),
-      createdAtRow: () => (data.contract_created_at ? Promise.resolve(null) : udata(Cooperative.Model.UdataKey.EDUCATION_CONTRACT_CREATED_AT)),
+      numberRow: () => (data.contract_number ? Promise.resolve(null) : udata(UdataKey.EDUCATION_CONTRACT_NUMBER)),
+      createdAtRow: () => (data.contract_created_at ? Promise.resolve(null) : udata(UdataKey.EDUCATION_CONTRACT_CREATED_AT)),
     }
   },
   assemble: ({ data, meta, reads: { coop, vars, userData, numberRow, createdAtRow } }) => {

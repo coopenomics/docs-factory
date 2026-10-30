@@ -1,11 +1,12 @@
 import type { Cooperative } from 'cooptypes'
+import type { IVars as DocsIVars } from '@coopenomics/docs-templates'
 import DataService from '../Services/Databazor/DataService'
 import type { IFactoryStorage, Where } from '../Storage'
 import { type ValidateResult, Validator } from '../Services/Validator'
 import { VarsSchema } from '../Schema'
 import { getCurrentBlock } from '../Utils/getCurrentBlock'
 
-export type IVars = Cooperative.Model.IVars
+export type IVars = DocsIVars
 
 export class Vars {
   data?: IVars

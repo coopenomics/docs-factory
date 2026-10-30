@@ -1,4 +1,5 @@
 import type { Cooperative } from 'cooptypes'
+import type { IProjectData } from '@coopenomics/docs-templates'
 import type { ValidateResult } from '../Services/Validator'
 import { Validator } from '../Services/Validator'
 import DataService from '../Services/Databazor/DataService'
@@ -6,7 +7,7 @@ import type { IFactoryStorage, Where } from '../Storage'
 import { getCurrentBlock } from '../Utils/getCurrentBlock'
 import { projectSchema } from '../Schema/ProjectSchema'
 
-export type ExternalProjectData = Cooperative.Document.IProjectData
+export type ExternalProjectData = IProjectData
 
 export interface InternalProjectData extends ExternalProjectData {
   block_num?: number

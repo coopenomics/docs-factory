@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { ResultContributionDecision } from '../Templates'
@@ -10,15 +10,15 @@ export const Factory = defineBuilder<ResultContributionDecision.Action, ResultCo
   registry_id: ResultContributionDecision.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       coop: () => f.getCooperative(data.coopname, data.block_num),
       vars: () => f.getVars(data.coopname, data.block_num),
       userData: () => f.getUser(data.username, data.block_num),
-      contributorContractUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER),
-      contributorContractCreatedAtUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_CREATED_AT),
-      blagorostAgreementUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER),
-      blagorostAgreementCreatedAtUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_CREATED_AT),
+      contributorContractUdata: udata(UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER),
+      contributorContractCreatedAtUdata: udata(UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_CREATED_AT),
+      blagorostAgreementUdata: udata(UdataKey.BLAGOROST_AGREEMENT_NUMBER),
+      blagorostAgreementCreatedAtUdata: udata(UdataKey.BLAGOROST_AGREEMENT_CREATED_AT),
     }
   },
   derive: ({ data, f, meta, reads: { coop } }) => ({

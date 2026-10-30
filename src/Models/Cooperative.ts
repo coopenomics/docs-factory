@@ -1,5 +1,5 @@
 import { RegistratorContract, SovietContract } from 'cooptypes'
-import type { Cooperative as CooperativeApi } from 'cooptypes'
+import type { ICooperativeData, MembersData } from '@coopenomics/docs-templates'
 import { type ValidateResult, Validator } from '../Services/Validator'
 import type { IFactoryStorage } from '../Storage'
 import type { IBankAccount } from '../Interfaces/BankAccounts'
@@ -12,8 +12,8 @@ import type { ExternalIndividualData } from './Individual'
 import { Individual } from './Individual'
 import type { IChainDataSource } from '../DataSource'
 
-export type CooperativeData = CooperativeApi.Model.ICooperativeData
-export type MembersData = CooperativeApi.Model.MembersData
+export type CooperativeData = ICooperativeData
+export type { MembersData }
 
 export class Cooperative {
   cooperative: CooperativeData | null

@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -27,8 +27,8 @@ describe('тест генератора документов ЦПП БЛАГОР
     })
 
     const udataRecords = [
-      { key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER, value: 'БЛ-001/2024' },
-      { key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_CREATED_AT, value: '2024-06-15T10:00:00.000Z' },
+      { key: UdataKey.BLAGOROST_AGREEMENT_NUMBER, value: 'БЛ-001/2024' },
+      { key: UdataKey.BLAGOROST_AGREEMENT_CREATED_AT, value: '2024-06-15T10:00:00.000Z' },
     ]
 
     for (const rec of udataRecords) {

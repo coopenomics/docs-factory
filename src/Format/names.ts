@@ -3,7 +3,7 @@
  * хранилища (шаг 2 фабрики v2, FR19). Вход — уже прочитанные данные субъекта,
  * выход — строка или модель для шаблона.
  */
-import type { Cooperative } from 'cooptypes'
+import type { ICommonUser, IFirstLastMiddleName } from '@coopenomics/docs-templates'
 import type { ExternalEntrepreneurData, ExternalIndividualData, ExternalOrganizationData } from '../Models'
 import type { externalDataTypes } from '../Interfaces'
 import type { IUserAt } from '../Sources'
@@ -31,7 +31,7 @@ export function fullParticipantName(data: externalDataTypes): string {
   return ''
 }
 
-export function firstLastMiddleName(data: externalDataTypes): Cooperative.Model.IFirstLastMiddleName {
+export function firstLastMiddleName(data: externalDataTypes): IFirstLastMiddleName {
   return {
     first_name: 'first_name' in data ? data.first_name : '',
     last_name: 'last_name' in data ? data.last_name : '',
@@ -59,7 +59,7 @@ export function personalAbbreviatedName(input: ExternalIndividualData | External
 }
 
 /** Общая модель пайщика для шаблонов: сокращение, имя, дата рождения или ОГРН, контакты. */
-export function commonUser(input: IUserAt): Cooperative.Model.ICommonUser {
+export function commonUser(input: IUserAt): ICommonUser {
   switch (input.type) {
     case 'individual':
     case 'entrepreneur': {

@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { IContributionAmount } from '@coopenomics/docs-templates'
 
-export const ContributionAmountSchema: JSONSchemaType<Cooperative.Document.IContributionAmount> = {
+export const ContributionAmountSchema: JSONSchemaType<IContributionAmount> = {
   type: 'object',
   properties: {
     amount: { type: 'number' },

@@ -1,4 +1,5 @@
 import type { Cooperative } from 'cooptypes'
+import type { IIndividualData } from '@coopenomics/docs-templates'
 import type { ValidateResult } from '../Services/Validator'
 import { Validator } from '../Services/Validator'
 import DataService from '../Services/Databazor/DataService'
@@ -6,7 +7,7 @@ import type { IFactoryStorage, Where } from '../Storage'
 import { individualSchema } from '../Schema/IndividualSchema'
 import { getCurrentBlock } from '../Utils/getCurrentBlock'
 
-export type ExternalIndividualData = Cooperative.Users.IIndividualData
+export type ExternalIndividualData = IIndividualData
 export type InternalIndividualData = ExternalIndividualData
 
 export class Individual {

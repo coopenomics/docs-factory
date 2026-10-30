@@ -1,5 +1,5 @@
-import type { IGenerate, IMetaDocument } from '../../types'
-import type { ICommonUser, ICooperativeData, IVars } from '../../types'
+import type { IGenerate, IMetaDocument } from '../../document'
+import type { ICommonUser, ICooperativeData, IVars } from '../../model'
 import {
   CONTRACT_BODY_HTML,
   CONTRACT_STYLE,

@@ -10,8 +10,7 @@
  * (`ant`, `entrepreneur`, `exampleorg`, участок `branch`).
  */
 import { beforeAll, describe, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
-import { Registry } from '@coopenomics/docs-templates'
+import { Registry, UdataKey } from '@coopenomics/docs-templates'
 import { generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
@@ -21,8 +20,8 @@ beforeAll(async () => {
   // значения, что в education-teacher-documents.test.ts: порядок файлов в
   // наборе не гарантирован, поэтому каждый файл задаёт их сам.
   for (const [key, value] of [
-    [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_NUMBER, 'УХД-0007'],
-    [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_CREATED_AT, '15.09.2026'],
+    [UdataKey.EDUCATION_CONTRACT_NUMBER, 'УХД-0007'],
+    [UdataKey.EDUCATION_CONTRACT_CREATED_AT, '15.09.2026'],
   ] as const) {
     await generator.save('udata', { coopname: 'voskhod', username: 'ant', key, value })
   }

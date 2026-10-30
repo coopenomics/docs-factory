@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import type { IGeneratedDocument } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -39,8 +39,8 @@ describe('Акт передачи материалов занятия на от�
   beforeAll(async () => {
     await generator.connect(testStorage())
     for (const [key, value] of [
-      [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_NUMBER, 'УХД-0007'],
-      [Cooperative.Model.UdataKey.EDUCATION_CONTRACT_CREATED_AT, '15.09.2026'],
+      [UdataKey.EDUCATION_CONTRACT_NUMBER, 'УХД-0007'],
+      [UdataKey.EDUCATION_CONTRACT_CREATED_AT, '15.09.2026'],
     ] as const) {
       await generator.save('udata', { coopname: 'voskhod', username: 'ant', key, value })
     }

@@ -1,6 +1,6 @@
-import type { IDocDataRef, IGenerate, IMetaDocument } from '../../types'
-import type { ICommonUser, ICooperativeData, IVars } from '../../types'
-import type { IOrganizationData } from '../../types'
+import type { IDocDataRef, IGenerate, IMetaDocument } from '../../document'
+import type { ICommonUser, ICooperativeData, IVars } from '../../model'
+import type { IOrganizationData } from '../../users'
 
 export const registry_id = 1103
 

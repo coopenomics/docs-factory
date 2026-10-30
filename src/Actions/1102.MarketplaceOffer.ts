@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { MarketplaceOffer } from '../Templates'
@@ -14,13 +14,13 @@ export const Factory = defineBuilder<MarketplaceOffer.Action, MarketplaceOffer.M
   registry_id: MarketplaceOffer.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       coop: () => f.getCooperative(data.coopname, data.block_num),
       vars: () => f.getVars(data.coopname, data.block_num),
       userData: () => f.getUser(data.username, data.block_num),
-      numberUdata: () => (data.marketplace_agreement_number ? Promise.resolve(null) : udata(Cooperative.Model.UdataKey.MARKETPLACE_AGREEMENT_NUMBER)),
-      createdAtUdata: () => (data.marketplace_agreement_created_at ? Promise.resolve(null) : udata(Cooperative.Model.UdataKey.MARKETPLACE_AGREEMENT_CREATED_AT)),
+      numberUdata: () => (data.marketplace_agreement_number ? Promise.resolve(null) : udata(UdataKey.MARKETPLACE_AGREEMENT_NUMBER)),
+      createdAtUdata: () => (data.marketplace_agreement_created_at ? Promise.resolve(null) : udata(UdataKey.MARKETPLACE_AGREEMENT_CREATED_AT)),
     }
   },
   assemble: ({ data, meta, reads: { coop, vars, userData, numberUdata, createdAtUdata } }) => {

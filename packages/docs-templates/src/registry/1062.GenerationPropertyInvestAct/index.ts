@@ -1,4 +1,4 @@
-import type { IGenerate, IMetaDocument } from '../../types'
+import type { IGenerate, IMetaDocument } from '../../document'
 
 export const registry_id = 1062
 

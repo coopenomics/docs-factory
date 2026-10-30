@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { IFirstLastMiddleName } from '@coopenomics/docs-templates'
 
-export const FirstLastMiddleNameSchema: JSONSchemaType<Cooperative.Model.IFirstLastMiddleName> = {
+export const FirstLastMiddleNameSchema: JSONSchemaType<IFirstLastMiddleName> = {
   type: 'object',
   properties: {
     first_name: { type: 'string' },

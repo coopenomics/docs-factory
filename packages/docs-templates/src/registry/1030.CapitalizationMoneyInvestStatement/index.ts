@@ -1,5 +1,5 @@
-import type { ICommonUser, IVars } from '../../types'
-import type { IGenerate, IMetaDocument } from '../../types'
+import type { ICommonUser, IVars } from '../../model'
+import type { IGenerate, IMetaDocument } from '../../document'
 
 export const registry_id = 1030
 

@@ -1,8 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
-
-/** Мета в типах `cooptypes` хозяина: модели шаблонов ссылаются на неё. */
-type IMetaDocument = Cooperative.Document.IMetaDocument
+import type { IMetaDocument } from '@coopenomics/docs-templates'
 
 /**
  * Схема меты, которую шаблоны вшивают в свою `model`. Поле `builder` (версия

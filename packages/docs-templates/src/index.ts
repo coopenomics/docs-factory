@@ -12,3 +12,9 @@
 export { version as DOCS_TEMPLATES_VERSION } from '../package.json'
 export * as Registry from './registry'
 export * from './decisionTypes'
+// Модель документа, данных кооператива, субъектов и реквизитов — то, из чего
+// собираются модели шаблонов. Пакет от `cooptypes` не зависит.
+export * from './document'
+export * from './model'
+export * from './users'
+export * from './payments'

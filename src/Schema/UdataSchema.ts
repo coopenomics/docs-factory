@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Cooperative } from 'cooptypes'
+import type { IUdata } from '@coopenomics/docs-templates'
 
-export const udataSchema: JSONSchemaType<Cooperative.Model.IUdata> = {
+export const udataSchema: JSONSchemaType<IUdata> = {
   type: 'object',
   properties: {
     coopname: { type: 'string' },

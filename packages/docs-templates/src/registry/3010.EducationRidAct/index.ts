@@ -1,5 +1,5 @@
-import type { IGenerate, IMetaDocument } from '../../types'
-import type { ICommonProgram, ICommonUser, ICooperativeData, IVars } from '../../types'
+import type { IGenerate, IMetaDocument } from '../../document'
+import type { ICommonProgram, ICommonUser, ICooperativeData, IVars } from '../../model'
 import {
   EDUCATION_ANNEX_HEAD_HTML,
   EDUCATION_DOC_STYLE,

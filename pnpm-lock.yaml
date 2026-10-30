@@ -117,9 +117,6 @@ importers:
 
   packages/docs-templates:
     devDependencies:
-      cooptypes:
-        specifier: 2026.10.28-5
-        version: 2026.10.28-5(eslint@8.57.1)(typescript@5.9.3)
       typescript:
         specifier: ^5.4.5
         version: 5.9.3

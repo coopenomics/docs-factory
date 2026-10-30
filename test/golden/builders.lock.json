@@ -137,12 +137,12 @@
   "599@1.0": {
     "file": "src/Actions/599.ProjectFreeDecision.ts",
     "export": "Factory",
-    "sha256": "f023e71a472e2ef29a3532057974f150ad3d6d80389b11756ad7937b2549cabb"
+    "sha256": "4cc80c9590bbaef885d7b88a7eec17ab6bedbb82d6de5eb9f3874dbeb25709c6"
   },
   "600@1.0": {
     "file": "src/Actions/600.FreeDecision.ts",
     "export": "Factory",
-    "sha256": "94586036f833ee6fcb3dc3a55ed0487e8010a07b6be81bb5bb71126e6f5ad9a5"
+    "sha256": "d5c007d212c2204406f56157a24b39cd1f790f65650c653c93c547d0037a7092"
   },
   "699@1.0": {
     "file": "src/Actions/699.SosediAgreement.ts",
@@ -167,7 +167,7 @@
   "996@1.0": {
     "file": "src/Actions/996.GeneratorOffer.ts",
     "export": "Factory",
-    "sha256": "6f6c2eb7dfab228ab54b4aaea41071b8b2cc69d2a74e253c2c5cfc41d68ca8f8"
+    "sha256": "17ff05978fba19926313a184c3b3928f2f391ee50f0a0fbe0c69cd9b8ebf631a"
   },
   "998@1.0": {
     "file": "src/Actions/998.BlagorostProgramTemplate.ts",
@@ -177,27 +177,27 @@
   "1000@1.0": {
     "file": "src/Actions/1000.BlagorostOffer.ts",
     "export": "Factory",
-    "sha256": "1dbec3ae6518aaf236136d9376268a15b8e6cd2ce970b1195e141cf95de981a8"
+    "sha256": "6ccfd9b72a20daf31487853d7705b35d45c582a1c953f5ba571bd1377bf80782"
   },
   "1001@1.0": {
     "file": "src/Actions/1001.GenerationContract.ts",
     "export": "Factory",
-    "sha256": "70a085643fc48a19c29125a440a37958ba19adf0da771d3116c143ea220237ba"
+    "sha256": "f771fdcbdf530c33668658254db7796ac9c05fc3c2280ed04c4fdaf7689996a0"
   },
   "1002@1.0": {
     "file": "src/Actions/1002.ProjectGenerationContract.ts",
     "export": "Factory",
-    "sha256": "c779dc4a65b0e623243c6698b3b64f6b86f4fc665f4292cb647070af9812d3f6"
+    "sha256": "a32990cc98c707f872f6a8b36df77c38d2838eb6bd5791e1b231477d82edc5cc"
   },
   "1003@1.0": {
     "file": "src/Actions/1003.ComponentGenerationContract.ts",
     "export": "Factory",
-    "sha256": "d227ea9c9d66fd09a602a08460b582ca2c355501c138dc0237c61133285b1bfd"
+    "sha256": "5da3919d2bb5a0ef456ed4d5eb640cb23f92a1d88011afb26fe30d4e9d85f486"
   },
   "1004@1.0": {
     "file": "src/Actions/1004.StorageAgreement.ts",
     "export": "Factory",
-    "sha256": "fc3c6813269cd23de088bc2f12b44a6f07a7b5bdea4ef309fceb8a363ee9ef65"
+    "sha256": "4961adfbac48cd772c19196db42a6c7dcbad24d1f781054c77dcf5527fc0ae8b"
   },
   "1005@1.0": {
     "file": "src/Actions/1005.InitProjectStatement.ts",
@@ -212,7 +212,7 @@
   "1007@1.0": {
     "file": "src/Actions/1007.BlagorostAgreement.ts",
     "export": "Factory",
-    "sha256": "5f529e79002bd4cf714227e982b28a77e57d8147e0eccc8a31861386da498ae4"
+    "sha256": "c3623ff6f9f7ffdcb924e9548f7f0c964c63c9db40ab63be4047fe434030290b"
   },
   "1010@1.0": {
     "file": "src/Actions/1010.ExpenseStatement.ts",
@@ -227,12 +227,12 @@
   "1020@1.0": {
     "file": "src/Actions/1020.GenerationMoneyInvestStatement.ts",
     "export": "Factory",
-    "sha256": "c18e172b5a202a197fe15833eaf92af02473029957914ecae2f50f23476c136d"
+    "sha256": "19bf0e9f5866060b7a7ae082097668745be31d806fbdd9d85385feb90ab0c81e"
   },
   "1025@1.0": {
     "file": "src/Actions/1025.GenerationMoneyReturnUnusedStatement.ts",
     "export": "Factory",
-    "sha256": "92efd55149b8ce87550bc998aeb6ce0bd4194f161950b3d1ade41f5768480e58"
+    "sha256": "7b094367360d35e32bf9bf6c87ff5b2e8b86750c986087ca0eab19a02538a4cc"
   },
   "1030@1.0": {
     "file": "src/Actions/1030.CapitalizationMoneyInvestStatement.ts",
@@ -242,17 +242,17 @@
   "1040@1.0": {
     "file": "src/Actions/1040.ResultContributionStatement.ts",
     "export": "Factory",
-    "sha256": "500d2726d4c03c7d60cb2b4a46925a2b8a30de30025ef4d9b1f6971c00e7ee51"
+    "sha256": "72b297e222e4b92a169587c14c127f605437d4d25a6c1fcb8f4fb9e4cd45e16d"
   },
   "1041@1.0": {
     "file": "src/Actions/1041.ResultContributionDecision.ts",
     "export": "Factory",
-    "sha256": "5dae6df49013171d7b4b0608f1d2211ac4d39e1a78b453bad68288e056308449"
+    "sha256": "95df50153dde73a71e6f8d2a9cb3b5ce4a289d448c0355819e8103b9761c4a31"
   },
   "1042@1.0": {
     "file": "src/Actions/1042.ResultContributionAct.ts",
     "export": "Factory",
-    "sha256": "c208f316b89e88e20d0c993daaac923cfbe03242f642f79f5f4f9f6c91330576"
+    "sha256": "dc520c12211e587a9803bc24a36440369818bb8157c81ab01b07a322f86a1367"
   },
   "1050@1.0": {
     "file": "src/Actions/1050.GetLoanStatement.ts",
@@ -297,7 +297,7 @@
   "1080@1.0": {
     "file": "src/Actions/1080.GenerationConvertStatement.ts",
     "export": "Factory",
-    "sha256": "63a9954eb55917fb0d5d432e68234f8499fdbc5c1528128eb0a8c1b1e4b19bad"
+    "sha256": "7672c273be74c000a656dbcd8b111660eb8405bcdca43e325b7c25de565e0acf"
   },
   "1090@1.0": {
     "file": "src/Actions/1090.CapitalizationToMainWalletConvertStatement.ts",
@@ -317,7 +317,7 @@
   "1102@1.0": {
     "file": "src/Actions/1102.MarketplaceOffer.ts",
     "export": "Factory",
-    "sha256": "5948902989dbf743065ca6f02ae32490a945cdea82f20f69306af007a9853d62"
+    "sha256": "959e2e1396a69dc66ed8414b38d304b2abf548eebdb58635bbc8a9354530ec98"
   },
   "1103@1.0": {
     "file": "src/Actions/1103.MarketplaceTransportNote.ts",
@@ -407,17 +407,17 @@
   "3002@1.0": {
     "file": "src/Actions/3002.EducationParentOffer.ts",
     "export": "Factory",
-    "sha256": "b19013d418cfc40fc323139fddec03aee8441e27b42e7a06f3ed2ea6525b156f"
+    "sha256": "3c2a94dcdc060e392f0d832b7b83977a432a2eabd6d2af04ada56036689a44d8"
   },
   "3004@1.0": {
     "file": "src/Actions/3004.EducationTeacherOffer.ts",
     "export": "Factory",
-    "sha256": "4ea15c2a6919321523e93ac22b9bb80559e3bef9f87dafb424b94770e728dd14"
+    "sha256": "7dd0a9375c828a0eb460be995c67d4b209c554548a24cc0bd075701b1e97ffa9"
   },
   "3006@1.0": {
     "file": "src/Actions/3006.EducationParticipationContract.ts",
     "export": "Factory",
-    "sha256": "b09f9e86fd3ade91fee25b618f88c09de086612d8802bb035e7e0c218bdb9b67"
+    "sha256": "a2b30581a0abd057c177b72a729c6765ba6aeacf413118c5beeffaca727be3e6"
   },
   "3008@1.0": {
     "file": "src/Actions/3008.EducationRidStatement.ts",

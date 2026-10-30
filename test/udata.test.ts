@@ -1,6 +1,6 @@
 import type { PostgresFactoryStorage } from '../src/Storage'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import { coopname, generator, testStorage } from './utils'
 
@@ -20,7 +20,7 @@ describe('тест модели пользовательских данных (u
     const udata1 = {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       value: 'test value 1',
       metadata: { additional: 'data1' },
     }
@@ -28,7 +28,7 @@ describe('тест модели пользовательских данных (u
     const udata2 = {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER,
+      key: UdataKey.BLAGOROST_AGREEMENT_NUMBER,
       value: 'test value 2',
       metadata: { additional: 'data2' },
     }
@@ -36,7 +36,7 @@ describe('тест модели пользовательских данных (u
     const udata3 = {
       coopname: 'voskhod',
       username: 'testuser2',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       value: 'test value 3',
       metadata: { additional: 'data3' },
     }
@@ -54,19 +54,19 @@ describe('тест модели пользовательских данных (u
     const retrieved1 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any
 
     const retrieved2 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER,
+      key: UdataKey.BLAGOROST_AGREEMENT_NUMBER,
     }) as any
 
     const retrieved3 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser2',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any
 
     // Проверяем, что данные извлечены корректно
@@ -109,7 +109,7 @@ describe('тест модели пользовательских данных (u
     const history1 = await generator.getHistory('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any[]
 
     expect(history1).toHaveLength(1)
@@ -119,38 +119,38 @@ describe('тест модели пользовательских данных (u
     await generator.del('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     })
 
     await generator.del('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER,
+      key: UdataKey.BLAGOROST_AGREEMENT_NUMBER,
     })
 
     await generator.del('udata', {
       coopname: 'voskhod',
       username: 'testuser2',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     })
 
     // Проверяем, что данные помечены как удаленные
     const deleted1 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any
 
     const deleted2 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser1',
-      key: Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER,
+      key: UdataKey.BLAGOROST_AGREEMENT_NUMBER,
     }) as any
 
     const deleted3 = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'testuser2',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any
 
     expect(deleted1).not.toBeNull()
@@ -169,7 +169,7 @@ describe('тест модели пользовательских данных (u
     const baseUdata = {
       coopname: 'voskhod',
       username: 'versionuser',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       deleted: false,
     }
 
@@ -215,7 +215,7 @@ describe('тест модели пользовательских данных (u
     const current = await generator.get('udata', {
       coopname: 'voskhod',
       username: 'versionuser',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any
 
     expect(current.value).toEqual('version 4')
@@ -225,7 +225,7 @@ describe('тест модели пользовательских данных (u
     const history = await generator.getHistory('udata', {
       coopname: 'voskhod',
       username: 'versionuser',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
     }) as any[]
 
     expect(history.length).toEqual(4)
@@ -244,7 +244,7 @@ describe('тест модели пользовательских данных (u
     const filterWithBlock = {
       coopname: 'voskhod',
       username: 'versionuser',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       block_num: version2BlockNum,
     }
 
@@ -257,7 +257,7 @@ describe('тест модели пользовательских данных (u
     const filterBeforeVersion2 = {
       coopname: 'voskhod',
       username: 'versionuser',
-      key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+      key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       block_num: blockBeforeVersion2,
     }
 
@@ -275,7 +275,7 @@ describe('тест модели пользовательских данных (u
       const udata = {
         coopname: 'voskhod',
         username,
-        key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+        key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
         value: `value for ${username}`,
         metadata: { user: username },
       }
@@ -288,7 +288,7 @@ describe('тест модели пользовательских данных (u
       const retrieved = await generator.get('udata', {
         coopname: 'voskhod',
         username,
-        key: Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER,
+        key: UdataKey.GENERATOR_AGREEMENT_NUMBER,
       }) as any
 
       expect(retrieved.value).toEqual(`value for ${username}`)

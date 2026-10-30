@@ -178,11 +178,11 @@ udata, приватные данные, подписи, собрания, гол
 - Версия — семантическая, своя: `1.0.0` — первый выпуск. Ось версий
   сборщиков (`major.minor` в `src/Actions`) — отдельная, с версией пакета не
   связана.
-- `cooptypes` — зависимость хозяина (`peerDependencies`): пакет берёт тот
-  выпуск, что стоит в приложении. Для сборки и тестов здесь закреплена точная
-  версия в `devDependencies`. Новое поле типа, которое нужно фабрике раньше,
-  чем выйдет `cooptypes`, объявляется в `src/Interfaces` (так сделано с
-  `meta.builder`).
+- `cooptypes` — зависимость хозяина (`peerDependencies`) только для типов
+  цепи (таблицы и действия контрактов): пакет берёт тот выпуск, что стоит в
+  приложении, для сборки и тестов здесь закреплена точная версия в
+  `devDependencies`. Модель документа, данные кооператива, субъекты и
+  реквизиты фабрика берёт из `@coopenomics/docs-templates`.
 - Выпуск: поднять `version` в `package.json`, коммит, тег `vX.Y.Z` → workflow
   `Release`: проверки Factory, сверка тега с версией, публикация в npm
   (`NPM_TOKEN`; предварительная `vX.Y.Z-dev.N` — с меткой `next`), робот
@@ -202,13 +202,21 @@ udata, приватные данные, подписи, собрания, гол
 решений совета для робота (`decisionTypesRegistry`), он ссылается на шаблоны
 протоколов.
 
-- Импорт: `import { Registry } from '@coopenomics/docs-templates'`,
-  `Registry.WalletAgreement.Model`. `Cooperative.Registry` в `cooptypes` больше
-  нет.
-- Модель документа, субъекты и реквизиты (`IGenerate`, `IMetaDocument`,
-  `IVars`, …) остаются в `cooptypes` (решение владельца 30.10.2026); пакет
-  шаблонов берёт их только как типы через `src/types.ts`, `cooptypes` — его
-  зависимость хозяина. В собранном коде шаблонов `cooptypes` нет.
+- Импорт: `import { Registry, type IMetaDocument, UdataKey } from '@coopenomics/docs-templates'`,
+  `Registry.WalletAgreement.Model`. `Cooperative.Registry`, `Cooperative.Model`,
+  `Cooperative.Users`, `Cooperative.Payments` и модели документа в
+  `cooptypes` больше нет.
+- Пакет самостоятельный, зависимостей нет (решение владельца 30.10.2026). В
+  нём же — модель документа (`src/document`: `IMetaDocument`, `IGenerate`,
+  `IGenerationOptions`, `IGeneratedDocument`, виды утверждения шаблонов),
+  данные кооператива (`src/model`: `IVars`, `ICooperativeData`, `UdataKey`),
+  субъекты (`src/users`) и реквизиты (`src/payments`); всё экспортируется из
+  корня пакета. Данные цепи, которые входят в модель документа (кооператив,
+  член совета, собрание, вопрос), пакет описывает сам в `src/chain.ts`:
+  модель шаблона заморожена вместе с ним и не меняется со сменой ABI.
+- В `cooptypes` остаются типы цепи, в том числе подписанный документ
+  (`IChainDocument2`, `ISignedDocument2`, `SigFile`, канонизация подписи); мету
+  документа он берёт из этого пакета.
 - Фабрика зависит от шаблонов как `workspace:*`; при публикации pnpm ставит
   точную версию. Версии обоих пакетов равны, workflow `Release` сверяет их с
   тегом и публикует сначала шаблоны, затем фабрику.

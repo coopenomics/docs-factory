@@ -1,4 +1,5 @@
 import type { Cooperative } from 'cooptypes'
+import type { IBankAccount, IEntrepreneurData } from '@coopenomics/docs-templates'
 import type { ValidateResult } from '../Services/Validator'
 import { Validator } from '../Services/Validator'
 import DataService from '../Services/Databazor/DataService'
@@ -6,10 +7,10 @@ import type { IFactoryStorage, Where } from '../Storage'
 import { entrepreneurSchema } from '../Schema/EntrepreneurSchema'
 import { getCurrentBlock } from '../Utils/getCurrentBlock'
 
-export type ExternalEntrepreneurData = Cooperative.Users.IEntrepreneurData
+export type ExternalEntrepreneurData = IEntrepreneurData
 
 export type InternalEntrepreneurData = Omit<ExternalEntrepreneurData, 'bank_account'> & {
-  bank_account?: Cooperative.Payments.IBankAccount
+  bank_account?: IBankAccount
 }
 
 export class Entrepreneur {

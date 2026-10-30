@@ -1,7 +1,7 @@
-import type { Cooperative } from 'cooptypes'
+import type { IBankAccount as DocsIBankAccount, IPaymentData as DocsIPaymentData } from '@coopenomics/docs-templates'
 
 export type Currency = 'RUB' | 'Other'
 
-export type IBankAccount = Cooperative.Payments.IBankAccount
+export type IBankAccount = DocsIBankAccount
 
-export type IPaymentData = Cooperative.Payments.IPaymentData
+export type IPaymentData = DocsIPaymentData

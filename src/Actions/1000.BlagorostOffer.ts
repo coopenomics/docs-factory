@@ -1,5 +1,4 @@
-import { Cooperative } from 'cooptypes'
-import { Registry } from '@coopenomics/docs-templates'
+import { Registry, UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { BlagorostOffer } from '../Templates'
@@ -15,13 +14,13 @@ export const Factory = defineBuilder<BlagorostOffer.Action, BlagorostOffer.Model
   registry_id: BlagorostOffer.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       vars: () => f.getVars(data.coopname, data.block_num),
       coop: () => f.getCooperative(data.coopname, data.block_num),
       userData: () => f.getUser(data.username, data.block_num),
-      blagorostAgreementUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_NUMBER),
-      blagorostAgreementCreatedAtUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_AGREEMENT_CREATED_AT),
+      blagorostAgreementUdata: udata(UdataKey.BLAGOROST_AGREEMENT_NUMBER),
+      blagorostAgreementCreatedAtUdata: udata(UdataKey.BLAGOROST_AGREEMENT_CREATED_AT),
       docData: () => f.loadDocData<BlagorostOffer.Model['doc_data']>(data),
     }
   },

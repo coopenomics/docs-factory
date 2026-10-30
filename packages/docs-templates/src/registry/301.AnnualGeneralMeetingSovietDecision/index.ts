@@ -1,6 +1,6 @@
-import type { IDecisionData, IGenerate, IMetaDocument } from '../../types'
-import type { ICooperativeData, IMeetExtended, IVars } from '../../types'
-import type { IMeetPoint } from '../../types'
+import type { IDecisionData, IGenerate, IMetaDocument } from '../../document'
+import type { ICooperativeData, IMeetExtended, IVars } from '../../model'
+import type { IMeetPoint } from '../../chain'
 
 export const registry_id = 301
 

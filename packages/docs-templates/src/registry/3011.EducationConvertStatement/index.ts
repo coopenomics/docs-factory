@@ -1,5 +1,5 @@
-import type { IGenerate, IMetaDocument } from '../../types'
-import type { ICommonProgram, ICommonUser, ICooperativeData, IVars } from '../../types'
+import type { IGenerate, IMetaDocument } from '../../document'
+import type { ICommonProgram, ICommonUser, ICooperativeData, IVars } from '../../model'
 import { EDUCATION_DOC_STYLE } from '../educationContractDocs'
 
 export const registry_id = 3011

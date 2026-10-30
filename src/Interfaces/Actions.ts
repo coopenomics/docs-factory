@@ -1,7 +1,7 @@
-import type { Cooperative } from 'cooptypes'
+import type { IGenerateJoinCoopDecision as DocsIGenerateJoinCoopDecision, IGenerateWalletAgreement } from '@coopenomics/docs-templates'
 import type { IGenerate } from './Documents'
 
-export type IGenerateJoinCoopDecision = Cooperative.Document.IGenerateJoinCoopDecision
+export type IGenerateJoinCoopDecision = DocsIGenerateJoinCoopDecision
 
 /**
  * Интерфейс генерации заявления на вступление в кооператив
@@ -11,4 +11,4 @@ export interface IGenerateJoinCoop extends IGenerate {
   skip_save: boolean
 }
 
-export type IGenerateAgreement = Cooperative.Document.IGenerateWalletAgreement
+export type IGenerateAgreement = IGenerateWalletAgreement

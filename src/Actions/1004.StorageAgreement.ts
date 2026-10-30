@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { UdataKey } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { StorageAgreement } from '../Templates'
@@ -10,16 +10,16 @@ export const Factory = defineBuilder<StorageAgreement.Action, StorageAgreement.M
   registry_id: StorageAgreement.registry_id,
   version: '1.0',
   reads: ({ data, f }) => {
-    const udata = (key: Cooperative.Model.UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    const udata = (key: UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
     return {
       coop: () => f.getCooperative(data.coopname, data.block_num),
       vars: () => f.getVars(data.coopname, data.block_num),
       userData: () => f.getUser(data.username, data.block_num),
-      storageAgreementUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_STORAGE_AGREEMENT_NUMBER),
-      storageAgreementCreatedAtUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_STORAGE_AGREEMENT_CREATED_AT),
-      contributorContractUdata: udata(Cooperative.Model.UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER),
-      generatorAgreementUdata: udata(Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_NUMBER),
-      generatorAgreementCreatedAtUdata: udata(Cooperative.Model.UdataKey.GENERATOR_AGREEMENT_CREATED_AT),
+      storageAgreementUdata: udata(UdataKey.BLAGOROST_STORAGE_AGREEMENT_NUMBER),
+      storageAgreementCreatedAtUdata: udata(UdataKey.BLAGOROST_STORAGE_AGREEMENT_CREATED_AT),
+      contributorContractUdata: udata(UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER),
+      generatorAgreementUdata: udata(UdataKey.GENERATOR_AGREEMENT_NUMBER),
+      generatorAgreementCreatedAtUdata: udata(UdataKey.GENERATOR_AGREEMENT_CREATED_AT),
     }
   },
   assemble: ({ data, meta, reads: { coop, vars, userData, storageAgreementUdata, storageAgreementCreatedAtUdata, contributorContractUdata, generatorAgreementUdata, generatorAgreementCreatedAtUdata } }) => {
