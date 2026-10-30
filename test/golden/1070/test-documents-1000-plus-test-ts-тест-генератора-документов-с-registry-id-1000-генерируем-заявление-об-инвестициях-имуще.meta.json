@@ -1,5 +1,5 @@
 {
-  "title": "Заявление об инвестировании имущества в благорост",
+  "title": "Заявление о паевом взносе имуществом в программу «Благорост»",
   "lang": "ru",
   "registry_id": 1070,
   "generator": "coopjs",
@@ -10,5 +10,11 @@
   "created_at": "2026-10-28T09:00:00.000Z",
   "block_num": 0,
   "timezone": "Europe/Moscow",
-  "builder": "1.0"
+  "property_hash": "b7e1c0a4f3d2e5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+  "property_name": "Ноутбук Lenovo ThinkPad T14",
+  "property_description": "Серийный номер PF3XK2LM, 2023 года выпуска, исправен, с зарядным устройством",
+  "property_quantity": "1",
+  "property_unit": "шт.",
+  "property_amount": "85000.0000 RUB",
+  "builder": "1.1"
 }

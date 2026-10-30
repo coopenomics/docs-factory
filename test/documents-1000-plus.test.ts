@@ -27,6 +27,22 @@ beforeAll(async () => {
     })
   }
 
+  // Акт приёма-передачи имущества в Благорост (1072) ссылается на принятое решение совета
+  const factory1072 = generator.factoryFor(1072)
+  if (factory1072) {
+    vi.spyOn(factory1072, 'getApprovedDecision').mockImplementation(async () => {
+      return {
+        id: 1,
+        date: '19.01.2026',
+        time: '10:00',
+        votes_for: 2,
+        votes_against: 0,
+        votes_abstained: 0,
+        voters_percent: 100,
+      }
+    })
+  }
+
   // Подменяем метод getDecision для фабрики Протокола списания скоропорта
   // (1107) — голоса совета приходят из SIMPLE_EXPLORER_API, в тесте
   // обращений к нему нет.
@@ -447,6 +463,12 @@ describe('тест генератора документов с registry_id >= 1
       registry_id: 1070,
       coopname: 'voskhod',
       username: 'ant',
+      property_hash: 'b7e1c0a4f3d2e5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0',
+      property_name: 'Ноутбук Lenovo ThinkPad T14',
+      property_description: 'Серийный номер PF3XK2LM, 2023 года выпуска, исправен, с зарядным устройством',
+      property_quantity: '1',
+      property_unit: 'шт.',
+      property_amount: '85000.0000 RUB',
       lang: 'ru',
     })
   })
@@ -456,6 +478,13 @@ describe('тест генератора документов с registry_id >= 1
       registry_id: 1071,
       coopname: 'voskhod',
       username: 'ant',
+      decision_id: 1,
+      property_hash: 'b7e1c0a4f3d2e5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0',
+      property_name: 'Ноутбук Lenovo ThinkPad T14',
+      property_description: 'Серийный номер PF3XK2LM, 2023 года выпуска, исправен, с зарядным устройством',
+      property_quantity: '1',
+      property_unit: 'шт.',
+      property_amount: '85000.0000 RUB',
       lang: 'ru',
     })
   })
@@ -465,6 +494,13 @@ describe('тест генератора документов с registry_id >= 1
       registry_id: 1072,
       coopname: 'voskhod',
       username: 'ant',
+      decision_id: 1,
+      property_hash: 'b7e1c0a4f3d2e5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0',
+      property_name: 'Ноутбук Lenovo ThinkPad T14',
+      property_description: 'Серийный номер PF3XK2LM, 2023 года выпуска, исправен, с зарядным устройством',
+      property_quantity: '1',
+      property_unit: 'шт.',
+      property_amount: '85000.0000 RUB',
       lang: 'ru',
     })
   })
