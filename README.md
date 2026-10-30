@@ -18,8 +18,11 @@
   вида документа — в одном файле: `Factory` (1.0) и дописанные в конец
   `Factory_1_1`, `Factory_2_0`. Выпущенная версия заморожена: исправление —
   новый `minor` в конце файла.
-- **Шаблоны и реестр шаблонов** (`src/Templates`) с номерами редакций; ключ
-  `x-builder` в схеме редакции объявляет, под какой `major` сборщика она написана.
+- **Шаблоны документов** — второй пакет репозитория `@coopenomics/docs-templates`
+  (`packages/docs-templates`): тексты, схемы, переводы, типы `Action` и `Model`
+  каждого вида документа. Выходит одной версией с фабрикой. Фабрика собирает из
+  них реестр шаблонов (`src/Templates`) с номерами редакций; ключ `x-builder` в
+  схеме редакции объявляет, под какой `major` сборщика она написана.
 - **Порт хранилища** `IFactoryStorage` и реализации: PostgreSQL
   (`PostgresFactoryStorage`, Kysely) и память (`MemoryFactoryStorage`).
 - **Порт данных цепи** `IChainDataSource`: шаблоны, таблицы и действия на блок.
@@ -27,8 +30,10 @@
 ## Установка
 
 ```bash
-pnpm add @coopenomics/docs-factory cooptypes
+pnpm add @coopenomics/docs-factory @coopenomics/docs-templates cooptypes
 ```
+
+Версии `docs-factory` и `docs-templates` в приложении ставятся одинаковыми.
 
 `cooptypes` — зависимость приложения (`peerDependencies`): фабрика берёт тот
 выпуск, что стоит у приложения.
@@ -76,11 +81,13 @@ const same = await generator.generate({ ...document.meta }, { skip_save: true })
 
 ## Выпуск
 
-1. Поднять `version` в `package.json` (семантическая версия), коммит в `main`.
+1. Поднять `version` в `package.json` и в `packages/docs-templates/package.json`
+   (одна семантическая версия), коммит в `main`.
 2. Тег `vX.Y.Z` (предварительный — `vX.Y.Z-dev.N`) в `C9S/docs-factory`.
-3. Workflow `Release`: проверки Factory → сверка тега с версией → публикация в npm
-   (предварительная — с меткой `next`) → робот открывает PR в `C9S/mono` → `dev`
-   с новой точной версией во всех `package.json` и `pnpm-lock.yaml`.
+3. Workflow `Release`: проверки Factory → сверка тега с версиями обоих пакетов →
+   публикация в npm шаблонов, затем фабрики (предварительная — с меткой `next`) →
+   робот открывает PR в `C9S/mono` → `dev` с новой точной версией обоих пакетов во
+   всех `package.json` и `pnpm-lock.yaml`.
 
 Монорепозиторий поднимает версию только этим PR: гейт `pnpm check` держит
 точную и одну версию, контроллер при старте сверяет установленную фабрику с

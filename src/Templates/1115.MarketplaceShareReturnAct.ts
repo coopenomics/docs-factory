@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, decisionSchema, organizationSchema } from '../Schema'
@@ -8,11 +8,11 @@ import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { FirstLastMiddleNameSchema } from '../Schema/FirstLastMiddleNameSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceShareReturnAct.registry_id
+export const registry_id = Registry.MarketplaceShareReturnAct.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceShareReturnAct.Action
+export type Action = Registry.MarketplaceShareReturnAct.Action
 
-export type Model = Cooperative.Registry.MarketplaceShareReturnAct.Model
+export type Model = Registry.MarketplaceShareReturnAct.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -33,9 +33,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceShareReturnAct.title,
-  description: Cooperative.Registry.MarketplaceShareReturnAct.description,
+  title: Registry.MarketplaceShareReturnAct.title,
+  description: Registry.MarketplaceShareReturnAct.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceShareReturnAct.context,
-  translations: Cooperative.Registry.MarketplaceShareReturnAct.translations,
+  context: Registry.MarketplaceShareReturnAct.context,
+  translations: Registry.MarketplaceShareReturnAct.translations,
 }

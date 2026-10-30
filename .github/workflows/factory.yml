@@ -2,7 +2,8 @@ name: Factory
 
 # Проверки фабрики документов на каждый пуш и как переиспользуемый шаг выпуска.
 #
-#  - сборка с проверкой типов (`prebuild` → `tsc --noEmit`);
+#  - сборка с проверкой типов: пакет шаблонов `packages/docs-templates`, затем
+#    фабрика (`prebuild` → `tsc --noEmit`);
 #  - тесты и сверка эталонов `test/golden/*` (GOLDEN_PDF=1: хэш PDF тоже
 #    сверяется; WeasyPrint 67 и шрифт Arial закреплены, как в образе контроллера);
 #  - полнота экспорта сборщиков, чтения на блок, заморозка версий сборщиков,
@@ -62,8 +63,15 @@ jobs:
       - name: Зависимости
         run: pnpm install --frozen-lockfile
 
+      # Фабрика берёт шаблоны из соседнего пакета рабочего пространства, а он
+      # отдаёт собранный dist: сначала пакет шаблонов, потом фабрика.
+      - name: Сборка пакета шаблонов с проверкой типов
+        run: |
+          pnpm --filter @coopenomics/docs-templates run typecheck
+          pnpm --filter @coopenomics/docs-templates run build
+
       # prebuild — проверка типов: unbuild сам типы не проверяет.
-      - name: Сборка с проверкой типов
+      - name: Сборка фабрики с проверкой типов
         run: pnpm run build
 
       - name: WeasyPrint и шрифт Arial (как в образе контроллера)

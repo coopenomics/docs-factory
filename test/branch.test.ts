@@ -1,5 +1,5 @@
 import { beforeAll, describe, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
@@ -74,8 +74,8 @@ beforeAll(async () => {
 
 describe('тест генератора документов кооперативных участков', () => {
   it('генерируем предложение повестки собрания пайщиков (320)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchMeetingProposal.Action>({
-      registry_id: Cooperative.Registry.BranchMeetingProposal.registry_id,
+    await testDocumentGeneration<Registry.BranchMeetingProposal.Action>({
+      registry_id: Registry.BranchMeetingProposal.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -86,8 +86,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем бюллетень для голосования на собрании пайщиков (322)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchMeetingBallot.Action>({
-      registry_id: Cooperative.Registry.BranchMeetingBallot.registry_id,
+    await testDocumentGeneration<Registry.BranchMeetingBallot.Action>({
+      registry_id: Registry.BranchMeetingBallot.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -101,8 +101,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем протокол решения собрания пайщиков (323)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchMeetingDecision.Action>({
-      registry_id: Cooperative.Registry.BranchMeetingDecision.registry_id,
+    await testDocumentGeneration<Registry.BranchMeetingDecision.Action>({
+      registry_id: Registry.BranchMeetingDecision.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -117,8 +117,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем заявление председателя собрания в совет (324)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchEstablishmentPetition.Action>({
-      registry_id: Cooperative.Registry.BranchEstablishmentPetition.registry_id,
+    await testDocumentGeneration<Registry.BranchEstablishmentPetition.Action>({
+      registry_id: Registry.BranchEstablishmentPetition.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -130,8 +130,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем решение совета об учреждении кооперативного участка (325)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchEstablishmentSovietDecision.Action>({
-      registry_id: Cooperative.Registry.BranchEstablishmentSovietDecision.registry_id,
+    await testDocumentGeneration<Registry.BranchEstablishmentSovietDecision.Action>({
+      registry_id: Registry.BranchEstablishmentSovietDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -143,8 +143,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем заявление о приёме доверенным лицом участка (326)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchTrustedStatement.Action>({
-      registry_id: Cooperative.Registry.BranchTrustedStatement.registry_id,
+    await testDocumentGeneration<Registry.BranchTrustedStatement.Action>({
+      registry_id: Registry.BranchTrustedStatement.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -154,8 +154,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем договор о материальной ответственности доверенного лица (327)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchTrustedLiabilityAgreement.Action>({
-      registry_id: Cooperative.Registry.BranchTrustedLiabilityAgreement.registry_id,
+    await testDocumentGeneration<Registry.BranchTrustedLiabilityAgreement.Action>({
+      registry_id: Registry.BranchTrustedLiabilityAgreement.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',
@@ -166,8 +166,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем договор о материальной ответственности председателя участка (328)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchTrusteeLiabilityAgreement.Action>({
-      registry_id: Cooperative.Registry.BranchTrusteeLiabilityAgreement.registry_id,
+    await testDocumentGeneration<Registry.BranchTrusteeLiabilityAgreement.Action>({
+      registry_id: Registry.BranchTrusteeLiabilityAgreement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -177,8 +177,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем доверенность председателю кооперативного участка (329)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchTrusteePowerOfAttorney.Action>({
-      registry_id: Cooperative.Registry.BranchTrusteePowerOfAttorney.registry_id,
+    await testDocumentGeneration<Registry.BranchTrusteePowerOfAttorney.Action>({
+      registry_id: Registry.BranchTrusteePowerOfAttorney.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -189,8 +189,8 @@ describe('тест генератора документов кооперати�
   })
 
   it('генерируем доверенность доверенному лицу кооперативного участка (330)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchTrustedPowerOfAttorney.Action>({
-      registry_id: Cooperative.Registry.BranchTrustedPowerOfAttorney.registry_id,
+    await testDocumentGeneration<Registry.BranchTrustedPowerOfAttorney.Action>({
+      registry_id: Registry.BranchTrustedPowerOfAttorney.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       lang: 'ru',

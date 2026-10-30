@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import { BlagorostProgramTemplate } from '../Templates'
 
@@ -20,6 +20,6 @@ export const Factory = defineBuilder<BlagorostProgramTemplate.Action, BlagorostP
     meta,
     coop,
     vars,
-    doc_data: Cooperative.Registry.requireCapitalProgramPrivateData(docData, BlagorostProgramTemplate.registry_id),
+    doc_data: Registry.requireCapitalProgramPrivateData(docData, BlagorostProgramTemplate.registry_id),
   }),
 })

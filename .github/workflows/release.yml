@@ -1,13 +1,17 @@
 name: Release
 
-# Выпуск фабрики документов (решение 15 PRD компонента 71).
+# Выпуск фабрики документов и шаблонов (решения 7 и 15 PRD компонента 71).
 #
 # По тегу `vX.Y.Z` (или предварительному `vX.Y.Z-dev.N`):
 #   1. полный прогон workflow Factory — эталоны, типы, заморозка версий;
-#   2. тег обязан совпасть с версией в package.json;
-#   3. публикация в npm (`NPM_TOKEN`); предварительная версия — с меткой `next`;
-#   4. робот открывает PR в C9S/mono → dev: новая точная версия пакета во всех
-#      package.json монорепозитория и обновлённый pnpm-lock.yaml. Слияние PR —
+#   2. тег обязан совпасть с версией обоих пакетов: `@coopenomics/docs-factory`
+#      (корень) и `@coopenomics/docs-templates` (packages/docs-templates) —
+#      шаблон и сборщик одной версии совпадают по построению;
+#   3. публикация в npm (`NPM_TOKEN`): сначала шаблоны, затем фабрика (её
+#      `workspace:*` на шаблоны pnpm заменяет точной версией); предварительная
+#      версия — с меткой `next`;
+#   4. робот открывает PR в C9S/mono → dev: новая точная версия обоих пакетов во
+#      всех package.json монорепозитория и обновлённый pnpm-lock.yaml. Слияние PR —
 #      после зелёной проверки монорепозитория; руками версию никто не поднимает.
 #
 # Секреты репозитория: NPM_TOKEN (публикация), GITEA_TOKEN (PR в монорепу).
@@ -42,8 +46,9 @@ jobs:
         id: version
         run: |
           version=$(node -p "require('./package.json').version")
-          if [ "v$version" != "${GITHUB_REF_NAME}" ]; then
-            echo "Тег ${GITHUB_REF_NAME} не совпадает с версией пакета $version" >&2
+          templates=$(node -p "require('./packages/docs-templates/package.json').version")
+          if [ "v$version" != "${GITHUB_REF_NAME}" ] || [ "$templates" != "$version" ]; then
+            echo "Тег ${GITHUB_REF_NAME}: версия фабрики $version, версия шаблонов $templates — должны совпасть с тегом" >&2
             exit 1
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -57,6 +62,7 @@ jobs:
         run: |
           tag=latest
           [ "${{ steps.version.outputs.prerelease }}" = "true" ] && tag=next
+          pnpm --filter @coopenomics/docs-templates publish --access public --no-git-checks --tag "$tag"
           pnpm publish --access public --no-git-checks --tag "$tag"
 
       # Прежнее имя пакета (до выноса из монорепозитория) — устаревшее.
@@ -88,7 +94,8 @@ jobs:
       - name: Дождаться версии в npm
         run: |
           for i in $(seq 1 30); do
-            npm view "@coopenomics/docs-factory@${VERSION}" version >/dev/null 2>&1 && exit 0
+            npm view "@coopenomics/docs-factory@${VERSION}" version >/dev/null 2>&1 \
+              && npm view "@coopenomics/docs-templates@${VERSION}" version >/dev/null 2>&1 && exit 0
             sleep 10
           done
           echo "Версия ${VERSION} не появилась в npm за 5 минут" >&2
@@ -110,8 +117,10 @@ jobs:
               const p = JSON.parse(fs.readFileSync(f, "utf8"));
               let touched = false;
               for (const k of ["dependencies", "devDependencies", "peerDependencies"]) {
-                if (p[k] && p[k]["@coopenomics/docs-factory"] !== undefined && p[k]["@coopenomics/docs-factory"] !== v) {
-                  p[k]["@coopenomics/docs-factory"] = v; touched = true;
+                for (const name of ["@coopenomics/docs-factory", "@coopenomics/docs-templates"]) {
+                  if (p[k] && p[k][name] !== undefined && p[k][name] !== v) {
+                    p[k][name] = v; touched = true;
+                  }
                 }
               }
               if (touched) { fs.writeFileSync(f, JSON.stringify(p, null, 2) + "\n"); changed++; console.log("версия обновлена:", f); }
@@ -123,7 +132,7 @@ jobs:
           git config user.name "docs-factory-bot"
           git config user.email "docs-factory-bot@coopenomics.world"
           git add -A
-          git commit -m "[deps][@docs-factory-bot] config: @coopenomics/docs-factory ${VERSION} — зачем: выпуск фабрики документов; слияние после зелёной проверки монорепозитория"
+          git commit -m "[deps][@docs-factory-bot] config: @coopenomics/docs-factory и docs-templates ${VERSION} — зачем: выпуск фабрики и шаблонов документов; слияние после зелёной проверки монорепозитория"
           git push origin "$branch"
           echo "BRANCH=$branch" >> "$GITHUB_ENV"
 
@@ -134,8 +143,8 @@ jobs:
             const v = process.env.VERSION, pre = v.includes("-");
             console.log(JSON.stringify({
               base: "dev", head: process.env.BRANCH,
-              title: `${pre ? "[предварительная] " : ""}@coopenomics/docs-factory ${v}`,
-              body: `Выпуск фабрики документов ${v} (тег v${v} в C9S/docs-factory). Эталоны всех документов в репозитории фабрики прошли до публикации.\n\nПеред слиянием: зелёные Typecheck, Check и Tests монорепозитория (полигон ci/tests).${pre ? "\n\nПредварительная версия — для проверки на стенде; в выпуск монорепозитория не сливать." : ""}`
+              title: `${pre ? "[предварительная] " : ""}@coopenomics/docs-factory и docs-templates ${v}`,
+              body: `Выпуск фабрики и шаблонов документов ${v} (тег v${v} в C9S/docs-factory). Эталоны всех документов в репозитории фабрики прошли до публикации.\n\nПеред слиянием: зелёные Typecheck, Check и Tests монорепозитория (полигон ci/tests).${pre ? "\n\nПредварительная версия — для проверки на стенде; в выпуск монорепозитория не сливать." : ""}`
             }))')
           curl -sf -X POST -H "Authorization: token ${GITEA_TOKEN}" -H "Content-Type: application/json" \
             "${GITEA_URL}/api/v1/repos/C9S/mono/pulls" -d "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log("PR", r.number, r.html_url)})'

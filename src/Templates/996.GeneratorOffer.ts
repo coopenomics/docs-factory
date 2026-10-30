@@ -1,15 +1,15 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CapitalProgramPrivateDataSchema } from '../Schema/CapitalProgramPrivateDataSchema'
 import { CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.GeneratorOffer.registry_id
+export const registry_id = Registry.GeneratorOffer.registry_id
 
-export type Action = Cooperative.Registry.GeneratorOffer.Action
+export type Action = Registry.GeneratorOffer.Action
 
-export type Model = Cooperative.Registry.GeneratorOffer.Model
+export type Model = Registry.GeneratorOffer.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -27,9 +27,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.GeneratorOffer.title,
-  description: Cooperative.Registry.GeneratorOffer.description,
+  title: Registry.GeneratorOffer.title,
+  description: Registry.GeneratorOffer.description,
   model: Schema,
-  context: Cooperative.Registry.GeneratorOffer.context,
-  translations: Cooperative.Registry.GeneratorOffer.translations,
+  context: Registry.GeneratorOffer.context,
+  translations: Registry.GeneratorOffer.translations,
 }

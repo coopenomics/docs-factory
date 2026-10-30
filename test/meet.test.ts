@@ -1,5 +1,5 @@
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import type { IGenerate, IGeneratedDocument } from '../src/Interfaces/Documents'
 import { coopname, deleteAllFiles, generator, testStorage } from './utils'
@@ -40,8 +40,8 @@ describe('тест генератора документов общих собр
   ]
 
   it('генерируем предложение повестки дня (300)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingAgenda.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingAgenda.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingAgenda.Action>({
+      registry_id: Registry.AnnualGeneralMeetingAgenda.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       meet: testMeetData,
@@ -51,8 +51,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем предложение повестки дня повторного собрания (300 с is_repeated)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingAgenda.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingAgenda.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingAgenda.Action>({
+      registry_id: Registry.AnnualGeneralMeetingAgenda.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       meet: testMeetData,
@@ -62,8 +62,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем решение совета о созыве собрания (301)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingSovietDecision.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingSovietDecision.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingSovietDecision.Action>({
+      registry_id: Registry.AnnualGeneralMeetingSovietDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       decision_id: _testDecisionId,
@@ -73,8 +73,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем решение совета о повторном созыве собрания (301 с is_repeated)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingSovietDecision.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingSovietDecision.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingSovietDecision.Action>({
+      registry_id: Registry.AnnualGeneralMeetingSovietDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       decision_id: _testDecisionId,
@@ -84,8 +84,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем уведомление о проведении собрания (302)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingNotification.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingNotification.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingNotification.Action>({
+      registry_id: Registry.AnnualGeneralMeetingNotification.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       meet_hash: _testMeetHash,
@@ -93,8 +93,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем заявление с бюллетенем для голосования (303)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingVotingBallot.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingVotingBallot.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingVotingBallot.Action>({
+      registry_id: Registry.AnnualGeneralMeetingVotingBallot.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       meet_hash: _testMeetHash,
@@ -114,8 +114,8 @@ describe('тест генератора документов общих собр
   })
 
   it('генерируем протокол решения общего собрания (304)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.AnnualGeneralMeetingDecision.Action>({
-      registry_id: Cooperative.Registry.AnnualGeneralMeetingDecision.registry_id,
+    await testDocumentGeneration<Registry.AnnualGeneralMeetingDecision.Action>({
+      registry_id: Registry.AnnualGeneralMeetingDecision.registry_id,
       coopname: 'voskhod',
       username: 'individual',
       meet_hash: _testMeetHash,

@@ -1,16 +1,16 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, decisionSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.BranchEstablishmentSovietDecision.registry_id
+export const registry_id = Registry.BranchEstablishmentSovietDecision.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchEstablishmentSovietDecision.Action
+export type Action = Registry.BranchEstablishmentSovietDecision.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchEstablishmentSovietDecision.Model
+export type Model = Registry.BranchEstablishmentSovietDecision.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -29,9 +29,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchEstablishmentSovietDecision.title,
-  description: Cooperative.Registry.BranchEstablishmentSovietDecision.description,
+  title: Registry.BranchEstablishmentSovietDecision.title,
+  description: Registry.BranchEstablishmentSovietDecision.description,
   model: Schema,
-  context: Cooperative.Registry.BranchEstablishmentSovietDecision.context,
-  translations: Cooperative.Registry.BranchEstablishmentSovietDecision.translations,
+  context: Registry.BranchEstablishmentSovietDecision.context,
+  translations: Registry.BranchEstablishmentSovietDecision.translations,
 }

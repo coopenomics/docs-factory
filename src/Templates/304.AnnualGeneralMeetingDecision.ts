@@ -1,20 +1,20 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, MeetSchema, QuestionExtendedSchema, VarsSchema, decisionSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.AnnualGeneralMeetingDecision.registry_id
+export const registry_id = Registry.AnnualGeneralMeetingDecision.registry_id
 
 /**
  * Интерфейс генерации протокола решения общего собрания
  */
-export type Action = Cooperative.Registry.AnnualGeneralMeetingDecision.Action
+export type Action = Registry.AnnualGeneralMeetingDecision.Action
 
 /**
  * Модель данных документа
  */
-export type Model = Cooperative.Registry.AnnualGeneralMeetingDecision.Model
+export type Model = Registry.AnnualGeneralMeetingDecision.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -35,9 +35,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.AnnualGeneralMeetingDecision.title,
-  description: Cooperative.Registry.AnnualGeneralMeetingDecision.description,
+  title: Registry.AnnualGeneralMeetingDecision.title,
+  description: Registry.AnnualGeneralMeetingDecision.description,
   model: Schema,
-  context: Cooperative.Registry.AnnualGeneralMeetingDecision.context,
-  translations: Cooperative.Registry.AnnualGeneralMeetingDecision.translations,
+  context: Registry.AnnualGeneralMeetingDecision.context,
+  translations: Registry.AnnualGeneralMeetingDecision.translations,
 }

@@ -1,16 +1,16 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { AgendaMeetSchema, AgendaQuestionSchema, CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.AnnualGeneralMeetingAgenda.registry_id
+export const registry_id = Registry.AnnualGeneralMeetingAgenda.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.AnnualGeneralMeetingAgenda.Action
+export type Action = Registry.AnnualGeneralMeetingAgenda.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.AnnualGeneralMeetingAgenda.Model
+export type Model = Registry.AnnualGeneralMeetingAgenda.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -32,9 +32,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.AnnualGeneralMeetingAgenda.title,
-  description: Cooperative.Registry.AnnualGeneralMeetingAgenda.description,
+  title: Registry.AnnualGeneralMeetingAgenda.title,
+  description: Registry.AnnualGeneralMeetingAgenda.description,
   model: Schema,
-  context: Cooperative.Registry.AnnualGeneralMeetingAgenda.context,
-  translations: Cooperative.Registry.AnnualGeneralMeetingAgenda.translations,
+  context: Registry.AnnualGeneralMeetingAgenda.context,
+  translations: Registry.AnnualGeneralMeetingAgenda.translations,
 }

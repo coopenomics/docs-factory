@@ -1,7 +1,7 @@
 {
   "name": "@coopenomics/docs-factory",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Фабрика документов цифрового кооператива: сборка документов по шаблонам, сборщики всех видов документов, версии сборщиков",
   "author": "Alex Ant <chairman.voskhod@gmail.com>",
   "license": "MIT",
@@ -45,6 +45,7 @@
     "check": "node scripts/actions-index-check.mjs && node scripts/reads-on-block-check.mjs && node scripts/builders-freeze-check.mjs"
   },
   "dependencies": {
+    "@coopenomics/docs-templates": "workspace:*",
     "ajv": "^8.13.0",
     "ajv-formats": "^3.0.1",
     "ajv-i18n": "^4.2.0",

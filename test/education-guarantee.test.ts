@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
 
@@ -9,7 +9,7 @@ import { generator, testStorage } from './utils'
  * пункты 4.4.2 и 4.4.4 Положения, называют Подписку и её стоимость, номер
  * заявления — короткий.
  */
-const R = Cooperative.Registry
+const R = Registry
 const CLAIM = '55c470039a8c53ce1b4b6e842fe8063ab3d5b85ba2ba8ab0ae6e30be3ad328b7'
 const BASE = { coopname: 'voskhod', username: 'ant', lang: 'ru' }
 const PROTOCOL = { protocol_number: 'СС-01-09-26', protocol_day_month_year: '01 сентября 2026 г.' }

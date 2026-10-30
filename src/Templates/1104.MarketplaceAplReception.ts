@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, decisionSchema, organizationSchema } from '../Schema'
@@ -8,11 +8,11 @@ import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { FirstLastMiddleNameSchema } from '../Schema/FirstLastMiddleNameSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceAplReception.registry_id
+export const registry_id = Registry.MarketplaceAplReception.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceAplReception.Action
+export type Action = Registry.MarketplaceAplReception.Action
 
-export type Model = Cooperative.Registry.MarketplaceAplReception.Model
+export type Model = Registry.MarketplaceAplReception.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -33,9 +33,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceAplReception.title,
-  description: Cooperative.Registry.MarketplaceAplReception.description,
+  title: Registry.MarketplaceAplReception.title,
+  description: Registry.MarketplaceAplReception.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceAplReception.context,
-  translations: Cooperative.Registry.MarketplaceAplReception.translations,
+  context: Registry.MarketplaceAplReception.context,
+  translations: Registry.MarketplaceAplReception.translations,
 }

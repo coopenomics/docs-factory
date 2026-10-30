@@ -11,6 +11,7 @@
  */
 import { beforeAll, describe, it } from 'vitest'
 import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
@@ -33,16 +34,16 @@ const EDU_HASH = '55c470039a8c53ce1b4b6e842fe8063ab3d5b85ba2ba8ab0ae6e30be3ad328
 
 describe('эталоны документов, которых не было в наборе', () => {
   it('699 соглашение ЦПП «Соседи»', async () => {
-    await testDocumentGeneration<Cooperative.Registry.SosediAgreement.Action>({
-      registry_id: Cooperative.Registry.SosediAgreement.registry_id,
+    await testDocumentGeneration<Registry.SosediAgreement.Action>({
+      registry_id: Registry.SosediAgreement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
     })
   })
 
   it('1095 заявление о конвертации паевого взноса в оплату ресурсов', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BillingConversionStatement.Action>({
-      registry_id: Cooperative.Registry.BillingConversionStatement.registry_id,
+    await testDocumentGeneration<Registry.BillingConversionStatement.Action>({
+      registry_id: Registry.BillingConversionStatement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       convert_amount: '1000.0000 RUB',
@@ -50,16 +51,16 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1100 положение ЦПП «Стол заказов»', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceProgramTemplate.Action>({
-      registry_id: Cooperative.Registry.MarketplaceProgramTemplate.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceProgramTemplate.Action>({
+      registry_id: Registry.MarketplaceProgramTemplate.registry_id,
       coopname: 'voskhod',
       username: 'ant',
     })
   })
 
   it('1102 оферта ЦПП «Стол заказов»', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceOffer.Action>({
-      registry_id: Cooperative.Registry.MarketplaceOffer.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceOffer.Action>({
+      registry_id: Registry.MarketplaceOffer.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       marketplace_agreement_number: 'СЗ-001/2026',
@@ -75,10 +76,10 @@ describe('эталоны документов, которых не было в �
       loading_address: 'г. Москва, ул. Складская, д. 1',
       loading_datetime: '2026-10-27T08:00:00.000Z',
       delivery_datetime_estimate: '2026-10-27T12:00:00.000Z',
-    }, Cooperative.Registry.MarketplaceTransportNote.registry_id)
+    }, Registry.MarketplaceTransportNote.registry_id)
 
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceTransportNote.Action>({
-      registry_id: Cooperative.Registry.MarketplaceTransportNote.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceTransportNote.Action>({
+      registry_id: Registry.MarketplaceTransportNote.registry_id,
       coopname: 'voskhod',
       username: 'exampleorg',
       ttn_number: 'ТТН-0001',
@@ -93,8 +94,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1104 акт приёма-передачи имущества на участке', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceAplReception.Action>({
-      registry_id: Cooperative.Registry.MarketplaceAplReception.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceAplReception.Action>({
+      registry_id: Registry.MarketplaceAplReception.registry_id,
       coopname: 'voskhod',
       username: 'exampleorg',
       order_id: '1',
@@ -116,8 +117,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1109 заявление о финансовой помощи участку', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchFinancialAidStatement.Action>({
-      registry_id: Cooperative.Registry.BranchFinancialAidStatement.registry_id,
+    await testDocumentGeneration<Registry.BranchFinancialAidStatement.Action>({
+      registry_id: Registry.BranchFinancialAidStatement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       aid_hash: ORDER_HASH,
@@ -127,8 +128,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1110 заявление о конвертации паевого взноса в членский (Стол заказов)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceConvertStatement.Action>({
-      registry_id: Cooperative.Registry.MarketplaceConvertStatement.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceConvertStatement.Action>({
+      registry_id: Registry.MarketplaceConvertStatement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       order_hash: ORDER_HASH,
@@ -138,8 +139,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1111 служебная записка о списании', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceWriteoffServiceMemo.Action>({
-      registry_id: Cooperative.Registry.MarketplaceWriteoffServiceMemo.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceWriteoffServiceMemo.Action>({
+      registry_id: Registry.MarketplaceWriteoffServiceMemo.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       proposal_hash: ORDER_HASH,
@@ -155,8 +156,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('1112 протокол совета о финансовой помощи участку', async () => {
-    await testDocumentGeneration<Cooperative.Registry.BranchFinancialAidProtocol.Action>({
-      registry_id: Cooperative.Registry.BranchFinancialAidProtocol.registry_id,
+    await testDocumentGeneration<Registry.BranchFinancialAidProtocol.Action>({
+      registry_id: Registry.BranchFinancialAidProtocol.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       decision_id: 1,
@@ -170,8 +171,8 @@ describe('эталоны документов, которых не было в �
   // 3009 и 3014 остальные тесты собирают напрямую через generator.generate
   // ради проверки текста, поэтому эталон им даёт этот файл.
   it('3009 протокол совета о приёме результата преподавателя', async () => {
-    await testDocumentGeneration<Cooperative.Registry.EducationRidDecision.Action>({
-      registry_id: Cooperative.Registry.EducationRidDecision.registry_id,
+    await testDocumentGeneration<Registry.EducationRidDecision.Action>({
+      registry_id: Registry.EducationRidDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -183,8 +184,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('3014 протокол совета об аннулировании Подписки по Гарантийным условиям', async () => {
-    await testDocumentGeneration<Cooperative.Registry.EducationGuaranteeDecision.Action>({
-      registry_id: Cooperative.Registry.EducationGuaranteeDecision.registry_id,
+    await testDocumentGeneration<Registry.EducationGuaranteeDecision.Action>({
+      registry_id: Registry.EducationGuaranteeDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -196,8 +197,8 @@ describe('эталоны документов, которых не было в �
   })
 
   it('3011 заявление о конвертации паевого взноса (Образование)', async () => {
-    await testDocumentGeneration<Cooperative.Registry.EducationConvertStatement.Action>({
-      registry_id: Cooperative.Registry.EducationConvertStatement.registry_id,
+    await testDocumentGeneration<Registry.EducationConvertStatement.Action>({
+      registry_id: Registry.EducationConvertStatement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       sub_hash: ORDER_HASH,

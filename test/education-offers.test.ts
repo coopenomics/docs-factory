@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { IGeneratedDocument } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -10,7 +10,7 @@ import { generator, testStorage } from './utils'
  * изложены условиями соглашения, раздел о приёме в Участники в оферту не
  * входит, разделы после него сдвинуты на номер.
  */
-const R = Cooperative.Registry
+const R = Registry
 const PROTOCOL = { protocol_number: 'СС-01-09-26', protocol_day_month_year: '01 сентября 2026 г.' }
 const OFFER_PROTOCOL = { protocol_number: 'СС-02-09-26', protocol_day_month_year: '02 сентября 2026 г.' }
 const OFFERS = [

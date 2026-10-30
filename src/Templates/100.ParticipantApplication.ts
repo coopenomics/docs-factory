@@ -1,6 +1,6 @@
 import type { JSONSchemaType } from 'ajv'
 
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { individualSchema } from '../Schema/IndividualSchema'
@@ -8,15 +8,15 @@ import { BankAccountSchema, VarsSchema, organizationSchema } from '../Schema'
 import { CooperativeSchema } from '../Schema/CooperativeSchema'
 import { entrepreneurSchema } from '../Schema/EntrepreneurSchema'
 
-export const registry_id = Cooperative.Registry.ParticipantApplication.registry_id
+export const registry_id = Registry.ParticipantApplication.registry_id
 
 /**
  * Интерфейс генерации заявления на вступление в кооператив
  */
-export type Action = Cooperative.Registry.ParticipantApplication.Action
+export type Action = Registry.ParticipantApplication.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.ParticipantApplication.Model
+export type Model = Registry.ParticipantApplication.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -110,9 +110,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ParticipantApplication.title,
-  description: Cooperative.Registry.ParticipantApplication.description,
+  title: Registry.ParticipantApplication.title,
+  description: Registry.ParticipantApplication.description,
   model: Schema,
-  context: Cooperative.Registry.ParticipantApplication.context,
-  translations: Cooperative.Registry.ParticipantApplication.translations,
+  context: Registry.ParticipantApplication.context,
+  translations: Registry.ParticipantApplication.translations,
 }

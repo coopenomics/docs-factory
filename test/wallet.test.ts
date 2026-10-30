@@ -1,5 +1,5 @@
 import { beforeAll, describe, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import { PaymentMethod } from '../src/Models/PaymentMethod'
 import { testDocumentGeneration } from './utils/testDocument'
@@ -33,7 +33,7 @@ describe('тестируем цифровой кошелёк', () => {
     await paymentMethod.save()
 
     await testDocumentGeneration({
-      registry_id: Cooperative.Registry.ReturnByMoney.registry_id,
+      registry_id: Registry.ReturnByMoney.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',
@@ -46,7 +46,7 @@ describe('тестируем цифровой кошелёк', () => {
 
   it('генерация решения о возврате паевого взноса (ReturnByMoneyDecision)', async () => {
     await testDocumentGeneration({
-      registry_id: Cooperative.Registry.ReturnByMoneyDecision.registry_id,
+      registry_id: Registry.ReturnByMoneyDecision.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       lang: 'ru',

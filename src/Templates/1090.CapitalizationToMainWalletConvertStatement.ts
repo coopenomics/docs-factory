@@ -1,18 +1,18 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema } from '../Schema'
 import { VarsSchema } from '../Schema/VarsSchema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 
-export const registry_id = Cooperative.Registry.CapitalizationToMainWalletConvertStatement.registry_id
+export const registry_id = Registry.CapitalizationToMainWalletConvertStatement.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.CapitalizationToMainWalletConvertStatement.Action
+export type Action = Registry.CapitalizationToMainWalletConvertStatement.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.CapitalizationToMainWalletConvertStatement.Model
+export type Model = Registry.CapitalizationToMainWalletConvertStatement.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -29,9 +29,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.CapitalizationToMainWalletConvertStatement.title,
-  description: Cooperative.Registry.CapitalizationToMainWalletConvertStatement.description,
+  title: Registry.CapitalizationToMainWalletConvertStatement.title,
+  description: Registry.CapitalizationToMainWalletConvertStatement.description,
   model: Schema,
-  context: Cooperative.Registry.CapitalizationToMainWalletConvertStatement.context,
-  translations: Cooperative.Registry.CapitalizationToMainWalletConvertStatement.translations,
+  context: Registry.CapitalizationToMainWalletConvertStatement.context,
+  translations: Registry.CapitalizationToMainWalletConvertStatement.translations,
 }

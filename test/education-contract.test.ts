@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { IGeneratedDocument } from '../src'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
@@ -9,7 +10,7 @@ import { generator, testStorage } from './utils'
  * (двойник 3005 выведен), пайщик подписывает тот же шаблон со своими данными:
  * текст договора в бланке и в экземпляре обязан совпадать дословно.
  */
-const CONTRACT = Cooperative.Registry.EducationParticipationContract.registry_id
+const CONTRACT = Registry.EducationParticipationContract.registry_id
 const CONTRACT_NUMBER = 'УХД-0007'
 const CONTRACT_DATE = '15.09.2026'
 const PROTOCOL = { protocol_number: 'СС-01-09-26', protocol_day_month_year: '01 сентября 2026 г.' }

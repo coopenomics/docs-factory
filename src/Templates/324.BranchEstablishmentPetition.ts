@@ -1,16 +1,16 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.BranchEstablishmentPetition.registry_id
+export const registry_id = Registry.BranchEstablishmentPetition.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchEstablishmentPetition.Action
+export type Action = Registry.BranchEstablishmentPetition.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchEstablishmentPetition.Model
+export type Model = Registry.BranchEstablishmentPetition.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -29,9 +29,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchEstablishmentPetition.title,
-  description: Cooperative.Registry.BranchEstablishmentPetition.description,
+  title: Registry.BranchEstablishmentPetition.title,
+  description: Registry.BranchEstablishmentPetition.description,
   model: Schema,
-  context: Cooperative.Registry.BranchEstablishmentPetition.context,
-  translations: Cooperative.Registry.BranchEstablishmentPetition.translations,
+  context: Registry.BranchEstablishmentPetition.context,
+  translations: Registry.BranchEstablishmentPetition.translations,
 }

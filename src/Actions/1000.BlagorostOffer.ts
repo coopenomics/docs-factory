@@ -1,4 +1,5 @@
 import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { BlagorostOffer } from '../Templates'
@@ -25,7 +26,7 @@ export const Factory = defineBuilder<BlagorostOffer.Action, BlagorostOffer.Model
     }
   },
   assemble: ({ meta, reads: { vars, coop, userData, blagorostAgreementUdata, blagorostAgreementCreatedAtUdata, docData } }) => {
-    const doc_data = Cooperative.Registry.requireCapitalProgramPrivateData(docData, BlagorostOffer.registry_id)
+    const doc_data = Registry.requireCapitalProgramPrivateData(docData, BlagorostOffer.registry_id)
     if (!vars.blagorost_program?.protocol_number || !vars.blagorost_program?.protocol_day_month_year)
       throw new DocumentNotApprovedError('Данные протокола об утверждении Положения о ЦПП «БЛАГОРОСТ» не найдены. Сначала утвердите Положение и сохраните данные протокола.')
     if (!vars.blagorost_offer_template?.protocol_number || !vars.blagorost_offer_template?.protocol_day_month_year)

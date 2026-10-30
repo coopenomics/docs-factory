@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, organizationSchema } from '../Schema'
@@ -7,11 +7,11 @@ import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { CommonRequestSchema } from '../Schema/CommonRequestSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceReturnCancelStatement.registry_id
+export const registry_id = Registry.MarketplaceReturnCancelStatement.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceReturnCancelStatement.Action
+export type Action = Registry.MarketplaceReturnCancelStatement.Action
 
-export type Model = Cooperative.Registry.MarketplaceReturnCancelStatement.Model
+export type Model = Registry.MarketplaceReturnCancelStatement.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -43,9 +43,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceReturnCancelStatement.title,
-  description: Cooperative.Registry.MarketplaceReturnCancelStatement.description,
+  title: Registry.MarketplaceReturnCancelStatement.title,
+  description: Registry.MarketplaceReturnCancelStatement.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceReturnCancelStatement.context,
-  translations: Cooperative.Registry.MarketplaceReturnCancelStatement.translations,
+  context: Registry.MarketplaceReturnCancelStatement.context,
+  translations: Registry.MarketplaceReturnCancelStatement.translations,
 }

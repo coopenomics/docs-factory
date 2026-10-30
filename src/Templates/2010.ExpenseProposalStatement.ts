@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import {
@@ -10,11 +10,11 @@ import {
   VarsSchema,
 } from '../Schema'
 
-export const registry_id = Cooperative.Registry.ExpenseProposalStatement.registry_id
+export const registry_id = Registry.ExpenseProposalStatement.registry_id
 
-export type Action = Cooperative.Registry.ExpenseProposalStatement.Action
-export type Model = Cooperative.Registry.ExpenseProposalStatement.Model
-export type PrivateData = Cooperative.Registry.ExpenseProposalStatement.PrivateData
+export type Action = Registry.ExpenseProposalStatement.Action
+export type Model = Registry.ExpenseProposalStatement.Model
+export type PrivateData = Registry.ExpenseProposalStatement.PrivateData
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -36,9 +36,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ExpenseProposalStatement.title,
-  description: Cooperative.Registry.ExpenseProposalStatement.description,
+  title: Registry.ExpenseProposalStatement.title,
+  description: Registry.ExpenseProposalStatement.description,
   model: Schema,
-  context: Cooperative.Registry.ExpenseProposalStatement.context,
-  translations: Cooperative.Registry.ExpenseProposalStatement.translations,
+  context: Registry.ExpenseProposalStatement.context,
+  translations: Registry.ExpenseProposalStatement.translations,
 }

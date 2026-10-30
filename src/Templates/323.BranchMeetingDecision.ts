@@ -1,11 +1,11 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 
 // Схема вопроса протокола с результатами голосования
-const ProtocolQuestionSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingDecision.IBranchProtocolQuestion> = {
+const ProtocolQuestionSchema: JSONSchemaType<Registry.BranchMeetingDecision.IBranchProtocolQuestion> = {
   type: 'object',
   properties: {
     number: { type: 'string' },
@@ -24,13 +24,13 @@ const ProtocolQuestionSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingD
   additionalProperties: true,
 }
 
-export const registry_id = Cooperative.Registry.BranchMeetingDecision.registry_id
+export const registry_id = Registry.BranchMeetingDecision.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchMeetingDecision.Action
+export type Action = Registry.BranchMeetingDecision.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchMeetingDecision.Model
+export type Model = Registry.BranchMeetingDecision.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -55,9 +55,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchMeetingDecision.title,
-  description: Cooperative.Registry.BranchMeetingDecision.description,
+  title: Registry.BranchMeetingDecision.title,
+  description: Registry.BranchMeetingDecision.description,
   model: Schema,
-  context: Cooperative.Registry.BranchMeetingDecision.context,
-  translations: Cooperative.Registry.BranchMeetingDecision.translations,
+  context: Registry.BranchMeetingDecision.context,
+  translations: Registry.BranchMeetingDecision.translations,
 }

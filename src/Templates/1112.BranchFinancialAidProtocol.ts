@@ -1,16 +1,16 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema } from '../Schema'
 import { VarsSchema } from '../Schema/VarsSchema'
 import { decisionSchema } from '../Schema/DecisionSchema'
 
-export const registry_id = Cooperative.Registry.BranchFinancialAidProtocol.registry_id
+export const registry_id = Registry.BranchFinancialAidProtocol.registry_id
 
-export type Action = Cooperative.Registry.BranchFinancialAidProtocol.Action
+export type Action = Registry.BranchFinancialAidProtocol.Action
 
-export type Model = Cooperative.Registry.BranchFinancialAidProtocol.Model
+export type Model = Registry.BranchFinancialAidProtocol.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -29,9 +29,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchFinancialAidProtocol.title,
-  description: Cooperative.Registry.BranchFinancialAidProtocol.description,
+  title: Registry.BranchFinancialAidProtocol.title,
+  description: Registry.BranchFinancialAidProtocol.description,
   model: Schema,
-  context: Cooperative.Registry.BranchFinancialAidProtocol.context,
-  translations: Cooperative.Registry.BranchFinancialAidProtocol.translations,
+  context: Registry.BranchFinancialAidProtocol.context,
+  translations: Registry.BranchFinancialAidProtocol.translations,
 }

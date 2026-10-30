@@ -1,11 +1,11 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
 
 // Схема волеизъявления по вопросу повестки
-const AnswerSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingBallot.IAnswer> = {
+const AnswerSchema: JSONSchemaType<Registry.BranchMeetingBallot.IAnswer> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -17,7 +17,7 @@ const AnswerSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingBallot.IAns
 }
 
 // Схема вопроса собрания участка
-const QuestionSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingBallot.IQuestion> = {
+const QuestionSchema: JSONSchemaType<Registry.BranchMeetingBallot.IQuestion> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -30,13 +30,13 @@ const QuestionSchema: JSONSchemaType<Cooperative.Registry.BranchMeetingBallot.IQ
   additionalProperties: true,
 }
 
-export const registry_id = Cooperative.Registry.BranchMeetingBallot.registry_id
+export const registry_id = Registry.BranchMeetingBallot.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchMeetingBallot.Action
+export type Action = Registry.BranchMeetingBallot.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchMeetingBallot.Model
+export type Model = Registry.BranchMeetingBallot.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -62,9 +62,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchMeetingBallot.title,
-  description: Cooperative.Registry.BranchMeetingBallot.description,
+  title: Registry.BranchMeetingBallot.title,
+  description: Registry.BranchMeetingBallot.description,
   model: Schema,
-  context: Cooperative.Registry.BranchMeetingBallot.context,
-  translations: Cooperative.Registry.BranchMeetingBallot.translations,
+  context: Registry.BranchMeetingBallot.context,
+  translations: Registry.BranchMeetingBallot.translations,
 }

@@ -1,17 +1,17 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { individualSchema } from '../Schema/IndividualSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.BranchTrustedPowerOfAttorney.registry_id
+export const registry_id = Registry.BranchTrustedPowerOfAttorney.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchTrustedPowerOfAttorney.Action
+export type Action = Registry.BranchTrustedPowerOfAttorney.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchTrustedPowerOfAttorney.Model
+export type Model = Registry.BranchTrustedPowerOfAttorney.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -36,9 +36,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchTrustedPowerOfAttorney.title,
-  description: Cooperative.Registry.BranchTrustedPowerOfAttorney.description,
+  title: Registry.BranchTrustedPowerOfAttorney.title,
+  description: Registry.BranchTrustedPowerOfAttorney.description,
   model: Schema,
-  context: Cooperative.Registry.BranchTrustedPowerOfAttorney.context,
-  translations: Cooperative.Registry.BranchTrustedPowerOfAttorney.translations,
+  context: Registry.BranchTrustedPowerOfAttorney.context,
+  translations: Registry.BranchTrustedPowerOfAttorney.translations,
 }

@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
@@ -17,13 +17,13 @@ const QuestionSchema: JSONSchemaType<{ number: string, title: string, context?: 
   additionalProperties: true,
 }
 
-export const registry_id = Cooperative.Registry.BranchMeetingProposal.registry_id
+export const registry_id = Registry.BranchMeetingProposal.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchMeetingProposal.Action
+export type Action = Registry.BranchMeetingProposal.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchMeetingProposal.Model
+export type Model = Registry.BranchMeetingProposal.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -45,9 +45,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchMeetingProposal.title,
-  description: Cooperative.Registry.BranchMeetingProposal.description,
+  title: Registry.BranchMeetingProposal.title,
+  description: Registry.BranchMeetingProposal.description,
   model: Schema,
-  context: Cooperative.Registry.BranchMeetingProposal.context,
-  translations: Cooperative.Registry.BranchMeetingProposal.translations,
+  context: Registry.BranchMeetingProposal.context,
+  translations: Registry.BranchMeetingProposal.translations,
 }

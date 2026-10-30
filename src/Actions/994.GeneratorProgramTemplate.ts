@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import { GeneratorProgramTemplate } from '../Templates'
 
@@ -20,6 +20,6 @@ export const Factory = defineBuilder<GeneratorProgramTemplate.Action, GeneratorP
     meta,
     coop,
     vars,
-    doc_data: Cooperative.Registry.requireCapitalProgramPrivateData(docData, GeneratorProgramTemplate.registry_id),
+    doc_data: Registry.requireCapitalProgramPrivateData(docData, GeneratorProgramTemplate.registry_id),
   }),
 })

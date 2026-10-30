@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema } from '../Schema'
@@ -7,13 +7,13 @@ import { VarsSchema } from '../Schema/VarsSchema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { CommonProgramSchema } from '../Schema/CommonProgramSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceWriteoffServiceMemo.registry_id
+export const registry_id = Registry.MarketplaceWriteoffServiceMemo.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceWriteoffServiceMemo.Action
+export type Action = Registry.MarketplaceWriteoffServiceMemo.Action
 
-export type Model = Cooperative.Registry.MarketplaceWriteoffServiceMemo.Model
+export type Model = Registry.MarketplaceWriteoffServiceMemo.Model
 
-const WriteoffMemoItemSchema: JSONSchemaType<Cooperative.Registry.MarketplaceWriteoffServiceMemo.WriteoffMemoItem> = {
+const WriteoffMemoItemSchema: JSONSchemaType<Registry.MarketplaceWriteoffServiceMemo.WriteoffMemoItem> = {
   type: 'object',
   properties: {
     asset_title: { type: 'string' },
@@ -45,9 +45,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceWriteoffServiceMemo.title,
-  description: Cooperative.Registry.MarketplaceWriteoffServiceMemo.description,
+  title: Registry.MarketplaceWriteoffServiceMemo.title,
+  description: Registry.MarketplaceWriteoffServiceMemo.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceWriteoffServiceMemo.context,
-  translations: Cooperative.Registry.MarketplaceWriteoffServiceMemo.translations,
+  context: Registry.MarketplaceWriteoffServiceMemo.context,
+  translations: Registry.MarketplaceWriteoffServiceMemo.translations,
 }

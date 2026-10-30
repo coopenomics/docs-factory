@@ -1,4 +1,4 @@
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { EducationRidAct } from '../Templates'
@@ -23,7 +23,7 @@ export const Factory = defineBuilder<EducationRidAct.Action, EducationRidAct.Mod
     user: Format.commonUser(userData),
     program: { name: 'Образование' },
     ...contract,
-    rid_type_human: Cooperative.Registry.educationRidTypeLabel(data.rid_type),
+    rid_type_human: Registry.educationRidTypeLabel(data.rid_type),
     ...(data.decision_id ? { decision_id: data.decision_id, decision_date: data.decision_date ?? '' } : {}),
     rid_hash: data.rid_hash,
     rid_short_hash: Format.shortHash(data.rid_hash),

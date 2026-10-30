@@ -1,7 +1,7 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 
-export const CapitalApprovalHeaderSchema: JSONSchemaType<Cooperative.Registry.CapitalApprovalHeader> = {
+export const CapitalApprovalHeaderSchema: JSONSchemaType<Registry.CapitalApprovalHeader> = {
   type: 'object',
   properties: {
     protocol_number: { type: 'string' },
@@ -11,7 +11,7 @@ export const CapitalApprovalHeaderSchema: JSONSchemaType<Cooperative.Registry.Ca
   additionalProperties: false,
 }
 
-export const CapitalProgramPrivateDataSchema: JSONSchemaType<Cooperative.Registry.CapitalProgramPrivateData> = {
+export const CapitalProgramPrivateDataSchema: JSONSchemaType<Registry.CapitalProgramPrivateData> = {
   type: 'object',
   properties: {
     generator_program_purpose: { type: 'string' },
@@ -26,6 +26,6 @@ export const CapitalProgramPrivateDataSchema: JSONSchemaType<Cooperative.Registr
     return_source_description: { type: 'string' },
     return_additional_source: { type: 'string' },
   },
-  required: [...Cooperative.Registry.capitalProgramPrivateDataRequiredFields],
+  required: [...Registry.capitalProgramPrivateDataRequiredFields],
   additionalProperties: false,
 }

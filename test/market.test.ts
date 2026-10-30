@@ -1,5 +1,5 @@
 import { beforeAll, describe, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
@@ -24,8 +24,8 @@ describe('тест генератора документов стола зака
   }
 
   it('генерируем заявление на выдачу товара паевым взносом', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceShareReturnStatement.Action>({
-      registry_id: Cooperative.Registry.MarketplaceShareReturnStatement.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceShareReturnStatement.Action>({
+      registry_id: Registry.MarketplaceShareReturnStatement.registry_id,
       coopname: 'voskhod',
       username: 'entrepreneur',
       order_id: '1',
@@ -38,8 +38,8 @@ describe('тест генератора документов стола зака
   })
 
   it('генерируем решение совета о выдаче товара паевым взносом', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceShareReturnDecision.Action>({
-      registry_id: Cooperative.Registry.MarketplaceShareReturnDecision.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceShareReturnDecision.Action>({
+      registry_id: Registry.MarketplaceShareReturnDecision.registry_id,
       coopname: 'voskhod',
       username: 'entrepreneur',
       decision_id: 1,
@@ -51,8 +51,8 @@ describe('тест генератора документов стола зака
   })
 
   it('генерируем акт о выдаче товара паевым взносом', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceShareReturnAct.Action>({
-      registry_id: Cooperative.Registry.MarketplaceShareReturnAct.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceShareReturnAct.Action>({
+      registry_id: Registry.MarketplaceShareReturnAct.registry_id,
       coopname: 'voskhod',
       username: 'entrepreneur',
       order_id: '1',
@@ -68,8 +68,8 @@ describe('тест генератора документов стола зака
   })
 
   it('генерируем рекламацию пайщика — заявление о гарантийном возврате имущества', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceReturnStatement.Action>({
-      registry_id: Cooperative.Registry.MarketplaceReturnStatement.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceReturnStatement.Action>({
+      registry_id: Registry.MarketplaceReturnStatement.registry_id,
       coopname: 'voskhod',
       username: 'entrepreneur',
       order_id: '1',
@@ -100,8 +100,8 @@ describe('тест генератора документов стола зака
   }
 
   it('генерируем заявление оператора участка об отмене сделки по гарантийному возврату', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceReturnCancelStatement.Action>({
-      registry_id: Cooperative.Registry.MarketplaceReturnCancelStatement.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceReturnCancelStatement.Action>({
+      registry_id: Registry.MarketplaceReturnCancelStatement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       ...cancel,
@@ -109,8 +109,8 @@ describe('тест генератора документов стола зака
   })
 
   it('генерируем протокол решения совета об отмене сделки по гарантийному возврату', async () => {
-    await testDocumentGeneration<Cooperative.Registry.MarketplaceReturnCancelDecision.Action>({
-      registry_id: Cooperative.Registry.MarketplaceReturnCancelDecision.registry_id,
+    await testDocumentGeneration<Registry.MarketplaceReturnCancelDecision.Action>({
+      registry_id: Registry.MarketplaceReturnCancelDecision.registry_id,
       coopname: 'voskhod',
       username: 'entrepreneur',
       decision_id: 1,

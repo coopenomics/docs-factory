@@ -1,17 +1,17 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { individualSchema } from '../Schema/IndividualSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.BranchTrustedLiabilityAgreement.registry_id
+export const registry_id = Registry.BranchTrustedLiabilityAgreement.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.BranchTrustedLiabilityAgreement.Action
+export type Action = Registry.BranchTrustedLiabilityAgreement.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.BranchTrustedLiabilityAgreement.Model
+export type Model = Registry.BranchTrustedLiabilityAgreement.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -36,9 +36,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.BranchTrustedLiabilityAgreement.title,
-  description: Cooperative.Registry.BranchTrustedLiabilityAgreement.description,
+  title: Registry.BranchTrustedLiabilityAgreement.title,
+  description: Registry.BranchTrustedLiabilityAgreement.description,
   model: Schema,
-  context: Cooperative.Registry.BranchTrustedLiabilityAgreement.context,
-  translations: Cooperative.Registry.BranchTrustedLiabilityAgreement.translations,
+  context: Registry.BranchTrustedLiabilityAgreement.context,
+  translations: Registry.BranchTrustedLiabilityAgreement.translations,
 }

@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema } from '../Schema'
@@ -7,11 +7,11 @@ import { VarsSchema } from '../Schema/VarsSchema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { decisionSchema } from '../Schema/DecisionSchema'
 
-export const registry_id = Cooperative.Registry.EducationGuaranteeDecision.registry_id
+export const registry_id = Registry.EducationGuaranteeDecision.registry_id
 
-export type Action = Cooperative.Registry.EducationGuaranteeDecision.Action
+export type Action = Registry.EducationGuaranteeDecision.Action
 
-export type Model = Cooperative.Registry.EducationGuaranteeDecision.Model
+export type Model = Registry.EducationGuaranteeDecision.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -31,9 +31,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.EducationGuaranteeDecision.title,
-  description: Cooperative.Registry.EducationGuaranteeDecision.description,
+  title: Registry.EducationGuaranteeDecision.title,
+  description: Registry.EducationGuaranteeDecision.description,
   model: Schema,
-  context: Cooperative.Registry.EducationGuaranteeDecision.context,
-  translations: Cooperative.Registry.EducationGuaranteeDecision.translations,
+  context: Registry.EducationGuaranteeDecision.context,
+  translations: Registry.EducationGuaranteeDecision.translations,
 }

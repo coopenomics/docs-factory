@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
 
@@ -9,7 +10,7 @@ import { generator, testStorage } from './utils'
  * приложениями к договору по формам «Благороста» (1040–1042): называют номер
  * и дату договора, вид результата — словами.
  */
-const R = Cooperative.Registry
+const R = Registry
 const RID = '55c470039a8c53ce1b4b6e842fe8063ab3d5b85ba2ba8ab0ae6e30be3ad328b7'
 const BASE = { coopname: 'voskhod', username: 'ant', lang: 'ru' }
 const CONTRACT = 'Договора об участии в хозяйственной деятельности № УХД-0007 от 15.09.2026'

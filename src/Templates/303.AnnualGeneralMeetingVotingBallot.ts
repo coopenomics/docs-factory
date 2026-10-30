@@ -1,11 +1,11 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, MeetSchema, VarsSchema } from '../Schema'
 
 // Схема для объекта ответа с голосованием (упрощенная версия)
-const AnswerSchema: JSONSchemaType<Cooperative.Registry.AnnualGeneralMeetingVotingBallot.IAnswer> = {
+const AnswerSchema: JSONSchemaType<Registry.AnnualGeneralMeetingVotingBallot.IAnswer> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -17,7 +17,7 @@ const AnswerSchema: JSONSchemaType<Cooperative.Registry.AnnualGeneralMeetingVoti
 }
 
 // Схема для объекта вопроса
-const QuestionSchema: JSONSchemaType<Cooperative.Registry.AnnualGeneralMeetingVotingBallot.IQuestion> = {
+const QuestionSchema: JSONSchemaType<Registry.AnnualGeneralMeetingVotingBallot.IQuestion> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -30,13 +30,13 @@ const QuestionSchema: JSONSchemaType<Cooperative.Registry.AnnualGeneralMeetingVo
   additionalProperties: true,
 }
 
-export const registry_id = Cooperative.Registry.AnnualGeneralMeetingVotingBallot.registry_id
+export const registry_id = Registry.AnnualGeneralMeetingVotingBallot.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.AnnualGeneralMeetingVotingBallot.Action
+export type Action = Registry.AnnualGeneralMeetingVotingBallot.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.AnnualGeneralMeetingVotingBallot.Model
+export type Model = Registry.AnnualGeneralMeetingVotingBallot.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -63,9 +63,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.AnnualGeneralMeetingVotingBallot.title,
-  description: Cooperative.Registry.AnnualGeneralMeetingVotingBallot.description,
+  title: Registry.AnnualGeneralMeetingVotingBallot.title,
+  description: Registry.AnnualGeneralMeetingVotingBallot.description,
   model: Schema,
-  context: Cooperative.Registry.AnnualGeneralMeetingVotingBallot.context,
-  translations: Cooperative.Registry.AnnualGeneralMeetingVotingBallot.translations,
+  context: Registry.AnnualGeneralMeetingVotingBallot.context,
+  translations: Registry.AnnualGeneralMeetingVotingBallot.translations,
 }

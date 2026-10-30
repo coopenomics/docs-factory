@@ -1,19 +1,19 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { CooperativeSchema } from '../Schema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { VarsSchema } from '../Schema/VarsSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceOffer.registry_id
+export const registry_id = Registry.MarketplaceOffer.registry_id
 
 // Инстанс публичной оферты ЦПП «Стол заказов» для конкретного пайщика.
 // Эпик 1 / Story 1.11 (L2 onboarding) + Story 1.4 (L3 fallback gate). Подписывается
 // пайщиком через wallet::signagree (program_id=2 «marketplace», draft_id=1100).
-export type Action = Cooperative.Registry.MarketplaceOffer.Action
+export type Action = Registry.MarketplaceOffer.Action
 
-export type Model = Cooperative.Registry.MarketplaceOffer.Model
+export type Model = Registry.MarketplaceOffer.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -30,9 +30,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceOffer.title,
-  description: Cooperative.Registry.MarketplaceOffer.description,
+  title: Registry.MarketplaceOffer.title,
+  description: Registry.MarketplaceOffer.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceOffer.context,
-  translations: Cooperative.Registry.MarketplaceOffer.translations,
+  context: Registry.MarketplaceOffer.context,
+  translations: Registry.MarketplaceOffer.translations,
 }

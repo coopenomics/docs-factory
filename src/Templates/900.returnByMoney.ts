@@ -1,17 +1,17 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 
-export const registry_id = Cooperative.Registry.ReturnByMoney.registry_id
+export const registry_id = Registry.ReturnByMoney.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.ReturnByMoney.Action
+export type Action = Registry.ReturnByMoney.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.ReturnByMoney.Model
+export type Model = Registry.ReturnByMoney.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -31,9 +31,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ReturnByMoney.title,
-  description: Cooperative.Registry.ReturnByMoney.description,
+  title: Registry.ReturnByMoney.title,
+  description: Registry.ReturnByMoney.description,
   model: Schema,
-  context: Cooperative.Registry.ReturnByMoney.context,
-  translations: Cooperative.Registry.ReturnByMoney.translations,
+  context: Registry.ReturnByMoney.context,
+  translations: Registry.ReturnByMoney.translations,
 }

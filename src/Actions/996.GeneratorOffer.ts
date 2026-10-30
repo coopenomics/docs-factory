@@ -1,4 +1,5 @@
 import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { defineBuilder } from '../Builder'
 import * as Format from '../Format'
 import { GeneratorOffer } from '../Templates'
@@ -24,7 +25,7 @@ export const Factory = defineBuilder<GeneratorOffer.Action, GeneratorOffer.Model
     }
   },
   assemble: ({ meta, reads: { vars, coop, user, generatorAgreementUdata, generatorAgreementCreatedAtUdata, docData } }) => {
-    const doc_data = Cooperative.Registry.requireCapitalProgramPrivateData(docData, GeneratorOffer.registry_id)
+    const doc_data = Registry.requireCapitalProgramPrivateData(docData, GeneratorOffer.registry_id)
     if (!vars.generator_program?.protocol_number || !vars.generator_program?.protocol_day_month_year)
       throw new Error('Данные протокола об утверждении генерационной программы не найдены. Сначала утвердите генерационную программу и сохраните данные протокола.')
     if (!vars.generator_offer_template?.protocol_number || !vars.generator_offer_template?.protocol_day_month_year)

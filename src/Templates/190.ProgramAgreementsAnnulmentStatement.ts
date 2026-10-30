@@ -1,13 +1,13 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CommonUserSchema, CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.ProgramAgreementsAnnulmentStatement.registry_id
+export const registry_id = Registry.ProgramAgreementsAnnulmentStatement.registry_id
 
-export type Action = Cooperative.Registry.ProgramAgreementsAnnulmentStatement.Action
-export type Model = Cooperative.Registry.ProgramAgreementsAnnulmentStatement.Model
+export type Action = Registry.ProgramAgreementsAnnulmentStatement.Action
+export type Model = Registry.ProgramAgreementsAnnulmentStatement.Model
 
 export const Schema: JSONSchemaType<Model> = {
   type: 'object',
@@ -53,9 +53,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.ProgramAgreementsAnnulmentStatement.title,
-  description: Cooperative.Registry.ProgramAgreementsAnnulmentStatement.description,
+  title: Registry.ProgramAgreementsAnnulmentStatement.title,
+  description: Registry.ProgramAgreementsAnnulmentStatement.description,
   model: Schema,
-  context: Cooperative.Registry.ProgramAgreementsAnnulmentStatement.context,
-  translations: Cooperative.Registry.ProgramAgreementsAnnulmentStatement.translations,
+  context: Registry.ProgramAgreementsAnnulmentStatement.context,
+  translations: Registry.ProgramAgreementsAnnulmentStatement.translations,
 }

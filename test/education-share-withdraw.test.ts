@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import { testDocumentGeneration } from './utils/testDocument'
 import { generator, testStorage } from './utils'
 
@@ -8,7 +8,7 @@ import { generator, testStorage } from './utils'
  * ЦПП «Цифровой Кошелёк» (3015): одна просьба с суммой, без ссылок на договор
  * и без приложений.
  */
-const R = Cooperative.Registry
+const R = Registry
 const BASE = { coopname: 'voskhod', username: 'ant', lang: 'ru' }
 const STATEMENT = { registry_id: R.EducationShareWithdrawStatement.registry_id, amount: '1500.0000 RUB' }
 

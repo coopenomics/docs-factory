@@ -1,15 +1,15 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 
-export const registry_id = Cooperative.Registry.GenerationPropertyInvestStatement.registry_id
+export const registry_id = Registry.GenerationPropertyInvestStatement.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.GenerationPropertyInvestStatement.Action
+export type Action = Registry.GenerationPropertyInvestStatement.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.GenerationPropertyInvestStatement.Model
+export type Model = Registry.GenerationPropertyInvestStatement.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -22,9 +22,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.GenerationPropertyInvestStatement.title,
-  description: Cooperative.Registry.GenerationPropertyInvestStatement.description,
+  title: Registry.GenerationPropertyInvestStatement.title,
+  description: Registry.GenerationPropertyInvestStatement.description,
   model: Schema,
-  context: Cooperative.Registry.GenerationPropertyInvestStatement.context,
-  translations: Cooperative.Registry.GenerationPropertyInvestStatement.translations,
+  context: Registry.GenerationPropertyInvestStatement.context,
+  translations: Registry.GenerationPropertyInvestStatement.translations,
 }

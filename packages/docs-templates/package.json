@@ -1,0 +1,43 @@
+{
+  "name": "@coopenomics/docs-templates",
+  "type": "module",
+  "version": "1.2.0",
+  "description": "Шаблоны документов цифрового кооператива: тексты, схемы данных, переводы и типы действия и модели каждого вида документа",
+  "author": "Alex Ant <chairman.voskhod@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coopenomics/docs-factory.git",
+    "directory": "packages/docs-templates"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "prepublishOnly": "pnpm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "cooptypes": "*"
+  },
+  "devDependencies": {
+    "cooptypes": "2026.10.29",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

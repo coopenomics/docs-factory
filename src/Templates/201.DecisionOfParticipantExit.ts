@@ -1,6 +1,6 @@
 import type { JSONSchemaType } from 'ajv'
 
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { individualSchema } from '../Schema/IndividualSchema'
@@ -9,14 +9,14 @@ import { CooperativeSchema } from '../Schema/CooperativeSchema'
 import { entrepreneurSchema } from '../Schema/EntrepreneurSchema'
 import { decisionSchema } from '../Schema/DecisionSchema'
 
-export const registry_id = Cooperative.Registry.DecisionOfParticipantExit.registry_id
+export const registry_id = Registry.DecisionOfParticipantExit.registry_id
 
 /**
  * Интерфейс генерации решения совета о выходе пайщика из кооператива
  */
-export type Action = Cooperative.Registry.DecisionOfParticipantExit.Action
+export type Action = Registry.DecisionOfParticipantExit.Action
 
-export type Model = Cooperative.Registry.DecisionOfParticipantExit.Model
+export type Model = Registry.DecisionOfParticipantExit.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -84,9 +84,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.DecisionOfParticipantExit.title,
-  description: Cooperative.Registry.DecisionOfParticipantExit.description,
+  title: Registry.DecisionOfParticipantExit.title,
+  description: Registry.DecisionOfParticipantExit.description,
   model: Schema,
-  context: Cooperative.Registry.DecisionOfParticipantExit.context,
-  translations: Cooperative.Registry.DecisionOfParticipantExit.translations,
+  context: Registry.DecisionOfParticipantExit.context,
+  translations: Registry.DecisionOfParticipantExit.translations,
 }

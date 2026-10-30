@@ -1,18 +1,18 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { CooperativeSchema } from '../Schema'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { VarsSchema } from '../Schema/VarsSchema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 
-export const registry_id = Cooperative.Registry.GenerationMoneyReturnUnusedStatement.registry_id
+export const registry_id = Registry.GenerationMoneyReturnUnusedStatement.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.GenerationMoneyReturnUnusedStatement.Action
+export type Action = Registry.GenerationMoneyReturnUnusedStatement.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.GenerationMoneyReturnUnusedStatement.Model
+export type Model = Registry.GenerationMoneyReturnUnusedStatement.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -33,9 +33,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.GenerationMoneyReturnUnusedStatement.title,
-  description: Cooperative.Registry.GenerationMoneyReturnUnusedStatement.description,
+  title: Registry.GenerationMoneyReturnUnusedStatement.title,
+  description: Registry.GenerationMoneyReturnUnusedStatement.description,
   model: Schema,
-  context: Cooperative.Registry.GenerationMoneyReturnUnusedStatement.context,
-  translations: Cooperative.Registry.GenerationMoneyReturnUnusedStatement.translations,
+  context: Registry.GenerationMoneyReturnUnusedStatement.context,
+  translations: Registry.GenerationMoneyReturnUnusedStatement.translations,
 }

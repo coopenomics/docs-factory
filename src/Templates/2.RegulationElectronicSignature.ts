@@ -1,16 +1,16 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.RegulationElectronicSignature.registry_id
+export const registry_id = Registry.RegulationElectronicSignature.registry_id
 
 // Модель действия для генерации
-export type Action = Cooperative.Registry.RegulationElectronicSignature.Action
+export type Action = Registry.RegulationElectronicSignature.Action
 
 // Модель данных
-export type Model = Cooperative.Registry.RegulationElectronicSignature.Model
+export type Model = Registry.RegulationElectronicSignature.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -25,9 +25,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.RegulationElectronicSignature.title,
-  description: Cooperative.Registry.RegulationElectronicSignature.description,
+  title: Registry.RegulationElectronicSignature.title,
+  description: Registry.RegulationElectronicSignature.description,
   model: Schema,
-  context: Cooperative.Registry.RegulationElectronicSignature.context,
-  translations: Cooperative.Registry.RegulationElectronicSignature.translations,
+  context: Registry.RegulationElectronicSignature.context,
+  translations: Registry.RegulationElectronicSignature.translations,
 }

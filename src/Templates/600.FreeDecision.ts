@@ -1,20 +1,20 @@
 import type { JSONSchemaType } from 'ajv'
 
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema } from '../Schema/CooperativeSchema'
 import { decisionSchema } from '../Schema/DecisionSchema'
 import { VarsSchema } from '../Schema'
 
-export const registry_id = Cooperative.Registry.FreeDecision.registry_id
+export const registry_id = Registry.FreeDecision.registry_id
 
 /**
  * Интерфейс генерации решения совета
  */
-export type Action = Cooperative.Registry.FreeDecision.Action
+export type Action = Registry.FreeDecision.Action
 
-export type Model = Cooperative.Registry.FreeDecision.Model
+export type Model = Registry.FreeDecision.Model
 
 // Схема для сверки
 export const Schema: JSONSchemaType<Model> = {
@@ -62,9 +62,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.FreeDecision.title,
-  description: Cooperative.Registry.FreeDecision.description,
+  title: Registry.FreeDecision.title,
+  description: Registry.FreeDecision.description,
   model: Schema,
-  context: Cooperative.Registry.FreeDecision.context,
-  translations: Cooperative.Registry.FreeDecision.translations,
+  context: Registry.FreeDecision.context,
+  translations: Registry.FreeDecision.translations,
 }

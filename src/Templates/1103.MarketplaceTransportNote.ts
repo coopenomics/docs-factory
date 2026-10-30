@@ -1,17 +1,17 @@
 import type { JSONSchemaType } from 'ajv'
-import { Cooperative } from 'cooptypes'
+import { Registry } from '@coopenomics/docs-templates'
 import type { ITemplate } from '../Interfaces'
 import { IMetaJSONSchema } from '../Schema/MetaSchema'
 import { CooperativeSchema, VarsSchema, organizationSchema } from '../Schema'
 import { CommonUserSchema } from '../Schema/CommonUserSchema'
 
-export const registry_id = Cooperative.Registry.MarketplaceTransportNote.registry_id
+export const registry_id = Registry.MarketplaceTransportNote.registry_id
 
-export type Action = Cooperative.Registry.MarketplaceTransportNote.Action
+export type Action = Registry.MarketplaceTransportNote.Action
 
-export type Model = Cooperative.Registry.MarketplaceTransportNote.Model
+export type Model = Registry.MarketplaceTransportNote.Model
 
-export type PrivateData = Cooperative.Registry.MarketplaceTransportNote.PrivateData
+export type PrivateData = Registry.MarketplaceTransportNote.PrivateData
 
 // Схема приватного payload (off-chain). Используется только для
 // контрактной проверки в тестах — продакшен валидирует на boundary
@@ -72,9 +72,9 @@ export const Schema: JSONSchemaType<Model> = {
 }
 
 export const Template: ITemplate<Model> = {
-  title: Cooperative.Registry.MarketplaceTransportNote.title,
-  description: Cooperative.Registry.MarketplaceTransportNote.description,
+  title: Registry.MarketplaceTransportNote.title,
+  description: Registry.MarketplaceTransportNote.description,
   model: Schema,
-  context: Cooperative.Registry.MarketplaceTransportNote.context,
-  translations: Cooperative.Registry.MarketplaceTransportNote.translations,
+  context: Registry.MarketplaceTransportNote.context,
+  translations: Registry.MarketplaceTransportNote.translations,
 }
