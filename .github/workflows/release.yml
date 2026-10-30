@@ -128,7 +128,14 @@ jobs:
             if (!changed) { console.log("версия уже стоит везде"); fs.writeFileSync("/tmp/nothing", "1"); }
           '
           if [ -f /tmp/nothing ]; then exit 0; fi
-          pnpm install --lockfile-only --ignore-scripts
+          # Новое имя пакета реестр npm разносит не сразу: CDN несколько минут
+          # отдаёт 404 на его сокращённые метаданные. Повтор с паузой.
+          for i in $(seq 1 10); do
+            pnpm install --lockfile-only --ignore-scripts && break
+            [ "$i" = 10 ] && exit 1
+            echo "pnpm install не прошёл (попытка $i), повтор через 60 с"
+            sleep 60
+          done
           git config user.name "docs-factory-bot"
           git config user.email "docs-factory-bot@coopenomics.world"
           git add -A
