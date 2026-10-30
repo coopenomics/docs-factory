@@ -33,7 +33,7 @@
     "cooptypes": "*"
   },
   "devDependencies": {
-    "cooptypes": "2026.10.29",
+    "cooptypes": "2026.10.28-5",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0"
   },
