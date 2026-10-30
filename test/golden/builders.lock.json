@@ -162,22 +162,22 @@
   "994@1.0": {
     "file": "src/Actions/994.GeneratorProgramTemplate.ts",
     "export": "Factory",
-    "sha256": "040d2e240f30f4bb7a6c054db35219f6e99cb091754ba0c4b837a398a326841b"
+    "sha256": "e3ca26dadd61116a2cb95407e08f94b6f800e33e4143a823c2ba2313aaa3319c"
   },
   "996@1.0": {
     "file": "src/Actions/996.GeneratorOffer.ts",
     "export": "Factory",
-    "sha256": "14037730947c660f2aa168de66664dce038be859aec8ea89bbfff4a84ebd0844"
+    "sha256": "6f6c2eb7dfab228ab54b4aaea41071b8b2cc69d2a74e253c2c5cfc41d68ca8f8"
   },
   "998@1.0": {
     "file": "src/Actions/998.BlagorostProgramTemplate.ts",
     "export": "Factory",
-    "sha256": "b48f573bc2b4ff37fc9c34c423e7f9083502c5bb70c65da44a55ffacd3c68652"
+    "sha256": "0458827dc8a14e90f13864339864c5f5c9295b4a67d1c5d16672153a5abd49c3"
   },
   "1000@1.0": {
     "file": "src/Actions/1000.BlagorostOffer.ts",
     "export": "Factory",
-    "sha256": "7264d2bed66be5eed8d0f673dbc597d8ebf3a8403dcd4658c8df68547b9baac4"
+    "sha256": "1dbec3ae6518aaf236136d9376268a15b8e6cd2ce970b1195e141cf95de981a8"
   },
   "1001@1.0": {
     "file": "src/Actions/1001.GenerationContract.ts",
@@ -422,17 +422,17 @@
   "3008@1.0": {
     "file": "src/Actions/3008.EducationRidStatement.ts",
     "export": "Factory",
-    "sha256": "d9ab0958c3c170447617bdc0ce5058219f95758d26708a7254d81ea21b545f7f"
+    "sha256": "01f4cfbdf9ef7927bd45875546b31789001f41c35fedfce08a673f797a782cc5"
   },
   "3009@1.0": {
     "file": "src/Actions/3009.EducationRidDecision.ts",
     "export": "Factory",
-    "sha256": "4d0f6e9aa576e6621fe25e149096c7125fd9c683d4bd297a6917142ba7a166ff"
+    "sha256": "ca7988d4b927b68dd3071d0f878a8594296861d611776678e9bc3fa78133a1e7"
   },
   "3010@1.0": {
     "file": "src/Actions/3010.EducationRidAct.ts",
     "export": "Factory",
-    "sha256": "6f7ba22edc69ce6356bb1a485b8f9dd012128d6a5d05f775bf55604628fb89ba"
+    "sha256": "6d142997a61ea694e4eba83ce31656ec01c11e20516afb60abd65c6d57400690"
   },
   "3011@1.0": {
     "file": "src/Actions/3011.EducationConvertStatement.ts",
@@ -442,7 +442,7 @@
   "3012@1.0": {
     "file": "src/Actions/3012.EducationRidStorageAct.ts",
     "export": "Factory",
-    "sha256": "257f6db635ce353882a3ce28acc7fc28c5530788b5b4694562635aa8b9716d9f"
+    "sha256": "5ba2586fcd6c3a613f4669671d6ae36485af6715b7bc0adc8fc6cdd7965af4bb"
   },
   "3013@1.0": {
     "file": "src/Actions/3013.EducationGuaranteeStatement.ts",
