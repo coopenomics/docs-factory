@@ -1,7 +1,7 @@
 {
   "name": "@coopenomics/docs-factory",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Фабрика документов цифрового кооператива: сборка документов по шаблонам, сборщики всех видов документов, версии сборщиков",
   "author": "Alex Ant <chairman.voskhod@gmail.com>",
   "license": "MIT",

@@ -4,11 +4,12 @@
  *
  * Версия сборщика, однажды выпущенная, не правится: документы этой версии
  * пересобираются ею же, и любая правка её кода меняет старые документы.
- * Исправление ошибки — новый `minor` отдельным файлом рядом
- * (`<номер>.<Имя>_v1_1.ts`, `version: '1.1'`), со своими эталонами.
+ * Исправление ошибки — новый `minor` в конце того же файла
+ * (`export const Factory_1_1 = defineBuilder…({ version: '1.1', … })`),
+ * со своими эталонами.
  *
  * Замок `test/golden/builders.lock.json`: для каждой версии `<номер>@<версия>`
- * — файл и SHA-256 его кода. Хэш считается без строк импорта и реэкспорта,
+ * — файл, имя экспорта и SHA-256 её кода. Хэш считается без строк импорта и реэкспорта,
  * без комментариев и без различий в пробелах: перенос шаблонов в другой пакет
  * (шаг 6б) меняет только пути импорта, а смысл кода — нет. Проверка падает, если:
  *   - код замороженной версии изменился;
@@ -46,23 +47,79 @@ function codeOf(content) {
     .trim()
 }
 
+/**
+ * Конец выражения, начатого открывающей скобкой `open`: парные скобки с
+ * пропуском строк, шаблонных строк и комментариев.
+ */
+function matchParen(text, open) {
+  let depth = 0
+  for (let i = open; i < text.length; i++) {
+    const ch = text[i]
+    const next = text[i + 1]
+    if (ch === '/' && next === '/') { i = text.indexOf('\n', i); if (i < 0) return -1; continue }
+    if (ch === '/' && next === '*') { i = text.indexOf('*/', i + 2) + 1; if (i <= 0) return -1; continue }
+    if (ch === '\'' || ch === '"') {
+      for (i++; i < text.length && text[i] !== ch; i++) if (text[i] === '\\') i++
+      continue
+    }
+    if (ch === '`') {
+      let tpl = 0
+      for (i++; i < text.length; i++) {
+        if (text[i] === '\\') { i++; continue }
+        if (tpl === 0 && text[i] === '`') break
+        if (text[i] === '$' && text[i + 1] === '{') { tpl++; i++; continue }
+        if (tpl > 0 && text[i] === '}') tpl--
+      }
+      continue
+    }
+    if (ch === '(') depth++
+    if (ch === ')' && --depth === 0) return i
+  }
+  return -1
+}
+
+/**
+ * Версии сборщика в одном файле (решение владельца 30.10.2026): `Factory` —
+ * 1.0, следующие дописываются в конец файла как `Factory_1_1`, `Factory_2_0`.
+ * Хэш версии — общая часть файла до первой версии (помощники, кроме импортов)
+ * плюс её собственный вызов `defineBuilder(...)`. Код между версиями и после
+ * последней в хэши выпущенных версий не входит: помощники новой версии
+ * пишутся рядом с ней, а не над замороженными.
+ */
+const EXPORT = /^export const (Factory(?:_\d+_\d+)?)\s*=/gm
+
 /** Версии сборщиков по файлам `src/Actions`: ключ `<номер>@<версия>`. */
 const found = {}
 const problems = []
 for (const name of readdirSync(actionsDir).filter(n => /^\d+\.[A-Za-z0-9_]+\.ts$/.test(n)).sort()) {
   const id = name.split('.')[0]
   const content = readFileSync(join(actionsDir, name), 'utf8')
-  const versions = [...content.matchAll(/^\s*version:\s*'(\d+\.\d+)',?\s*$/gm)].map(m => m[1])
-  if (versions.length !== 1) {
-    problems.push(`${name}: ожидалось одно объявление version: 'M.m', найдено ${versions.length}`)
+  const exports = [...content.matchAll(EXPORT)]
+  if (exports.length === 0) {
+    problems.push(`${name}: нет ни одного export const Factory`)
     continue
   }
-  const key = `${id}@${versions[0]}`
-  if (found[key]) {
-    problems.push(`${name}: версия ${key} уже объявлена в ${found[key].file}`)
-    continue
+  const prelude = codeOf(content.slice(0, exports[0].index))
+  for (const ex of exports) {
+    const call = content.indexOf('()(', ex.index)
+    const end = call < 0 ? -1 : matchParen(content, call + 2)
+    if (end < 0) {
+      problems.push(`${name}: ${ex[1]} — не найден конец вызова defineBuilder`)
+      continue
+    }
+    const block = content.slice(ex.index, end + 1)
+    const versions = [...block.matchAll(/^\s*version:\s*'(\d+\.\d+)',?\s*$/gm)].map(m => m[1])
+    if (versions.length !== 1) {
+      problems.push(`${name}: ${ex[1]} — ожидалось одно объявление version: 'M.m', найдено ${versions.length}`)
+      continue
+    }
+    const key = `${id}@${versions[0]}`
+    if (found[key]) {
+      problems.push(`${name}: версия ${key} объявлена дважды`)
+      continue
+    }
+    found[key] = { file: `src/Actions/${name}`, export: ex[1], sha256: createHash('sha256').update(`${prelude}\n${codeOf(block)}`).digest('hex') }
   }
-  found[key] = { file: `src/Actions/${name}`, sha256: createHash('sha256').update(codeOf(content)).digest('hex') }
 }
 
 const lock = existsSync(lockPath) ? JSON.parse(readFileSync(lockPath, 'utf8')) : {}
@@ -72,7 +129,7 @@ for (const [key, frozen] of Object.entries(lock)) {
   if (!now)
     problems.push(`${key}: замороженная версия исчезла (${frozen.file}) — документы этой версии нечем пересобрать`)
   else if (now.sha256 !== frozen.sha256)
-    problems.push(`${key}: код ${now.file} изменён, а версия заморожена — заведите новый minor отдельным файлом`)
+    problems.push(`${key}: код ${now.export} в ${now.file} изменён, а версия заморожена — допишите новый minor в конец файла`)
 }
 
 const fresh = Object.keys(found).filter(key => !lock[key])

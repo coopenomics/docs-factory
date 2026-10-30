@@ -1,5 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { UnknownBuilderVersionError } from '../src'
+import * as Actions from '../src/Actions'
+import { defineBuilder } from '../src/Builder'
+import { buildFactories } from '../src/Builder/registry'
+import { MemoryFactoryStorage } from '../src/Storage'
 import { FIRST_BUILDER_VERSION, latestMinorOf, parseBuilderVersion, templateBuilderMajor } from '../src/Builder/version'
 import { Validator } from '../src/Services/Validator'
 import { WalletAgreement } from '../src/Templates'
@@ -95,3 +99,26 @@ describe('версия сборщика в мете документа', () => {
       .toBeInstanceOf(UnknownBuilderVersionError)
   })
 })
+
+describe('версии сборщика в одном файле', () => {
+  // Новая версия дописывается в конец файла вида документа экспортом
+  // Factory_<major>_<minor> (решение владельца 30.10.2026).
+  const v11 = defineBuilder<WalletAgreement.Action, WalletAgreement.Model>()({
+    registry_id: WalletAgreement.registry_id,
+    version: '1.1',
+    reads: () => ({}),
+    assemble: ({ meta }) => ({ meta } as never),
+  })
+
+  it('реестр собирает Factory и Factory_1_1 одного модуля как 1.0 и 1.1', () => {
+    const modules = { ...Actions, WalletAgreement: { ...Actions.WalletAgreement, Factory_1_1: v11 } }
+    const builders = buildFactories(modules, new MemoryFactoryStorage())
+    expect([...builders[WalletAgreement.registry_id].keys()].sort()).toEqual(['1.0', '1.1'])
+  })
+
+  it('имя экспорта и версия в объявлении обязаны совпасть', () => {
+    const modules = { ...Actions, WalletAgreement: { ...Actions.WalletAgreement, Factory_1_2: v11 } }
+    expect(() => buildFactories(modules, new MemoryFactoryStorage())).toThrow(/Factory_1_2 объявляет версию 1.1/)
+  })
+})
+
