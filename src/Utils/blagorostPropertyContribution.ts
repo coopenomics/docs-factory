@@ -68,3 +68,21 @@ export function propertyPositionFields(data: PropertyPosition) {
     property_amount: Format.formatAsset(data.property_amount),
   }
 }
+
+/** Подпись формы имущества в документах 1070–1072 (сборщик 1.2). */
+const PROPERTY_FORM_LABELS: Record<string, string> = {
+  thing: 'Вещь (имущество в натуральной форме)',
+  intangible: 'Нематериальное имущество в объективной форме (документ, методика, файл)',
+}
+
+/**
+ * Форма имущества из заявления. Неизвестное значение подписи не получает —
+ * шаблон выводит прежний текст «Имущество в натуральной форме».
+ */
+export function propertyFormFields(data: { property_form?: string }) {
+  const form = data.property_form ?? ''
+  return {
+    property_form: form,
+    property_form_label: PROPERTY_FORM_LABELS[form] ?? '',
+  }
+}

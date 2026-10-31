@@ -33,6 +33,8 @@ export const Schema: JSONSchemaType<Model> = {
     property_quantity: { type: 'string' },
     property_unit: { type: 'string' },
     property_amount: { type: 'string' },
+    property_form: { type: 'string', nullable: true },
+    property_form_label: { type: 'string', nullable: true },
   },
   required: ['meta', 'coop', 'vars', 'common_user', 'contributor_contract_number', 'contributor_contract_created_at', 'blagorost_agreement_number', 'blagorost_agreement_created_at', 'property_hash', 'property_short_hash', 'property_name', 'property_description', 'property_quantity', 'property_unit', 'property_amount'],
   additionalProperties: true,

@@ -505,6 +505,56 @@ describe('тест генератора документов с registry_id >= 1
     })
   })
 
+  it('генерируем заявление о взносе нематериального имущества в благорост (1070, форма имущества)', async () => {
+    await testDocumentGeneration({
+      registry_id: 1070,
+      coopname: 'voskhod',
+      username: 'ant',
+      property_hash: 'c8f2d1b5e4a3f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1',
+      property_form: 'intangible',
+      property_name: 'Методика обучения финансовой грамотности',
+      property_description: 'Документ на 48 страницах в формате PDF: программа занятий, задания и критерии оценки',
+      property_quantity: '1',
+      property_unit: 'экз.',
+      property_amount: '30000.0000 RUB',
+      lang: 'ru',
+    })
+  })
+
+  it('генерируем протокол о взносе нематериального имущества в благорост (1071, форма имущества)', async () => {
+    await testDocumentGeneration({
+      registry_id: 1071,
+      coopname: 'voskhod',
+      username: 'ant',
+      decision_id: 1,
+      property_hash: 'c8f2d1b5e4a3f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1',
+      property_form: 'intangible',
+      property_name: 'Методика обучения финансовой грамотности',
+      property_description: 'Документ на 48 страницах в формате PDF: программа занятий, задания и критерии оценки',
+      property_quantity: '1',
+      property_unit: 'экз.',
+      property_amount: '30000.0000 RUB',
+      lang: 'ru',
+    })
+  })
+
+  it('генерируем акт о взносе нематериального имущества в благорост (1072, форма имущества)', async () => {
+    await testDocumentGeneration({
+      registry_id: 1072,
+      coopname: 'voskhod',
+      username: 'ant',
+      decision_id: 1,
+      property_hash: 'c8f2d1b5e4a3f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1',
+      property_form: 'intangible',
+      property_name: 'Методика обучения финансовой грамотности',
+      property_description: 'Документ на 48 страницах в формате PDF: программа занятий, задания и критерии оценки',
+      property_quantity: '1',
+      property_unit: 'экз.',
+      property_amount: '30000.0000 RUB',
+      lang: 'ru',
+    })
+  })
+
   // Документы конвертации
   it('генерируем заявление о переводе части целевого паевого взноса', async () => {
     await testDocumentGeneration({
