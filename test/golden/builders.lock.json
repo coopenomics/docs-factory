@@ -289,6 +289,11 @@
     "export": "Factory_1_1",
     "sha256": "adc835b5cad891335034a888efeac0203728cb6e4c3c9d525c7fce23e36c2f4e"
   },
+  "1070@1.2": {
+    "file": "src/Actions/1070.CapitalizationPropertyInvestStatement.ts",
+    "export": "Factory_1_2",
+    "sha256": "5e1195b811b5d63509a5f0c40a0e14af1d9d66ae2938be40bcb082af8454a278"
+  },
   "1071@1.0": {
     "file": "src/Actions/1071.CapitalizationPropertyInvestDecision.ts",
     "export": "Factory",
@@ -299,6 +304,11 @@
     "export": "Factory_1_1",
     "sha256": "a20160ef3775aa0343e7ce6e7aef267a30e02d326fd443b75bef118ba394b4c4"
   },
+  "1071@1.2": {
+    "file": "src/Actions/1071.CapitalizationPropertyInvestDecision.ts",
+    "export": "Factory_1_2",
+    "sha256": "a173609309bd978df162a8cc1a4756412047445978573aba45db7a520a9c33c0"
+  },
   "1072@1.0": {
     "file": "src/Actions/1072.CapitalizationPropertyInvestAct.ts",
     "export": "Factory",
@@ -308,6 +318,11 @@
     "file": "src/Actions/1072.CapitalizationPropertyInvestAct.ts",
     "export": "Factory_1_1",
     "sha256": "b036357290e9541e3ed2e28434d06fd3faf81f3fcb4ad0acadca9cd5bc9f1074"
+  },
+  "1072@1.2": {
+    "file": "src/Actions/1072.CapitalizationPropertyInvestAct.ts",
+    "export": "Factory_1_2",
+    "sha256": "388c940abc282ac08e758307d586d5f2795bc43bd0622f3dfb5ede8bba0e2e83"
   },
   "1080@1.0": {
     "file": "src/Actions/1080.GenerationConvertStatement.ts",

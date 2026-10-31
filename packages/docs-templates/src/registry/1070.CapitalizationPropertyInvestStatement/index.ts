@@ -7,6 +7,12 @@ export const registry_id = 1070
 // (решение владельца 30.10.2026); оценку называет пайщик.
 export interface Action extends IGenerate {
   registry_id: number
+  /**
+   * Форма имущества: `thing` — вещь, `intangible` — нематериальное имущество
+   * (документ, методика, файл). Поле появилось со сборщиком 1.2; документы
+   * без него выводят прежний текст «Имущество в натуральной форме».
+   */
+  property_form?: string
   property_hash: string
   property_name: string
   property_description: string
@@ -29,6 +35,8 @@ export interface Model {
   blagorost_agreement_created_at: string
   property_hash: string
   property_short_hash: string
+  property_form?: string
+  property_form_label?: string
   property_name: string
   property_description: string
   property_quantity: string
@@ -39,7 +47,7 @@ export interface Model {
 export const title = 'Заявление о паевом взносе имуществом в программу «Благорост»'
 export const description = 'Заявление пайщика о внесении паевого взноса имуществом по целевой потребительской программе «Благорост»'
 
-export const context = `<div class="digital-document"><div style="text-align: right"><p>{% trans 'appendix_title' %} № {{ property_short_hash }}</p><p>{% trans 'to_agreement' %} № {{ contributor_contract_number }}</p><p>{% trans 'to_council' %} {{ vars.full_abbr_genitive }} "{{ vars.name }}"</p><p>{% trans 'from_shareholder' %} {{ common_user.full_name_or_short_name }}</p></div><div style="text-align: center"><h2>{% trans 'statement_title' %} № ЗПВИ-{{ property_short_hash }}</h2></div><p>{% trans 'statement_text' %} № {{ contributor_contract_number }} {% trans 'from_date' %} {{ contributor_contract_created_at }} {% trans 'and_appendix' %} №{{ blagorost_agreement_number }} {% trans 'from_date' %} {{ blagorost_agreement_created_at }} {% trans 'blagorost_agreement_text' %}, {% trans 'request_contribution' %}:</p><table><tr><th>{% trans 'property_name' %}</th><td>{{ property_name }}</td></tr><tr><th>{% trans 'property_form' %}</th><td>{% trans 'property_form_text' %}</td></tr><tr><th>{% trans 'description' %}</th><td>{{ property_description }}</td></tr><tr><th>{% trans 'purpose' %}</th><td>{% trans 'purpose_text' %} № {{ contributor_contract_number }}</td></tr></table><table><tr><th>{% trans 'number_pp' %}</th><td>1</td></tr><tr><th>{% trans 'name_details' %}</th><td>{{ property_name }}</td></tr><tr><th>{% trans 'unit' %}</th><td>{{ property_unit }}</td></tr><tr><th>{% trans 'quantity' %}</th><td>{{ property_quantity }}</td></tr><tr><th>{% trans 'total_cost' %}</th><td>{{ property_amount }}</td></tr><tr style="font-weight: bold;"><th>{% trans 'total' %}</th><td>{{ property_quantity }} {{ property_unit }} / {{ property_amount }}</td></tr></table><p>{% trans 'property_confirmation' %}.</p><p>{% trans 'shareholder' %}: {{ common_user.full_name_or_short_name }}</p><p>{{ created_at }}</p><p>{% trans 'signed_by_digital_signature' %}</p><p style="margin-top: 30px;">{% trans 'accepted' %}</p><p>{% trans 'signed_by_digital_signature' %}</p><p>{% trans 'chairman_title' %}</p><p>{{ vars.short_abbr }} "{{ vars.name }}"</p><p>{{ coop.chairman.last_name }} {{ coop.chairman.first_name }} {{ coop.chairman.middle_name }}</p></div><style>.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-top: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word;overflow-wrap: break-word;word-break: break-all;vertical-align: top;}th {background-color: #f4f4f4;width: 30%;font-weight: bold;}</style>`
+export const context = `<div class="digital-document"><div style="text-align: right"><p>{% trans 'appendix_title' %} № {{ property_short_hash }}</p><p>{% trans 'to_agreement' %} № {{ contributor_contract_number }}</p><p>{% trans 'to_council' %} {{ vars.full_abbr_genitive }} "{{ vars.name }}"</p><p>{% trans 'from_shareholder' %} {{ common_user.full_name_or_short_name }}</p></div><div style="text-align: center"><h2>{% trans 'statement_title' %} № ЗПВИ-{{ property_short_hash }}</h2></div><p>{% trans 'statement_text' %} № {{ contributor_contract_number }} {% trans 'from_date' %} {{ contributor_contract_created_at }} {% trans 'and_appendix' %} №{{ blagorost_agreement_number }} {% trans 'from_date' %} {{ blagorost_agreement_created_at }} {% trans 'blagorost_agreement_text' %}, {% trans 'request_contribution' %}:</p><table><tr><th>{% trans 'property_name' %}</th><td>{{ property_name }}</td></tr><tr><th>{% trans 'property_form' %}</th><td>{% if property_form_label %}{{ property_form_label }}{% else %}{% trans 'property_form_text' %}{% endif %}</td></tr><tr><th>{% trans 'description' %}</th><td>{{ property_description }}</td></tr><tr><th>{% trans 'purpose' %}</th><td>{% trans 'purpose_text' %} № {{ contributor_contract_number }}</td></tr></table><table><tr><th>{% trans 'number_pp' %}</th><td>1</td></tr><tr><th>{% trans 'name_details' %}</th><td>{{ property_name }}</td></tr><tr><th>{% trans 'unit' %}</th><td>{{ property_unit }}</td></tr><tr><th>{% trans 'quantity' %}</th><td>{{ property_quantity }}</td></tr><tr><th>{% trans 'total_cost' %}</th><td>{{ property_amount }}</td></tr><tr style="font-weight: bold;"><th>{% trans 'total' %}</th><td>{{ property_quantity }} {{ property_unit }} / {{ property_amount }}</td></tr></table><p>{% trans 'property_confirmation' %}.</p><p>{% trans 'shareholder' %}: {{ common_user.full_name_or_short_name }}</p><p>{{ created_at }}</p><p>{% trans 'signed_by_digital_signature' %}</p><p style="margin-top: 30px;">{% trans 'accepted' %}</p><p>{% trans 'signed_by_digital_signature' %}</p><p>{% trans 'chairman_title' %}</p><p>{{ vars.short_abbr }} "{{ vars.name }}"</p><p>{{ coop.chairman.last_name }} {{ coop.chairman.first_name }} {{ coop.chairman.middle_name }}</p></div><style>.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-top: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word;overflow-wrap: break-word;word-break: break-all;vertical-align: top;}th {background-color: #f4f4f4;width: 30%;font-weight: bold;}</style>`
 
 export const translations = {
   ru: {
@@ -65,7 +73,7 @@ export const translations = {
     quantity: 'Количество',
     total_cost: 'Стоимость Всего',
     total: 'ИТОГО',
-    property_confirmation: 'Я подтверждаю, что Имущество, которое я вношу паевым взносом в Общество, принадлежит мне на праве собственности, в споре и под арестом не состоит',
+    property_confirmation: 'Я подтверждаю, что Имущество, которое я вношу паевым взносом в Общество, принадлежит мне на праве собственности, а нематериальное Имущество — на исключительном праве, в споре и под арестом не состоит',
     shareholder: 'Пайщик',
     signed_by_digital_signature: 'Подписано электронной подписью',
     accepted: 'ПРИНЯТО',
