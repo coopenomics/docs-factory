@@ -10,11 +10,23 @@ name: Release
 #   3. публикация в npm (`NPM_TOKEN`): сначала шаблоны, затем фабрика (её
 #      `workspace:*` на шаблоны pnpm заменяет точной версией); предварительная
 #      версия — с меткой `next`;
-#   4. робот открывает PR в C9S/mono → dev: новая точная версия обоих пакетов во
-#      всех package.json монорепозитория и обновлённый pnpm-lock.yaml. Слияние PR —
-#      после зелёной проверки монорепозитория; руками версию никто не поднимает.
+#   4. робот встраивает новую версию в монорепозиторий C9S/mono сам — висящих
+#      PR на человека нет (решение владельца 01.11.2026). Куда — называет тег:
+#      - аннотированный тег с строкой `mono: <ветка>` в сообщении — выпуск
+#        сделан ради этой ветки монорепы (текст документа под её модель).
+#        Робот кладёт коммит с версией прямо в неё, без PR и без проверки:
+#        ветку проверяет её автор до слияния, в dev выпуск попадает вместе с ней;
+#      - без строки `mono:` — выпуск ни к чему не привязан и идёт в `dev`.
+#        Робот кладёт коммит с версией на полигон `ci/tests-docs-factory-vX.Y.Z`,
+#        ждёт Typecheck, Check и Tests монорепы и при зелёном вердикте кладёт
+#        коммит в `dev` сам. Красный вердикт, конфликт или отказ записи в dev —
+#        единственный случай, когда робот открывает PR: его чинит агент, не владелец;
+#      - предварительная версия в `dev` не идёт никогда: без строки `mono:`
+#        робот её только публикует.
+#   Пример тега, привязанного к ветке:
+#     git tag -a v1.5.3 -m "mono: feat/mkt-secure-part"
 #
-# Секреты репозитория: NPM_TOKEN (публикация), GITEA_TOKEN (PR в монорепу).
+# Секреты репозитория: NPM_TOKEN (публикация), GITEA_TOKEN (запись в C9S/mono).
 on:
   push:
     tags: ['v*']
@@ -29,6 +41,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       prerelease: ${{ steps.version.outputs.prerelease }}
+      target: ${{ steps.target.outputs.target }}
     steps:
       - uses: actions/checkout@v4
 
@@ -54,6 +67,19 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           case "$version" in *-*) echo "prerelease=true" >> "$GITHUB_OUTPUT" ;; *) echo "prerelease=false" >> "$GITHUB_OUTPUT" ;; esac
 
+      # Ветка монорепы, ради которой сделан выпуск, — строка `mono: <ветка>` в
+      # сообщении аннотированного тега. Лёгкий тег сообщения не несёт.
+      - name: Адресат выпуска в монорепе
+        id: target
+        run: |
+          git fetch --force origin "+refs/tags/${GITHUB_REF_NAME}:refs/tags/${GITHUB_REF_NAME}"
+          target=""
+          if [ "$(git cat-file -t "refs/tags/${GITHUB_REF_NAME}")" = "tag" ]; then
+            target=$(git cat-file -p "refs/tags/${GITHUB_REF_NAME}" | sed -n 's/^mono:[[:space:]]*\([^[:space:]]*\).*$/\1/p' | head -1)
+          fi
+          echo "адресат выпуска: ${target:-dev через проверку}"
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
       - run: pnpm install --frozen-lockfile
 
       - name: Публикация в npm
@@ -77,10 +103,16 @@ jobs:
   bump-mono:
     needs: publish
     runs-on: ubuntu-latest
+    # Проверка монорепы на полигоне идёт до часа; запас на очередь раннеров.
+    timeout-minutes: 240
     env:
       VERSION: ${{ needs.publish.outputs.version }}
+      PRERELEASE: ${{ needs.publish.outputs.prerelease }}
+      TARGET: ${{ needs.publish.outputs.target }}
       GITEA_URL: https://git.coopenomics.world
       GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+      # Чтение итогов проверок открытого зеркала coopenomics/mono.
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: pnpm/action-setup@v4
         with:
@@ -90,8 +122,22 @@ jobs:
         with:
           node-version: 22
 
+      - name: Куда встраивать
+        run: |
+          if [ -n "$TARGET" ]; then
+            echo "BASE=$TARGET" >> "$GITHUB_ENV"; echo "MODE=branch" >> "$GITHUB_ENV"
+            echo "выпуск ${VERSION} встраивается в ветку монорепы ${TARGET}"
+          elif [ "$PRERELEASE" = "true" ]; then
+            echo "MODE=skip" >> "$GITHUB_ENV"
+            echo "предварительная версия ${VERSION} без строки mono: в теге — только публикация, в dev не идёт"
+          else
+            echo "BASE=dev" >> "$GITHUB_ENV"; echo "MODE=dev" >> "$GITHUB_ENV"
+            echo "выпуск ${VERSION} идёт в dev после проверки монорепы"
+          fi
+
       # Пакет только что опубликован; реестр npm отдаёт его не сразу.
       - name: Дождаться версии в npm
+        if: env.MODE != 'skip'
         run: |
           for i in $(seq 1 30); do
             npm view "@coopenomics/docs-factory@${VERSION}" version >/dev/null 2>&1 \
@@ -101,15 +147,14 @@ jobs:
           echo "Версия ${VERSION} не появилась в npm за 5 минут" >&2
           exit 1
 
-      - name: Ветка с новой версией в монорепозитории
+      - name: Коммит с новой версией
+        if: env.MODE != 'skip'
         run: |
-          git clone --depth 50 --branch dev "https://docs-factory-bot:${GITEA_TOKEN}@git.coopenomics.world/C9S/mono.git" mono
+          git clone --depth 50 --branch "$BASE" "https://docs-factory-bot:${GITEA_TOKEN}@git.coopenomics.world/C9S/mono.git" mono
           cd mono
-          branch="deps/docs-factory-v${VERSION}"
-          git checkout -b "$branch"
           # Точная версия во всех package.json, где пакет объявлен.
           node -e '
-            const fs = require("fs"), path = require("path");
+            const fs = require("fs");
             const v = process.env.VERSION;
             const files = require("child_process").execSync("git ls-files \"package.json\" \"**/package.json\"").toString().trim().split("\n");
             let changed = 0;
@@ -139,19 +184,74 @@ jobs:
           git config user.name "docs-factory-bot"
           git config user.email "docs-factory-bot@coopenomics.world"
           git add -A
-          git commit -m "[deps][@docs-factory-bot] config: @coopenomics/docs-factory и docs-templates ${VERSION} — зачем: выпуск фабрики и шаблонов документов; слияние после зелёной проверки монорепозитория"
-          git push origin "$branch"
-          echo "BRANCH=$branch" >> "$GITHUB_ENV"
+          git commit -m "[deps][@docs-factory-bot] config: @coopenomics/docs-factory и docs-templates ${VERSION} — зачем: выпуск фабрики и шаблонов документов встраивается в монорепу роботом выпуска"
+          echo "SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-      - name: PR в C9S/mono → dev
-        if: env.BRANCH != ''
+      # Выпуск ради ветки: коммит прямо в неё. Ветку мог сдвинуть автор —
+      # тогда коммит переносится на её свежую голову.
+      - name: Версия в ветку выпуска
+        if: env.MODE == 'branch' && env.SHA != ''
+        working-directory: mono
         run: |
+          for i in 1 2 3; do
+            git push origin "HEAD:${BASE}" && exit 0
+            git fetch --depth 50 origin "$BASE" && git rebase "origin/${BASE}" || { git rebase --abort; break; }
+          done
+          echo "FALLBACK=не удалось записать версию в ветку ${BASE}" >> "$GITHUB_ENV"
+
+      # Выпуск без привязки: проверка монорепы теми же Typecheck, Check и Tests,
+      # что у агента, — на полигоне ci/tests-docs-factory-vX.Y.Z.
+      - name: Проверка монорепы на полигоне
+        if: env.MODE == 'dev' && env.SHA != ''
+        working-directory: mono
+        run: |
+          polygon="ci/tests-docs-factory-v${VERSION}"
+          git push -f origin "HEAD:refs/heads/${polygon}"
+          # Зеркало на GitHub синхронизируется по записи; запрос — ускорение.
+          curl -s -o /dev/null -X POST -H "Authorization: token ${GITEA_TOKEN}" \
+            "${GITEA_URL}/api/v1/repos/C9S/mono/push_mirrors-sync" || true
+          verdict=""
+          for i in $(seq 1 140); do
+            runs=$(gh api "repos/coopenomics/mono/actions/runs?head_sha=${SHA}&per_page=50" \
+              --jq '[.workflow_runs[] | select(.name=="Typecheck" or .name=="Check" or .name=="Tests") | {name, status, conclusion}]' 2>/dev/null || echo '[]')
+            total=$(echo "$runs" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s||"[]");const names=new Set(r.map(x=>x.name));console.log(names.size)})')
+            pending=$(echo "$runs" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s||"[]");console.log(r.filter(x=>x.status!=="completed").length)})')
+            failed=$(echo "$runs" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s||"[]");console.log(r.filter(x=>x.status==="completed"&&x.conclusion!=="success").map(x=>x.name).join(","))})')
+            if [ -n "$failed" ]; then verdict="красная проверка: $failed"; break; fi
+            if [ "$total" = "3" ] && [ "$pending" = "0" ]; then verdict="green"; break; fi
+            sleep 60
+          done
+          [ -z "$verdict" ] && verdict="проверка не дождалась итога за 140 минут"
+          echo "вердикт полигона: $verdict"
+          if [ "$verdict" = "green" ]; then echo "VERDICT=green" >> "$GITHUB_ENV"; else echo "FALLBACK=$verdict" >> "$GITHUB_ENV"; fi
+
+      # Зелёный вердикт: коммит в dev. Dev мог сдвинуться вперёд — коммит версии
+      # переносится на свежую голову; конфликт (lock-файл) — в PR.
+      - name: Версия в dev
+        if: env.MODE == 'dev' && env.VERDICT == 'green'
+        working-directory: mono
+        run: |
+          for i in 1 2 3; do
+            git push origin HEAD:dev && { git push origin --delete "ci/tests-docs-factory-v${VERSION}" || true; exit 0; }
+            git fetch --depth 50 origin dev && git rebase origin/dev || { git rebase --abort; break; }
+          done
+          echo "FALLBACK=не удалось записать версию в dev (конфликт или защита ветки)" >> "$GITHUB_ENV"
+
+      # Единственный случай PR: встроить сам робот не смог. PR чинит агент.
+      - name: PR при неудаче
+        if: env.FALLBACK != ''
+        working-directory: mono
+        run: |
+          branch="deps/docs-factory-v${VERSION}"
+          git push -f origin "HEAD:refs/heads/${branch}"
           body=$(node -e '
-            const v = process.env.VERSION, pre = v.includes("-");
+            const v = process.env.VERSION;
             console.log(JSON.stringify({
-              base: "dev", head: process.env.BRANCH,
-              title: `${pre ? "[предварительная] " : ""}@coopenomics/docs-factory и docs-templates ${v}`,
-              body: `Выпуск фабрики и шаблонов документов ${v} (тег v${v} в C9S/docs-factory). Эталоны всех документов в репозитории фабрики прошли до публикации.\n\nПеред слиянием: зелёные Typecheck, Check и Tests монорепозитория (полигон ci/tests).${pre ? "\n\nПредварительная версия — для проверки на стенде; в выпуск монорепозитория не сливать." : ""}`
+              base: process.env.BASE, head: `deps/docs-factory-v${v}`,
+              title: `@coopenomics/docs-factory и docs-templates ${v} — робот не встроил сам`,
+              body: `Выпуск ${v} (тег v${v} в C9S/docs-factory). Робот выпуска не встроил версию в ${process.env.BASE}: ${process.env.FALLBACK}.\n\nPR чинит агент: разобрать причину, довести проверку до зелёной и влить.`
             }))')
           curl -sf -X POST -H "Authorization: token ${GITEA_TOKEN}" -H "Content-Type: application/json" \
             "${GITEA_URL}/api/v1/repos/C9S/mono/pulls" -d "$body" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log("PR", r.number, r.html_url)})'
+          echo "::error::Робот не встроил версию ${VERSION} в ${BASE}: ${FALLBACK}"
+          exit 1
