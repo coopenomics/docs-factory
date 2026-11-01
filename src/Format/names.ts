@@ -108,8 +108,11 @@ export function paymentDetails(paymentMethod: any, recipientName: string): strin
       return `№ счета получателя: ${bankData.account_number}\nБанк получателя: ${bankData.bank_name}\nКорр. счет банка: ${bankData.details?.corr || ''}\nБИК ${bankData.details?.bik || ''}\nПолучатель: ${recipientName}`
     }
     case 'sbp': {
-      const sbpData = paymentMethod.data as any // ISbpDetails из cooptypes
-      return `СБП\nТелефон получателя: ${sbpData.phone}`
+      const sbpData = paymentMethod.data as any // ISbpDetails из docs-templates
+      // Перевод по телефону поступает в конкретный банк: кассиру он нужен вместе
+      // с номером. Банк есть у реквизитов, сохранённых после появления поля.
+      const sbpBank = sbpData.bank_name?.trim() ? `\nБанк получателя: ${sbpData.bank_name.trim()}` : ''
+      return `СБП\nТелефон получателя: ${sbpData.phone}${sbpBank}`
     }
     default:
       return JSON.stringify(paymentMethod.data)
