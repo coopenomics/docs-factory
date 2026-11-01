@@ -42,3 +42,46 @@ export const Factory = defineBuilder<GenerationMoneyReturnUnusedStatement.Action
     }
   },
 })
+
+/**
+ * Версия 1.1 (99D-11): суммы в тексте — через `Format.formatAsset`, два знака,
+ * как во всех документах. Цепь отдаёт четыре знака, и версия 1.0 печатала их
+ * как есть либо срезала нули («300»). Версия 1.0 заморожена: подписанные
+ * документы пересобираются ею.
+ */
+export const Factory_1_1 = defineBuilder<GenerationMoneyReturnUnusedStatement.Action, GenerationMoneyReturnUnusedStatement.Model>()({
+  registry_id: GenerationMoneyReturnUnusedStatement.registry_id,
+  version: '1.1',
+  reads: ({ data, f }) => {
+    const udata = (key: UdataKey) => () => f.getUdata({ coopname: data.coopname, username: data.username, key, block_num: data.block_num })
+    return {
+      vars: () => f.getVars(data.coopname, data.block_num),
+      userData: () => f.getUser(data.username, data.block_num),
+      contributorContractUdata: udata(UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_NUMBER),
+      contributorContractCreatedAtUdata: udata(UdataKey.BLAGOROST_CONTRIBUTOR_CONTRACT_CREATED_AT),
+      generatorAgreementUdata: udata(UdataKey.GENERATOR_AGREEMENT_NUMBER),
+      generatorAgreementCreatedAtUdata: udata(UdataKey.GENERATOR_AGREEMENT_CREATED_AT),
+    }
+  },
+  assemble: ({ data, meta, reads: { vars, userData, contributorContractUdata, contributorContractCreatedAtUdata, generatorAgreementUdata, generatorAgreementCreatedAtUdata } }) => {
+    if (!contributorContractUdata?.value)
+      throw new Error('Данные договора УХД участника не найдены в Udata')
+    if (!contributorContractCreatedAtUdata?.value)
+      throw new Error('Дата создания договора УХД участника не найдена в Udata')
+    if (!generatorAgreementUdata?.value)
+      throw new Error('Данные генерационного соглашения не найдены в Udata')
+    if (!generatorAgreementCreatedAtUdata?.value)
+      throw new Error('Дата создания генерационного соглашения не найдена в Udata')
+    return {
+      meta,
+      vars,
+      common_user: Format.commonUser(userData),
+      contributor_contract_number: String(contributorContractUdata.value),
+      contributor_contract_created_at: String(contributorContractCreatedAtUdata.value),
+      generator_agreement_number: String(generatorAgreementUdata.value),
+      generator_agreement_created_at: String(generatorAgreementCreatedAtUdata.value),
+      project_hash: data.project_hash,
+      amount: Format.formatAsset(data.amount),
+    }
+  },
+})
