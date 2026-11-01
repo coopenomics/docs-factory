@@ -1,7 +1,7 @@
 {
   "name": "@coopenomics/docs-templates",
   "type": "module",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Шаблоны документов цифрового кооператива: тексты, схемы данных, переводы и типы действия и модели каждого вида документа",
   "author": "Alex Ant <chairman.voskhod@gmail.com>",
   "license": "MIT",
