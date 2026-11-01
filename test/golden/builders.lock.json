@@ -234,6 +234,11 @@
     "export": "Factory",
     "sha256": "7b094367360d35e32bf9bf6c87ff5b2e8b86750c986087ca0eab19a02538a4cc"
   },
+  "1025@1.1": {
+    "file": "src/Actions/1025.GenerationMoneyReturnUnusedStatement.ts",
+    "export": "Factory_1_1",
+    "sha256": "77f642d43e3704b920d92b6f48a134f585a4f34ebf94b62eb7cc0f927ee25c25"
+  },
   "1030@1.0": {
     "file": "src/Actions/1030.CapitalizationMoneyInvestStatement.ts",
     "export": "Factory",
@@ -354,20 +359,40 @@
     "export": "Factory",
     "sha256": "2a84e05c1c3ecfc9f78d783df0c689df3fe76f933694a0e683cf4cd140f99197"
   },
+  "1103@1.1": {
+    "file": "src/Actions/1103.MarketplaceTransportNote.ts",
+    "export": "Factory_1_1",
+    "sha256": "49accaf6f08dd47e61a715ed31b4f64a95c0716111b83dc04615ed8a167b0871"
+  },
   "1104@1.0": {
     "file": "src/Actions/1104.MarketplaceAplReception.ts",
     "export": "Factory",
     "sha256": "bb63d45eab8cb2a1853d443efef7e8f6e1d802f37af9e0aef5a348ec705f20d7"
+  },
+  "1104@1.1": {
+    "file": "src/Actions/1104.MarketplaceAplReception.ts",
+    "export": "Factory_1_1",
+    "sha256": "c8a22ef788054d6892adb5e70ca64ba4d47d4f0aa2238f7e99aa3add2f61b069"
   },
   "1106@1.0": {
     "file": "src/Actions/1106.MarketplaceReturnStatement.ts",
     "export": "Factory",
     "sha256": "ea860073cd70661e9bd76d9a8b41b2feaf843cfb313a9eb661bddb17c5366ab6"
   },
+  "1106@1.1": {
+    "file": "src/Actions/1106.MarketplaceReturnStatement.ts",
+    "export": "Factory_1_1",
+    "sha256": "ea9d5b6f68e9839b15e361a86e72ad9d8a297f3a63a712a422314888562deb56"
+  },
   "1107@1.0": {
     "file": "src/Actions/1107.MarketplaceWriteoffProtocol.ts",
     "export": "Factory",
     "sha256": "d3501268a68a0d2009bdd85acbaf96188af52dc26650f91359ee6d59cd36786f"
+  },
+  "1107@1.1": {
+    "file": "src/Actions/1107.MarketplaceWriteoffProtocol.ts",
+    "export": "Factory_1_1",
+    "sha256": "2b3787b662635f2153657fe13a12d552a9709e0b733bd5092b93ed5e1b8c8cd1"
   },
   "1108@1.0": {
     "file": "src/Actions/1108.MarketplaceWriteoffStatement.ts",
@@ -399,25 +424,50 @@
     "export": "Factory",
     "sha256": "435c9902ba9d274262ad33f5a32f7f9efad25399f2e59ee12458e94a82d5eab4"
   },
+  "1113@1.1": {
+    "file": "src/Actions/1113.MarketplaceShareReturnStatement.ts",
+    "export": "Factory_1_1",
+    "sha256": "bda151f4e632877b57b51a8f87101d8a4649147e1fabfc619762531435217c4a"
+  },
   "1114@1.0": {
     "file": "src/Actions/1114.MarketplaceShareReturnDecision.ts",
     "export": "Factory",
     "sha256": "ebdd29f55e5200683fca966ccdc64f4b235bd6260298d1917da4e40e6d8ef6d4"
+  },
+  "1114@1.1": {
+    "file": "src/Actions/1114.MarketplaceShareReturnDecision.ts",
+    "export": "Factory_1_1",
+    "sha256": "a92e9b292d66718b0b2f7458cbbcde59a13b8529aec952db1fb0f6447f7c02ac"
   },
   "1115@1.0": {
     "file": "src/Actions/1115.MarketplaceShareReturnAct.ts",
     "export": "Factory",
     "sha256": "00030499c525143f887bebcc36762929ddc5cdba283f647a13effae10db49827"
   },
+  "1115@1.1": {
+    "file": "src/Actions/1115.MarketplaceShareReturnAct.ts",
+    "export": "Factory_1_1",
+    "sha256": "d88119ad0ae86edb9e1f78248b8f6945d58dc06f1c4f4639cf0d1d1e0bc41555"
+  },
   "1116@1.0": {
     "file": "src/Actions/1116.MarketplaceReturnCancelStatement.ts",
     "export": "Factory",
     "sha256": "b6749ee68fb9e0b0d736f3c576ff29cfe4f55a506142e1f50bc0a13492193e92"
   },
+  "1116@1.1": {
+    "file": "src/Actions/1116.MarketplaceReturnCancelStatement.ts",
+    "export": "Factory_1_1",
+    "sha256": "c79bdef5bc863b8357853ac20f815756834a095c42680d58a1940a172c494f97"
+  },
   "1117@1.0": {
     "file": "src/Actions/1117.MarketplaceReturnCancelDecision.ts",
     "export": "Factory",
     "sha256": "16377746c2d199f12c905abb251e9aca9a79cf1a196865c0f71ffb6dd1730fa9"
+  },
+  "1117@1.1": {
+    "file": "src/Actions/1117.MarketplaceReturnCancelDecision.ts",
+    "export": "Factory_1_1",
+    "sha256": "9c9bb3e1b16d23ba3338747fa0d8de46477acf4cd75ffc335163439f75575a2d"
   },
   "2010@1.0": {
     "file": "src/Actions/2010.ExpenseProposalStatement.ts",

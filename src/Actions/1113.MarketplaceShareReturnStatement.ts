@@ -47,3 +47,46 @@ export const Factory = defineBuilder<MarketplaceShareReturnStatement.Action, Mar
   }),
   signer: ({ reads: { user } }) => Format.commonUser(user).full_name_or_short_name,
 })
+
+/**
+ * Версия 1.1 (99D-11): суммы в тексте — через `Format.formatAsset`, два знака,
+ * как во всех документах. Цепь отдаёт четыре знака, и версия 1.0 печатала их
+ * как есть либо срезала нули («300»). Версия 1.0 заморожена: подписанные
+ * документы пересобираются ею.
+ */
+export const Factory_1_1 = defineBuilder<MarketplaceShareReturnStatement.Action, MarketplaceShareReturnStatement.Model>()({
+  registry_id: MarketplaceShareReturnStatement.registry_id,
+  version: '1.1',
+  reads: ({ data, f }) => ({
+    coop: () => f.getCooperative(data.coopname, data.block_num),
+    vars: () => f.getVars(data.coopname, data.block_num),
+    user: () => f.getUser(data.username, data.block_num),
+  }),
+  derive: ({ data, f, reads: { coop } }) => ({
+    branch: async () => {
+      if (coop.is_branched && !data.braname)
+        throw new Error('Branch name is required')
+      return data.braname ? f.getOrganization(data.braname, data.block_num) : undefined
+    },
+  }),
+  assemble: ({ data, meta, reads: { coop, vars, user }, derived: { branch } }) => ({
+    meta,
+    coop,
+    vars,
+    user: Format.commonUser(user),
+    request: {
+      hash: data.sku,
+      title: data.product_title,
+      unit_of_measurement: data.unit_of_measurement,
+      units: data.fact_quantity,
+      unit_cost: Format.formatAsset(data.unit_cost),
+      total_cost: Format.formatAsset(data.total_amount),
+      currency: data.currency,
+      type: 'receive',
+      program_id: 0,
+    },
+    program: { name: 'Стол заказов' },
+    branch,
+  }),
+  signer: ({ reads: { user } }) => Format.commonUser(user).full_name_or_short_name,
+})
