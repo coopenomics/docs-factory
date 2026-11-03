@@ -1,7 +1,7 @@
 {
   "name": "@coopenomics/docs-factory",
   "type": "module",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Фабрика документов цифрового кооператива: сборка документов по шаблонам, сборщики всех видов документов, версии сборщиков",
   "author": "Alex Ant <chairman.voskhod@gmail.com>",
   "license": "MIT",
@@ -18,6 +18,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
+    },
+    "./templator": {
+      "types": "./dist/templator.d.ts",
+      "import": "./dist/templator.mjs",
+      "require": "./dist/templator.cjs"
     }
   },
   "main": "./dist/index.mjs",
