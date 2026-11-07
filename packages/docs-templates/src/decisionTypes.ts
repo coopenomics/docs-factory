@@ -8,6 +8,7 @@ import {
   EducationGuaranteeDecision, // 3014
   EducationRidDecision, // 3009
   FreeDecision,
+  MarketplaceInvestPropertyDecision, // 1121
   MarketplaceReturnCancelDecision, // 1117
   MarketplaceShareReturnDecision, // 1114
   MarketplaceWriteoffProtocol, // 1107
@@ -127,6 +128,13 @@ export const decisionTypesRegistry: Record<string, IDecisionTypeInfo> = {
     title: 'Выдача имущества пайщику',
     description: 'Заявление пайщика о возврате паевого взноса имуществом: совет разрешает выдать заказ со Стола заказов.',
     protocol_registry_id: MarketplaceShareReturnDecision.registry_id,
+    extension: 'market',
+  },
+  mktiprop: {
+    type: 'mktiprop',
+    title: 'Приём имущества в кооперативный участок',
+    description: 'Заявление инициатора о паевом взносе имуществом в кооперативный участок Стола заказов по договору участия в хозяйственной деятельности: совет решает принять имущество по цене, названной инициатором.',
+    protocol_registry_id: MarketplaceInvestPropertyDecision.registry_id,
     extension: 'market',
   },
   mktretrn: {

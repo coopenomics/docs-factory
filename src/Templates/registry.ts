@@ -91,6 +91,12 @@ import * as MarketplaceShareReturnDecision from './1114.MarketplaceShareReturnDe
 import * as MarketplaceShareReturnAct from './1115.MarketplaceShareReturnAct'
 import * as MarketplaceReturnCancelStatement from './1116.MarketplaceReturnCancelStatement'
 import * as MarketplaceReturnCancelDecision from './1117.MarketplaceReturnCancelDecision'
+import * as MarketplaceInvestAgreement from './1118.MarketplaceInvestAgreement'
+import * as MarketplaceInvestStatement from './1119.MarketplaceInvestStatement'
+import * as MarketplaceInvestPropertyStatement from './1120.MarketplaceInvestPropertyStatement'
+import * as MarketplaceInvestPropertyDecision from './1121.MarketplaceInvestPropertyDecision'
+import * as MarketplaceInvestPropertyAct from './1122.MarketplaceInvestPropertyAct'
+import * as MarketplaceInvestClaimStatement from './1123.MarketplaceInvestClaimStatement'
 import * as MarketplaceProgramTemplate from './1100.MarketplaceProgramTemplate'
 import * as EducationProgramTemplate from './3000.EducationProgramTemplate'
 import * as EducationParentOffer from './3002.EducationParentOffer'
@@ -184,6 +190,12 @@ export const Registry = {
   1115: MarketplaceShareReturnAct,
   1116: MarketplaceReturnCancelStatement,
   1117: MarketplaceReturnCancelDecision,
+  1118: MarketplaceInvestAgreement,
+  1119: MarketplaceInvestStatement,
+  1120: MarketplaceInvestPropertyStatement,
+  1121: MarketplaceInvestPropertyDecision,
+  1122: MarketplaceInvestPropertyAct,
+  1123: MarketplaceInvestClaimStatement,
   2010: ExpenseProposalStatement,
   2011: ExpenseProposalDecision,
   3000: EducationProgramTemplate,
