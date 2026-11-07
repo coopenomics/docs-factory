@@ -53,6 +53,9 @@ export async function deleteAllFiles(folderPath: string) {
  * те же, что прежде лежали в MongoDB набора, включая повторы голосов по
  * каждой записи реестра: эталоны собраны на этом наборе.
  */
+/** Число повторов голосов в фикстуре — шаблонов в реестре при съёмке эталонов. */
+const GOLDEN_VOTE_ROUNDS = 92
+
 export function seedChainFixtures(): void {
   resetChainFixtures()
 
@@ -98,90 +101,96 @@ export function seedChainFixtures(): void {
       'value.username': 'voskhod',
     })[0]
 
-    chainFixtures.actions.push({
-      block_num: 0,
-      account: 'soviet',
-      name: 'votefor',
-      receiver: 'soviet',
-      data: {
-        version: '1.0.0',
-        coopname: 'voskhod',
-        username: 'ant',
-        decision_id: '1',
-        signed_at: '2024-01-01T00:00:00.000Z',
-        signed_hash: 'hash',
-        signature: 'signature',
-        public_key: 'public_key',
-      } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
-    })
+    // Голоса совета прежде добавлялись на каждую запись реестра, и число
+    // голосов в протоколах эталонов равно числу шаблонов на момент их
+    // съёмки (92). Новый шаблон не должен менять вывод старых протоколов,
+    // поэтому повторов не больше, чем было при съёмке эталонов.
+    if (i <= GOLDEN_VOTE_ROUNDS) {
+      chainFixtures.actions.push({
+        block_num: 0,
+        account: 'soviet',
+        name: 'votefor',
+        receiver: 'soviet',
+        data: {
+          version: '1.0.0',
+          coopname: 'voskhod',
+          username: 'ant',
+          decision_id: '1',
+          signed_at: '2024-01-01T00:00:00.000Z',
+          signed_hash: 'hash',
+          signature: 'signature',
+          public_key: 'public_key',
+        } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
+      })
 
-    chainFixtures.actions.push({
-      block_num: 0,
-      account: 'soviet',
-      name: 'votefor',
-      receiver: 'soviet',
-      data: {
-        version: '1.0.0',
-        coopname: 'voskhod',
-        username: 'ant',
-        decision_id: '2',
-        signed_at: '2024-01-01T00:00:00.000Z',
-        signed_hash: 'hash',
-        signature: 'signature',
-        public_key: 'public_key',
-      } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
-    })
+      chainFixtures.actions.push({
+        block_num: 0,
+        account: 'soviet',
+        name: 'votefor',
+        receiver: 'soviet',
+        data: {
+          version: '1.0.0',
+          coopname: 'voskhod',
+          username: 'ant',
+          decision_id: '2',
+          signed_at: '2024-01-01T00:00:00.000Z',
+          signed_hash: 'hash',
+          signature: 'signature',
+          public_key: 'public_key',
+        } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
+      })
 
-    chainFixtures.actions.push({
-      block_num: 0,
-      account: 'soviet',
-      name: 'votefor',
-      receiver: 'soviet',
-      data: {
-        version: '1.0.0',
-        coopname: 'voskhod',
-        username: 'ant',
-        decision_id: '3',
-        signed_at: '2024-01-01T00:00:00.000Z',
-        signed_hash: 'hash',
-        signature: 'signature',
-        public_key: 'public_key',
-      } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
-    })
+      chainFixtures.actions.push({
+        block_num: 0,
+        account: 'soviet',
+        name: 'votefor',
+        receiver: 'soviet',
+        data: {
+          version: '1.0.0',
+          coopname: 'voskhod',
+          username: 'ant',
+          decision_id: '3',
+          signed_at: '2024-01-01T00:00:00.000Z',
+          signed_hash: 'hash',
+          signature: 'signature',
+          public_key: 'public_key',
+        } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
+      })
 
-    chainFixtures.actions.push({
-      block_num: 0,
-      account: 'soviet',
-      name: 'votefor',
-      receiver: 'soviet',
-      data: {
-        version: '1.0.0',
-        coopname: 'voskhod',
-        username: 'ant',
-        decision_id: '4',
-        signed_at: '2024-01-01T00:00:00.000Z',
-        signed_hash: 'hash',
-        signature: 'signature',
-        public_key: 'public_key',
-      } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
-    })
+      chainFixtures.actions.push({
+        block_num: 0,
+        account: 'soviet',
+        name: 'votefor',
+        receiver: 'soviet',
+        data: {
+          version: '1.0.0',
+          coopname: 'voskhod',
+          username: 'ant',
+          decision_id: '4',
+          signed_at: '2024-01-01T00:00:00.000Z',
+          signed_hash: 'hash',
+          signature: 'signature',
+          public_key: 'public_key',
+        } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
+      })
 
-    chainFixtures.actions.push({
-      block_num: 0,
-      account: 'soviet',
-      name: 'votefor',
-      receiver: 'soviet',
-      data: {
-        version: '1.0.0',
-        coopname: 'voskhod',
-        username: 'ant',
-        decision_id: '5',
-        signed_at: '2024-01-01T00:00:00.000Z',
-        signed_hash: 'hash',
-        signature: 'signature',
-        public_key: 'public_key',
-      } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
-    })
+      chainFixtures.actions.push({
+        block_num: 0,
+        account: 'soviet',
+        name: 'votefor',
+        receiver: 'soviet',
+        data: {
+          version: '1.0.0',
+          coopname: 'voskhod',
+          username: 'ant',
+          decision_id: '5',
+          signed_at: '2024-01-01T00:00:00.000Z',
+          signed_hash: 'hash',
+          signature: 'signature',
+          public_key: 'public_key',
+        } as SovietContract.Actions.Decisions.VoteFor.IVoteForDecision,
+      })
+    }
 
     if (!cooperative_is_exist) {
       chainFixtures.deltas.push({
