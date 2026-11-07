@@ -118,3 +118,10 @@ export * as MarketplaceShareReturnDecision from './1114.MarketplaceShareReturnDe
 export * as MarketplaceShareReturnAct from './1115.MarketplaceShareReturnAct'
 export * as MarketplaceReturnCancelStatement from './1116.MarketplaceReturnCancelStatement'
 export * as MarketplaceReturnCancelDecision from './1117.MarketplaceReturnCancelDecision'
+// Стол заказов — инвестиционный этап кооперативного участка (задача 99D-29)
+export * as MarketplaceInvestAgreement from './1118.MarketplaceInvestAgreement'
+export * as MarketplaceInvestStatement from './1119.MarketplaceInvestStatement'
+export * as MarketplaceInvestPropertyStatement from './1120.MarketplaceInvestPropertyStatement'
+export * as MarketplaceInvestPropertyDecision from './1121.MarketplaceInvestPropertyDecision'
+export * as MarketplaceInvestPropertyAct from './1122.MarketplaceInvestPropertyAct'
+export * as MarketplaceInvestClaimStatement from './1123.MarketplaceInvestClaimStatement'
