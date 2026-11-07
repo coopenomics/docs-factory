@@ -4,9 +4,14 @@
  * обратно, заявление, протокол совета и акт на имущество (1118–1123).
  * Каждая сборка сверяется со снимком в test/golden/<номер>.
  */
-import { describe, it } from 'vitest'
+import { beforeAll, describe, it } from 'vitest'
 import { Registry } from '@coopenomics/docs-templates'
+import { generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
+
+beforeAll(async () => {
+  await generator.connect(testStorage())
+})
 
 const HASH = '6a1c0e4f3d2b5a6978c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a1'
 const AGREEMENT = { agreement_number: 'A3F9C2D1', agreement_created_at: '07.11.2026' }
