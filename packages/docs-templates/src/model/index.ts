@@ -100,10 +100,6 @@ export interface IVars {
     protocol_number: string
     protocol_day_month_year: string
   }
-  marketplace_invest_agreement_template?: { // Бланк договора об участии в хозяйственной деятельности участка (1118)
-    protocol_number: string
-    protocol_day_month_year: string
-  }
   // Образование
   education_provision?: { // Положение о ЦПП «ОБРАЗОВАНИЕ»
     protocol_number: string

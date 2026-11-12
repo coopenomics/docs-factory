@@ -20,6 +20,7 @@ export const Schema: JSONSchemaType<Model> = {
     vars: VarsSchema,
     user: CommonUserSchema,
     agreement_number: { type: 'string' },
+    branch_name: { type: 'string', nullable: true },
   },
   required: ['meta', 'coop', 'vars', 'user', 'agreement_number'],
   additionalProperties: true,
