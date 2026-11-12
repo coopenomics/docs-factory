@@ -70,7 +70,7 @@ export const translations = {
     following_property: 'следующее Имущество',
     number_pp: '№ п/п',
     name_details: 'Наименование/Реквизиты',
-    description: 'Описание, характеристики и состояние',
+    description: 'Описание',
     unit: 'Ед. изм.',
     quantity: 'Количество',
     total_cost: 'Стоимость Всего',

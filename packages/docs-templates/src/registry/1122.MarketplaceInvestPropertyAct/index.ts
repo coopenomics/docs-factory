@@ -83,7 +83,7 @@ export const translations = {
     following_property: 'следующее Имущество',
     number_pp: '№ п/п',
     name_details: 'Наименование/Реквизиты',
-    description: 'Описание, характеристики и состояние',
+    description: 'Описание',
     property_form: 'Форма имущества',
     property_form_text: 'Имущество в натуральной форме',
     unit: 'Ед. изм.',
