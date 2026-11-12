@@ -83,7 +83,7 @@ export const context = `<div class="digital-document"><div style="text-align: ri
 export const translations = {
   ru: {
     // Форма имущества в акте — слово владельца 12.11.2026.
-    property_form_material: 'Материальное имущество',
+    property_form_material: 'Материальный объект',
     t1: 'Приложение №2 ',
     t2: 'к ДОГОВОРУ о совместной хозяйственной деятельности № ',
     t3: 'АКТ № АППИ-',
