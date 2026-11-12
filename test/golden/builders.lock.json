@@ -474,6 +474,11 @@
     "export": "Factory",
     "sha256": "608f39a6963515e646fddacfe4d16d2cf0a89be4c206c53304ef6a455904e232"
   },
+  "1118@1.1": {
+    "file": "src/Actions/1118.MarketplaceInvestAgreement.ts",
+    "export": "Factory_1_1",
+    "sha256": "b6be485c61d211616d96bfdd852cd26faedf1669c23b45ece53a875a6daeb100"
+  },
   "1119@1.0": {
     "file": "src/Actions/1119.MarketplaceInvestStatement.ts",
     "export": "Factory",
@@ -484,6 +489,11 @@
     "export": "Factory",
     "sha256": "bcefbcdf1c56d9f223dc9feb00f1d32104be2fce829b930288f71211ed1c2456"
   },
+  "1120@1.1": {
+    "file": "src/Actions/1120.MarketplaceInvestPropertyStatement.ts",
+    "export": "Factory_1_1",
+    "sha256": "a314cb3b3666af027a00295806ad3d9fee6b44d1d3b573d89a5aadf359530573"
+  },
   "1121@1.0": {
     "file": "src/Actions/1121.MarketplaceInvestPropertyDecision.ts",
     "export": "Factory",
@@ -493,6 +503,11 @@
     "file": "src/Actions/1122.MarketplaceInvestPropertyAct.ts",
     "export": "Factory",
     "sha256": "fe39561c84843587abaaf60f3b5d3d5d138caa58d24e4545ac331034c492bd84"
+  },
+  "1122@1.1": {
+    "file": "src/Actions/1122.MarketplaceInvestPropertyAct.ts",
+    "export": "Factory_1_1",
+    "sha256": "ce976518b61b877887a2c7c40de4aa47bf0f552d8925403cce012aad977e6494"
   },
   "1123@1.0": {
     "file": "src/Actions/1123.MarketplaceInvestClaimStatement.ts",

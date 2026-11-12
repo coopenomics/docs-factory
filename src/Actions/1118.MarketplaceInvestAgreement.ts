@@ -22,3 +22,27 @@ export const Factory = defineBuilder<MarketplaceInvestAgreement.Action, Marketpl
   }),
   signer: ({ reads: { userData } }) => Format.commonUser(userData).full_name_or_short_name,
 })
+
+/**
+ * Версия 1.1: договор заключается на кооперативный участок (решение владельца
+ * 12.11.2026) — в тексте название участка; реквизиты кооператива и контакты
+ * пайщика договор берёт из тех же чтений.
+ */
+export const Factory_1_1 = defineBuilder<MarketplaceInvestAgreement.Action, MarketplaceInvestAgreement.Model>()({
+  registry_id: MarketplaceInvestAgreement.registry_id,
+  version: '1.1',
+  reads: ({ data, f }) => ({
+    coop: () => f.getCooperative(data.coopname, data.block_num),
+    vars: () => f.getVars(data.coopname, data.block_num),
+    userData: () => f.getUser(data.username, data.block_num),
+  }),
+  assemble: ({ data, meta, reads: { coop, vars, userData } }) => ({
+    meta,
+    coop,
+    vars,
+    user: Format.commonUser(userData),
+    agreement_number: data.agreement_number,
+    branch_name: data.branch_name ?? '',
+  }),
+  signer: ({ reads: { userData } }) => Format.commonUser(userData).full_name_or_short_name,
+})

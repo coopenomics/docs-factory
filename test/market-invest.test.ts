@@ -14,7 +14,7 @@ beforeAll(async () => {
 })
 
 const HASH = '6a1c0e4f3d2b5a6978c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a1'
-const AGREEMENT = { agreement_number: 'A3F9C2D1', agreement_created_at: '07.11.2026' }
+const AGREEMENT = { agreement_number: 'УХД-A3F9C2D1', agreement_created_at: '07.11.2026' }
 const BRANCH = { braname: 'krg', branch_name: 'Коргашино' }
 const PROPERTY = {
   property_hash: HASH,
@@ -24,15 +24,23 @@ const PROPERTY = {
   property_quantity: '1',
   property_unit: 'шт.',
   property_amount: '85000.0000 RUB',
+  // Поля бланка владельца 12.11.2026 (сборщики 1120 и 1122 версии 1.1).
+  property_category: 'Холодильное оборудование',
+  property_media_links: 'https://example.ru/photo/vitrina',
+  property_warranty_terms: 'Ремонт за счёт Пайщика при поломке, 180 дней',
+  property_other: 'Комплект: витрина, полки, паспорт изделия',
+  property_unit_cost: '85000.0000 RUB',
+  property_warranty_days: '180',
 }
 
 describe('документы инвестиционного этапа участка Стола заказов', () => {
-  it('1118 договор участия в хозяйственной деятельности по ЦПП «Стол заказов»', async () => {
+  it('1118 договор об участии в хозяйственной деятельности участка', async () => {
     await testDocumentGeneration<Registry.MarketplaceInvestAgreement.Action>({
       registry_id: Registry.MarketplaceInvestAgreement.registry_id,
       coopname: 'voskhod',
       username: 'ant',
       agreement_number: AGREEMENT.agreement_number,
+      ...BRANCH,
     })
   })
 

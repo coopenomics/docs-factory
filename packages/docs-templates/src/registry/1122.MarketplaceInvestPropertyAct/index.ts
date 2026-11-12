@@ -1,9 +1,9 @@
 import type { ICommonUser, ICooperativeData, IVars } from '../../model'
 import type { IDecisionData, IGenerate, IMetaDocument } from '../../document'
 
-// Инвестиционный этап кооперативного участка Стола заказов (задача 99D-29):
-// документ по образцу 1072 Благороста, имущество вносится в участок
-// по договору участия в хозяйственной деятельности по ЦПП «Стол заказов».
+// Инвестиционный этап кооперативного участка Стола заказов (задачи 99D-29, 99D-35).
+// Текст — дословно Приложение № 2 к документу владельца «Договор УХД_ИНВЕСТ_ПВЗ_КУ»
+// (12.11.2026); пропуски бланка заменены подстановками.
 
 export const registry_id = 1122
 
@@ -34,6 +34,15 @@ export interface Action extends IGenerate {
   property_quantity: string
   property_unit: string
   property_amount: string
+  /** Поля бланка владельца 12.11.2026 (сборщик 1.1; 1.0 их не заполняет). */
+  property_category?: string
+  property_media_links?: string
+  property_warranty_terms?: string
+  property_other?: string
+  /** Стоимость единицы — сумма, делённая на количество; считает узел. */
+  property_unit_cost?: string
+  /** Срок Гарантийных обязательств в днях. */
+  property_warranty_days?: string
 }
 
 export type Meta = IMetaDocument & Action
@@ -58,45 +67,56 @@ export interface Model {
   property_quantity: string
   property_unit: string
   property_amount: string
+  property_category?: string
+  property_media_links?: string
+  property_warranty_terms?: string
+  property_other?: string
+  property_unit_cost?: string
+  property_warranty_days?: string
 }
 
 export const title = 'Акт приёма-передачи имущества в кооперативный участок'
 export const description = 'Форма акта приёма-передачи имущества, вносимого паевым взносом в кооперативный участок Стола заказов'
 
-export const context = `<div class="digital-document"><div style="text-align: right"><p>{% trans 'appendix_number' %} {{ property_short_hash }}</p><p>{% trans 'appendix_to_agreement' %} № {{ agreement_number }}</p></div><div style="text-align: center"><h2>{% trans 'act_title' %} № АППИ-{{ property_short_hash }}</h2></div><div style="display: flex; justify-content: space-between;"><p>{% trans 'city_label' %} {{ coop.city }}</p><p>{% trans 'date_label' %} {{ created_at }}</p></div><p>{{ vars.full_abbr }} "{{ vars.name }}" {% trans 'hereinafter_society' %} {% trans 'in_face_of_chairman' %} {{ branch_name }} {{ branch_chairman_name }}, {% trans 'and_shareholder' %} {{ common_user.full_name_or_short_name }}, {% trans 'act_text' %} № {{ agreement_number }} {% trans 'from_date' %} {{ agreement_created_at }} {% trans 'branch_text' %} {{ branch_name }}, {% trans 'statement_text' %} № ЗПВИ-{{ property_short_hash }} {% trans 'and_protocol' %} № {{ decision.id }} {% trans 'from_date' %} {{ decision.date }} {% trans 'following_property' %}:</p><table><tr><th>{% trans 'number_pp' %}</th><td>1</td></tr><tr><th>{% trans 'name_details' %}</th><td>{{ property_name }}</td></tr><tr><th>{% trans 'description' %}</th><td>{{ property_description }}</td></tr><tr><th>{% trans 'property_form' %}</th><td>{% if property_form_label %}{{ property_form_label }}{% else %}{% trans 'property_form_text' %}{% endif %}</td></tr><tr><th>{% trans 'unit' %}</th><td>{{ property_unit }}</td></tr><tr><th>{% trans 'quantity' %}</th><td>{{ property_quantity }}</td></tr><tr><th>{% trans 'total_cost' %}</th><td>{{ property_amount }}</td></tr><tr style="font-weight: bold;"><th>{% trans 'total' %}</th><td>{{ property_quantity }} {{ property_unit }} / {{ property_amount }}</td></tr></table><p>{% trans 'property_condition' %}.</p><p>{% trans 'no_claims_quality' %}.</p><div style="margin-top: 40px;"><p><strong>{% trans 'transferred' %}:</strong></p><p>{% trans 'shareholder' %}: {{ common_user.full_name_or_short_name }}</p><p>{% trans 'signed_by_digital_signature' %}</p></div><div style="margin-top: 40px;"><p><strong>{% trans 'received' %}:</strong></p><p>{% trans 'chairman_title' %} {{ branch_name }}</p><p>{{ vars.short_abbr }} "{{ vars.name }}"</p><p>{{ branch_chairman_name }}</p><p>{% trans 'signed_by_digital_signature' %}</p></div></div><style>.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-top: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word;overflow-wrap: break-word;word-break: break-all;vertical-align: top;}th {background-color: #f4f4f4;width: 30%;font-weight: bold;}</style>`
+export const context = `<div class="digital-document"><div style="text-align: right"><p>{% trans 't1' %}</p><p>{% trans 't2' %}{{ agreement_number }}</p></div><div style="text-align: center"><h2>{% trans 't3' %}{{ property_short_hash }}</h2><p>{% trans 't4' %}{{ agreement_number }}{% trans 't5' %}{{ agreement_created_at }}</p></div><div style="display: flex; justify-content: space-between;"><p>{% trans 't6' %}{{ coop.city }}</p><p>{% trans 't7' %}{{ created_at }}</p></div><p>{% trans 't8' %}{{ vars.name }}{% trans 't9' %}{{ coop.chairman.last_name }}{% trans 't10' %}{{ coop.chairman.first_name }}{% trans 't11' %}{{ coop.chairman.middle_name }}{% trans 't12' %}{{ common_user.full_name_or_short_name }}{% trans 't13' %}{{ agreement_number }}{% trans 't14' %}{{ agreement_created_at }}{% trans 't15' %}{{ decision.id }}{% trans 't16' %}{{ decision.date }}{% trans 't17' %}</p><table class="grid"><tr><th>{% trans 't18' %}</th><th>{% trans 't19' %}</th><th>{% trans 't20' %}</th><th>{% trans 't21' %}</th><th>{% trans 't22' %}</th><th>{% trans 't23' %}</th><th>{% trans 't24' %}</th></tr><tr><td>1</td><td>{{ property_name }}</td><td>{{ property_form_label }}</td><td>{{ property_unit }}</td><td>{{ property_quantity }}</td><td>{{ property_unit_cost }}</td><td>{{ property_amount }}</td></tr><tr><td></td><td>{% trans 't25' %}</td><td></td><td></td><td></td><td></td><td>{{ property_amount }}</td></tr></table><p>{% trans 't26' %}{{ agreement_number }}{% trans 't27' %}{{ agreement_created_at }}{% trans 't28' %}{{ property_warranty_days }}{% trans 't29' %}</p><div style="margin-top: 30px;"><p>{% trans 't30' %}{{ common_user.full_name_or_short_name }}</p><p>{% trans 't31' %}</p></div><div style="margin-top: 30px;"><p>{% trans 't32' %}{{ coop.chairman.last_name }}{% trans 't33' %}{{ coop.chairman.first_name }}{% trans 't34' %}{{ coop.chairman.middle_name }}</p><p>{% trans 't35' %}</p></div></div><style>.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-top: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word;overflow-wrap: break-word;vertical-align: top;}th {width: 30%;font-weight: bold;}.grid th {width: auto;}</style>`
 
 export const translations = {
   ru: {
-    act_title: 'АКТ ПРИЁМА-ПЕРЕДАЧИ ИМУЩЕСТВА',
-    appendix_number: 'Приложение №',
-    appendix_to_agreement: 'к ДОГОВОРУ об участии в хозяйственной деятельности',
-    city_label: 'г.',
-    date_label: 'Дата:',
-    hereinafter_society: '(далее "Общество")',
-    in_face_of_chairman: 'в лице председателя кооперативного участка',
-    and_shareholder: 'и Пайщик',
-    act_text: 'составили настоящий Акт о том, что Пайщик передал, а Общество получило от Пайщика паевой взнос Имуществом в соответствии с условиями Договора об участии в хозяйственной деятельности',
-    from_date: 'от',
-    branch_text: 'по ЦПП «Стол заказов» для участия в хозяйственной деятельности кооперативного участка',
-    statement_text: 'заявлением Пайщика',
-    and_protocol: 'и Протоколом Совета',
-    following_property: 'следующее Имущество',
-    number_pp: '№ п/п',
-    name_details: 'Наименование/Реквизиты',
-    description: 'Описание',
-    property_form: 'Форма имущества',
-    property_form_text: 'Имущество в натуральной форме',
-    unit: 'Ед. изм.',
-    quantity: 'Количество',
-    total_cost: 'Стоимость Всего',
-    total: 'ИТОГО',
-    property_condition: 'Имущество передано в состоянии, указанном в настоящем Акте, и принимается Обществом по стоимости, утверждённой решением Совета',
-    no_claims_quality: 'Претензий по качеству и комплектности Имущества Общество не имеет',
-    transferred: 'ПЕРЕДАНО',
-    shareholder: 'Пайщик',
-    signed_by_digital_signature: 'Подписано электронной подписью',
-    received: 'ПОЛУЧЕНО',
-    chairman_title: 'Председатель кооперативного участка',
+    t1: 'Приложение №2 ',
+    t2: 'к ДОГОВОРУ о совместной хозяйственной деятельности № ',
+    t3: 'АКТ № АППИ-',
+    t4: 'приема-передачи Имущества в соответствии с условиями Договора об участии в хозяйственной деятельности № ',
+    t5: ' от ',
+    t6: 'г. ',
+    t7: 'Дата: ',
+    t8: 'ПОТРЕБИТЕЛЬСКИЙ КООПЕРАТИВ "',
+    t9: '" (далее “Общество”) в лице Председателя Совета ',
+    t10: ' ',
+    t11: ' ',
+    t12: ', и Пайщик ',
+    t13: ', составили настоящий Акт о том, что Пайщик передал, а Кооператив получил от Пайщика, в соответствии с условиями Договора об участии в хозяйственной деятельности № ',
+    t14: ' от ',
+    t15: ' и Протоколом Совета № ',
+    t16: ' от ',
+    t17: '  следующее Имущество:',
+    t18: '№ п/п',
+    t19: 'Наименование/Реквизиты',
+    t20: 'Форма имущества',
+    t21: 'Ед изм.',
+    t22: 'Количество',
+    t23: 'Стоимость единицы (руб)',
+    t24: 'Стоимость Всего',
+    t25: 'ИТОГО:',
+    t26: 'Претензий по качеству Имущества Общество не имеет. Согласованный Сторонами срок Гарантийного обязательства, согласно условий Договора  об участии в хозяйственной деятельности № ',
+    t27: ' от ',
+    t28: ' в отношении переданного Имущества составляет ',
+    t29: ' дней. ',
+    t30: 'ПЕРЕДАНО:   Подпись ',
+    t31: 'Подписано электронной подписью',
+    t32: 'ПОЛУЧЕНО:  Подпись ',
+    t33: ' ',
+    t34: ' ',
+    t35: 'Подписано электронной подписью',
   },
 }
 
@@ -104,7 +124,7 @@ export const exampleData = {
   meta: {
     created_at: '11.04.2024 12:00',
   },
-  agreement_number: 'A3F9C2D1',
+  agreement_number: 'УХД-A3F9C2D1',
   agreement_created_at: '11.04.2024',
   branch_name: 'Коргашино',
   branch_chairman_name: 'Петров Пётр Петрович',
@@ -115,6 +135,12 @@ export const exampleData = {
   property_quantity: '1',
   property_unit: 'шт.',
   property_amount: '85000.00 RUB',
+  property_category: 'Холодильное оборудование',
+  property_media_links: 'https://example.ru/photo/vitrina',
+  property_warranty_terms: 'Ремонт за счёт Пайщика при поломке, 180 дней',
+  property_other: 'Комплект: витрина, полки, паспорт изделия',
+  property_unit_cost: '85000.00 RUB',
+  property_warranty_days: '180',
   vars: {
     name: 'ВОСХОД',
     full_abbr: 'Потребительский кооператив',
