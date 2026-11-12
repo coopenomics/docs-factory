@@ -14,7 +14,7 @@
   "branch_chairman_name": "Петров Пётр Петрович",
   "braname": "krg",
   "branch_name": "Коргашино",
-  "agreement_number": "A3F9C2D1",
+  "agreement_number": "УХД-A3F9C2D1",
   "agreement_created_at": "07.11.2026",
   "property_hash": "6a1c0e4f3d2b5a6978c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a1",
   "property_form": "thing",
@@ -23,5 +23,11 @@
   "property_quantity": "1",
   "property_unit": "шт.",
   "property_amount": "85000.0000 RUB",
-  "builder": "1.0"
+  "property_category": "Холодильное оборудование",
+  "property_media_links": "https://example.ru/photo/vitrina",
+  "property_warranty_terms": "Ремонт за счёт Пайщика при поломке, 180 дней",
+  "property_other": "Комплект: витрина, полки, паспорт изделия",
+  "property_unit_cost": "85000.0000 RUB",
+  "property_warranty_days": "180",
+  "builder": "1.1"
 }
