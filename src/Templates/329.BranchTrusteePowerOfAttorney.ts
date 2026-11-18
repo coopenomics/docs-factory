@@ -29,9 +29,13 @@ export const Schema: JSONSchemaType<Model> = {
     },
     branch_name: { type: 'string' },
     branch_address: { type: 'string' },
+    poa_number: { type: 'string' },
+    protocol_number: { type: 'string' },
+    protocol_date: { type: 'string' },
+    valid_until: { type: 'string' },
     vars: VarsSchema,
   },
-  required: ['meta', 'coop', 'individual', 'branch_name', 'branch_address', 'vars'],
+  required: ['meta', 'coop', 'individual', 'branch_name', 'branch_address', 'poa_number', 'protocol_number', 'protocol_date', 'valid_until', 'vars'],
   additionalProperties: true,
 }
 

@@ -29,9 +29,15 @@ export const Schema: JSONSchemaType<Model> = {
     },
     branch_name: { type: 'string' },
     trustee_full_name: { type: 'string' },
+    poa_number: { type: 'string' },
+    protocol_number: { type: 'string' },
+    protocol_date: { type: 'string' },
+    trustee_poa_number: { type: 'string' },
+    trustee_poa_date: { type: 'string' },
+    valid_until: { type: 'string' },
     vars: VarsSchema,
   },
-  required: ['meta', 'coop', 'individual', 'branch_name', 'trustee_full_name', 'vars'],
+  required: ['meta', 'coop', 'individual', 'branch_name', 'trustee_full_name', 'poa_number', 'protocol_number', 'protocol_date', 'trustee_poa_number', 'trustee_poa_date', 'valid_until', 'vars'],
   additionalProperties: true,
 }
 

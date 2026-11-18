@@ -185,6 +185,10 @@ describe('тест генератора документов кооперати�
       hash: branchHash,
       branch_name: branchName,
       branch_address: branchAddress,
+      poa_number: '7',
+      protocol_number: '12',
+      protocol_date: '18.11.2026',
+      valid_until: '17.11.2027',
     })
   })
 
@@ -197,6 +201,12 @@ describe('тест генератора документов кооперати�
       hash: branchHash,
       branch_name: branchName,
       trustee: 'ant',
+      poa_number: '8',
+      protocol_number: '12',
+      protocol_date: '18.11.2026',
+      trustee_poa_number: '7',
+      trustee_poa_date: '18.11.2026',
+      valid_until: '17.11.2027',
     })
   })
 })

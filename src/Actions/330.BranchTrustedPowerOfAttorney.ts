@@ -7,7 +7,7 @@ export { BranchTrustedPowerOfAttorney as Template } from '../Templates'
 /** Доверенность доверенному лицу участка: физлицо и председатель участка. */
 export const Factory = defineBuilder<BranchTrustedPowerOfAttorney.Action, BranchTrustedPowerOfAttorney.Model>()({
   registry_id: BranchTrustedPowerOfAttorney.registry_id,
-  version: '1.0',
+  version: '1.1',
   reads: ({ data, f }) => ({
     coop: () => f.getCooperative(data.coopname, data.block_num),
     vars: () => f.getVars(data.coopname, data.block_num),
@@ -25,6 +25,14 @@ export const Factory = defineBuilder<BranchTrustedPowerOfAttorney.Action, Branch
       individual,
       branch_name: data.branch_name,
       trustee_full_name: Format.commonUser(trusteeUser).full_name_or_short_name,
+      // Реквизиты вписывает узел: номер доверенности, протокол совета об учреждении
+      // участка и действующая доверенность председателя участка — основание полномочий.
+      poa_number: data.poa_number,
+      protocol_number: data.protocol_number,
+      protocol_date: data.protocol_date,
+      trustee_poa_number: data.trustee_poa_number,
+      trustee_poa_date: data.trustee_poa_date,
+      valid_until: data.valid_until,
     }
   },
   signer: ({ reads: { userData } }) => {

@@ -17,6 +17,16 @@ export interface Action extends IGenerate {
   hash: string
   branch_name: string
   branch_address: string
+  // Реквизиты, которые вписывает узел (решение владельца 18.11.2026): доверенность
+  // подписывается после решения совета об учреждении участка и ссылается на его протокол.
+  /** Номер доверенности — сквозной номер в кооперативе */
+  poa_number: string
+  /** Номер протокола совета об учреждении участка */
+  protocol_number: string
+  /** Дата протокола совета, ДД.ММ.ГГГГ */
+  protocol_date: string
+  /** Последний день срока доверенности (год со дня выдачи), ДД.ММ.ГГГГ */
+  valid_until: string
 }
 
 export type Meta = IMetaDocument & Action
@@ -28,24 +38,27 @@ export interface Model {
   individual: IIndividualData
   branch_name: string
   branch_address: string
+  poa_number: string
+  protocol_number: string
+  protocol_date: string
+  valid_until: string
   vars: IVars
 }
 
 export const title = 'Доверенность председателю кооперативного участка'
 export const description = 'Форма доверенности, выдаваемой кооперативом в лице Председателя Совета избранному председателю кооперативного участка на право представлять участок и распоряжаться его средствами'
-export const context = `<style>.digital-document h1 {margin: 0px;text-align:center;font-size: 16px;}.digital-document {padding: 20px;white-space: pre-wrap;}.digital-document p {margin: 0px;padding-top: 10px;text-align: justify;}.coop-header {text-align: center;padding-bottom: 10px;}.coop-header p {padding-top: 2px;text-align: center;}.signature {padding-top: 20px;}</style><div class="digital-document"><div class="coop-header"><p><strong>{{ vars.full_abbr }} «{{ vars.name }}»</strong></p><p>{% trans 'OGRN' %} {{ coop.details.ogrn }}</p><p>{% trans 'INN' %} {{ coop.details.inn }} / {% trans 'KPP' %} {{ coop.details.kpp }}</p></div><h1 class="header">{% trans 'POA_TITLE' %}</h1><p style="text-align: right; padding-top: 10px;">{{ coop.city }}, {{ created_at }}</p><p>{% trans 'PREAMBLE_INTRO', vars.full_abbr, vars.name, coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name %} <strong>{{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}</strong>{% if individual.passport %} ({% trans 'PASSPORT_INLINE', individual.passport.series, individual.passport.number, individual.passport.issued_at, individual.passport.issued_by, individual.passport.code, individual.full_address %}){% endif %} {% trans 'PREAMBLE_POWERS', branch_name, vars.full_abbr, vars.name, branch_address, vars.full_abbr, vars.name, vars.full_abbr, vars.name %}</p><p>{% trans 'BANK_ACCOUNT', individual.last_name, individual.first_name, individual.middle_name, vars.full_abbr, vars.name %}</p><p>{% trans 'RESPONSIBILITY', individual.last_name, individual.first_name, individual.middle_name, vars.full_abbr, vars.name %}</p><p>{% trans 'SIGNATURE_CERTIFIED', individual.last_name, individual.first_name, individual.middle_name %}</p><p>{% trans 'NON_TRANSFERABLE' %}</p><p>{% trans 'TERM_ONE_YEAR' %}</p><div class="signature" style="padding-top: 30px;"><p>{% trans 'PRINCIPAL_SIGNATURE', coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name %}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p><p style="padding-top: 10px;">{% trans 'SEAL' %}</p></div></div>`
+export const context = `<style>.digital-document h1 {margin: 0px;text-align:center;font-size: 16px;}.digital-document {padding: 20px;white-space: pre-wrap;}.digital-document p {margin: 0px;padding-top: 10px;text-align: justify;}.coop-header {text-align: center;padding-bottom: 10px;}.coop-header p {padding-top: 2px;text-align: center;}.signature {padding-top: 20px;}</style><div class="digital-document"><div class="coop-header"><p><strong>{{ vars.full_abbr }} «{{ vars.name }}»</strong></p><p>{% trans 'OGRN' %} {{ coop.details.ogrn }}</p><p>{% trans 'INN' %} {{ coop.details.inn }} / {% trans 'KPP' %} {{ coop.details.kpp }}</p></div><h1 class="header">{% trans 'POA_TITLE', poa_number %}</h1><p style="text-align: right; padding-top: 10px;">{{ coop.city }}, {{ created_at }}</p><p>{% trans 'PREAMBLE_INTRO', vars.full_abbr, vars.name, coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name %} <strong>{{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}</strong>{% if individual.passport %} ({% trans 'PASSPORT_INLINE', individual.passport.series, individual.passport.number, individual.passport.issued_at, individual.passport.issued_by, individual.passport.code, individual.full_address %}){% endif %} {% trans 'PREAMBLE_POWERS', branch_name, vars.full_abbr, vars.name, branch_address, vars.full_abbr, vars.name, vars.full_abbr, vars.name, protocol_number, protocol_date %}</p><p>{% trans 'RESPONSIBILITY', individual.last_name, individual.first_name, individual.middle_name, vars.full_abbr, vars.name %}</p><p>{% trans 'SIGNATURE_CERTIFIED', individual.last_name, individual.first_name, individual.middle_name %}</p><p>{% trans 'NON_TRANSFERABLE' %}</p><p>{% trans 'TERM_ONE_YEAR', valid_until %}</p><div class="signature" style="padding-top: 30px;"><p>{% trans 'PRINCIPAL_SIGNATURE', coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name %}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p><p style="padding-top: 10px;">{% trans 'SEAL' %}</p></div></div>`
 
 export const translations = {
   ru: {
-    POA_TITLE: 'ДОВЕРЕННОСТЬ',
+    POA_TITLE: 'ДОВЕРЕННОСТЬ № {0}',
     PREAMBLE_INTRO: '{0} «{1}» в лице Председателя Совета {2} {3} {4}, действующего на основании Устава, настоящей доверенностью уполномочивает гражданина',
     PASSPORT_INLINE: 'паспорт серия: {0} № {1}, выдан: {2} {3}, к/п {4}, зарегистрирован: {5}',
-    PREAMBLE_POWERS: 'действовать в лице Председателя Кооперативного участка «{0}» {1} «{2}», расположенного по адресу: {3} (далее — КУ), в соответствии с законодательством Российской Федерации и Уставом {4} «{5}», и представлять КУ в отношениях с другими юридическими лицами и гражданами, распоряжаться денежными средствами КУ в соответствии с Положением о кооперативном участке, утверждённым решением Собрания Совета {6} «{7}» (Протокол № ______________ от ______________ ), вести переговоры, подготавливать документы, заключать договоры с правом подписи по сделкам КУ, а также совершать иные действия, связанные с выполнением настоящего поручения.',
-    BANK_ACCOUNT: 'Также гражданин {0} {1} {2} имеет право распоряжения и управления открытым {3} «{4}» для КУ банковским счётом № __________________________________________.',
+    PREAMBLE_POWERS: 'действовать в лице Председателя Кооперативного участка «{0}» {1} «{2}», расположенного по адресу: {3} (далее — КУ), в соответствии с законодательством Российской Федерации и Уставом {4} «{5}», и представлять КУ в отношениях с другими юридическими лицами и гражданами, распоряжаться денежными средствами КУ в соответствии с Положением о кооперативном участке, утверждённым решением Собрания Совета {6} «{7}» (Протокол № {8} от {9}), вести переговоры, подготавливать документы, заключать договоры с правом подписи по сделкам КУ, а также совершать иные действия, связанные с выполнением настоящего поручения.',
     RESPONSIBILITY: 'Гражданин {0} {1} {2} несёт ответственность за все свои действия и деловые операции, осуществляемые в интересах {3} «{4}».',
     SIGNATURE_CERTIFIED: 'Подпись гражданина {0} {1} {2} удостоверяю.',
     NON_TRANSFERABLE: 'Полномочия по настоящей доверенности не могут быть переданы другим лицам.',
-    TERM_ONE_YEAR: 'Доверенность выдана на срок один год.',
+    TERM_ONE_YEAR: 'Доверенность выдана на срок один год, по {0} включительно.',
     PRINCIPAL_SIGNATURE: 'Подпись доверителя / Председатель Совета {0} {1} {2}',
     INN: 'ИНН',
     KPP: 'КПП',
@@ -87,6 +100,10 @@ export const exampleData = {
       code: '220-220',
     },
   },
+  poa_number: '7',
+  protocol_number: '12',
+  protocol_date: '18.11.2026',
+  valid_until: '17.11.2027',
   branch_name: 'РОМАШКА',
   branch_address: 'г. Москва, ул. Кооперативная, д. 5',
   vars: {
