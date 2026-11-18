@@ -74,3 +74,48 @@ export const Factory_1_1 = defineBuilder<BranchTrustedPowerOfAttorney.Action, Br
     return `${individual.last_name} ${individual.first_name} ${individual.middle_name}`
   },
 })
+
+/**
+ * Версия 1.2: без реквизитов узла (poa_number, protocol_number, protocol_date, trustee_poa_number, trustee_poa_date, valid_until) фабрика документ не собирает —
+ * общая генерация в обход узла давала доверенность с пустыми полями. Версия 1.1
+ * заморожена.
+ */
+export const Factory_1_2 = defineBuilder<BranchTrustedPowerOfAttorney.Action, BranchTrustedPowerOfAttorney.Model>()({
+  registry_id: BranchTrustedPowerOfAttorney.registry_id,
+  version: '1.2',
+  reads: ({ data, f }) => ({
+    coop: () => f.getCooperative(data.coopname, data.block_num),
+    vars: () => f.getVars(data.coopname, data.block_num),
+    userData: () => f.getUser(data.username, data.block_num),
+    trusteeUser: () => f.getUser(data.trustee, data.block_num),
+  }),
+  assemble: ({ data, meta, reads: { coop, vars, userData, trusteeUser } }) => {
+    // Реквизиты вписывает узел; без них документ вышел бы с пустыми полями.
+    const missing = ['poa_number', 'protocol_number', 'protocol_date', 'trustee_poa_number', 'trustee_poa_date', 'valid_until'].filter(key => !data[key as keyof typeof data])
+    if (missing.length)
+      throw new Error(`Доверенность доверенному лицу кооперативного участка: нет реквизитов ${missing.join(', ')} — документ собирает узел расширения участков`)
+    if (userData.type !== 'individual')
+      throw new Error('Доверенным лицом кооперативного участка может быть только физическое лицо')
+    const individual = userData.data as BranchTrustedPowerOfAttorney.Model['individual']
+    return {
+      meta,
+      coop,
+      vars,
+      individual,
+      branch_name: data.branch_name,
+      trustee_full_name: Format.commonUser(trusteeUser).full_name_or_short_name,
+      // Реквизиты вписывает узел: номер доверенности, протокол совета об учреждении
+      // участка и действующая доверенность председателя участка — основание полномочий.
+      poa_number: data.poa_number,
+      protocol_number: data.protocol_number,
+      protocol_date: data.protocol_date,
+      trustee_poa_number: data.trustee_poa_number,
+      trustee_poa_date: data.trustee_poa_date,
+      valid_until: data.valid_until,
+    }
+  },
+  signer: ({ reads: { userData } }) => {
+    const individual = userData.data as BranchTrustedPowerOfAttorney.Model['individual']
+    return `${individual.last_name} ${individual.first_name} ${individual.middle_name}`
+  },
+})

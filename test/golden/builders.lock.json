@@ -129,6 +129,11 @@
     "export": "Factory_1_1",
     "sha256": "621950339d086f615b3bb76065d4fce1b938c53ca1e5f2cae515df5625811aa2"
   },
+  "329@1.2": {
+    "file": "src/Actions/329.BranchTrusteePowerOfAttorney.ts",
+    "export": "Factory_1_2",
+    "sha256": "f493f1f10cf5a0f8086dbdd5811341e3456a4a431ac2230981e463af586f9919"
+  },
   "330@1.0": {
     "file": "src/Actions/330.BranchTrustedPowerOfAttorney.ts",
     "export": "Factory",
@@ -138,6 +143,11 @@
     "file": "src/Actions/330.BranchTrustedPowerOfAttorney.ts",
     "export": "Factory_1_1",
     "sha256": "1c1e8ec14f0e47ea767a7201eee79c8d41f1c19a5ca67aa89f0de4806dcd8504"
+  },
+  "330@1.2": {
+    "file": "src/Actions/330.BranchTrustedPowerOfAttorney.ts",
+    "export": "Factory_1_2",
+    "sha256": "b4e36c2c2ad7a39961cb14675429d2d14db41d9e7a3bd2eae025741145b54750"
   },
   "501@1.0": {
     "file": "src/Actions/501.DecisionOfParticipantApplication.ts",
