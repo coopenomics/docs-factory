@@ -31,11 +31,22 @@ export interface Model {
 
 export const title = 'Договор о материальной ответственности председателя кооперативного участка'
 export const description = 'Форма договора о материальной ответственности председателя кооперативного участка между кооперативом в лице Председателя Совета и избранным председателем участка'
-export const context = `<style>.digital-document h1 {margin: 0px;text-align:center;font-size: 16px;}.digital-document {padding: 20px;white-space: pre-wrap;}.digital-document p {margin: 0px;padding-top: 10px;text-align: justify;}.requisites p {padding-top: 2px;}.signature {padding-top: 20px;}</style><div class="digital-document"><h1 class="header">{% trans 'AGREEMENT_TITLE' %}</h1><p style="text-align: right; padding-top: 20px;">{{ coop.city }}, {{ created_at }}</p><p>{% trans 'PREAMBLE', vars.full_abbr, vars.name, coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name, branch_name, vars.full_abbr, vars.name %}</p><p>{% trans 'CLAUSE_1' %}</p><p>{% trans 'CLAUSE_1_A' %}</p><p>{% trans 'CLAUSE_1_B' %}</p><p>{% trans 'CLAUSE_1_C' %}</p><p>{% trans 'CLAUSE_1_D' %}</p><p>{% trans 'CLAUSE_2' %}</p><p>{% trans 'CLAUSE_2_A' %}</p><p>{% trans 'CLAUSE_2_B' %}</p><p>{% trans 'CLAUSE_2_REVISION' %}</p><p>{% trans 'CLAUSE_3' %}</p><p>{% trans 'CLAUSE_3_PARA2' %}</p><p>{% trans 'CLAUSE_4' %}</p><p>{% trans 'CLAUSE_5' %}</p><p>{% trans 'COPIES' %}</p><div class="requisites" style="padding-top: 30px;"><p><strong>{% trans 'SOCIETY_LABEL' %} {{ vars.full_abbr }} «{{ vars.name }}»</strong></p><p>{% trans 'INN' %} {{ coop.details.inn }}</p><p>{% trans 'KPP' %} {{ coop.details.kpp }}</p><p>{% trans 'OGRN' %} {{ coop.details.ogrn }}</p><p>{% trans 'LEGAL_ADDRESS' %} {{ coop.full_address }}</p><p>{% trans 'COUNCIL_CHAIRMAN_LABEL' %} {{ coop.chairman.last_name }} {{ coop.chairman.first_name }} {{ coop.chairman.middle_name }}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p></div><div class="requisites" style="padding-top: 20px;"><p><strong>{% trans 'EXECUTOR_LABEL' %} {{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}</strong></p>{% if individual.passport %}<p>{% trans 'PASSPORT_SERIES_NUMBER', individual.passport.series, individual.passport.number %}</p><p>{% trans 'PASSPORT_ISSUED', individual.passport.issued_by, individual.passport.code %}</p><p>{% trans 'PASSPORT_ISSUED_AT', individual.passport.issued_at %}</p>{% endif %}<p>{% trans 'REGISTRATION_ADDRESS' %} {{ individual.full_address }}</p><p>{% trans 'CONTACT_PHONE' %} {{ individual.phone }}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p></div></div>`
+export const context = `<style>
+h1 { margin: 0px; text-align: center; }
+.digital-document { padding: 20px; }
+.digital-document p { margin: 0 0 6px; }
+.coop-header { text-align: right; padding-bottom: 12px; }
+.coop-header p { margin: 0 0 2px; }
+.requisites { padding-top: 16px; }
+.requisites p { margin: 0 0 2px; }
+.signature { padding-top: 24px; }
+</style>
+<div class="digital-document"><div style="text-align: center"><h1>{% trans 'AGREEMENT_TITLE' %}</h1><p>{% trans 'AGREEMENT_SUBTITLE' %}</p></div><div style="display: flex; justify-content: space-between;"><p>{{ coop.city }}</p><p>{{ created_at }}</p></div><p>{% trans 'PREAMBLE', vars.full_abbr, vars.name, coop.chairman.last_name, coop.chairman.first_name, coop.chairman.middle_name, branch_name, vars.full_abbr, vars.name %}</p><p>{% trans 'CLAUSE_1' %}</p><p>{% trans 'CLAUSE_1_A' %}</p><p>{% trans 'CLAUSE_1_B' %}</p><p>{% trans 'CLAUSE_1_C' %}</p><p>{% trans 'CLAUSE_1_D' %}</p><p>{% trans 'CLAUSE_2' %}</p><p>{% trans 'CLAUSE_2_A' %}</p><p>{% trans 'CLAUSE_2_B' %}</p><p>{% trans 'CLAUSE_2_REVISION' %}</p><p>{% trans 'CLAUSE_3' %}</p><p>{% trans 'CLAUSE_3_PARA2' %}</p><p>{% trans 'CLAUSE_4' %}</p><p>{% trans 'CLAUSE_5' %}</p><p>{% trans 'COPIES' %}</p><div class="requisites" style="padding-top: 30px;"><p><strong>{% trans 'SOCIETY_LABEL' %} {{ vars.full_abbr }} «{{ vars.name }}»</strong></p><p>{% trans 'INN' %} {{ coop.details.inn }}</p><p>{% trans 'KPP' %} {{ coop.details.kpp }}</p><p>{% trans 'OGRN' %} {{ coop.details.ogrn }}</p><p>{% trans 'LEGAL_ADDRESS' %} {{ coop.full_address }}</p><p>{% trans 'COUNCIL_CHAIRMAN_LABEL' %} {{ coop.chairman.last_name }} {{ coop.chairman.first_name }} {{ coop.chairman.middle_name }}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p></div><div class="requisites"><p><strong>{% trans 'EXECUTOR_LABEL' %} {{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}</strong></p>{% if individual.passport %}<p>{% trans 'PASSPORT_SERIES_NUMBER', individual.passport.series, individual.passport.number %}</p><p>{% trans 'PASSPORT_ISSUED', individual.passport.issued_by, individual.passport.code %}</p><p>{% trans 'PASSPORT_ISSUED_AT', individual.passport.issued_at %}</p>{% endif %}<p>{% trans 'REGISTRATION_ADDRESS' %} {{ individual.full_address }}</p><p>{% trans 'CONTACT_PHONE' %} {{ individual.phone }}</p><p>{% trans 'SIGNED_DIGITALLY' %}</p></div></div>`
 
 export const translations = {
   ru: {
-    AGREEMENT_TITLE: 'ДОГОВОР О МАТЕРИАЛЬНОЙ ОТВЕТСТВЕННОСТИ',
+    AGREEMENT_TITLE: 'ДОГОВОР',
+    AGREEMENT_SUBTITLE: 'о материальной ответственности',
     PREAMBLE: 'В целях обеспечения сохранности материальных ценностей, {0} «{1}», в лице Председателя Совета {2} {3} {4}, действующего на основании Устава, именуемое в дальнейшем «Общество», и Председатель Кооперативного участка «{5}» {6} «{7}», именуемый в дальнейшем «Исполнитель», заключили настоящий договор о нижеследующем:',
     CLAUSE_1: '1. Исполнитель, выполняющий работу бухгалтера-кассира, непосредственно связанную с пересчетом, обработкой, приемом, выдачей, хранением, перевозкой денежных средств, других ценностей и имущества, принимает на себя полную материальную ответственность за обеспечение сохранности вверенных ему денежных средств, имущества и других ценностей и обязуется:',
     CLAUSE_1_A: '— бережно относиться к вверенным ему ценностям и имуществу и принимать меры к предотвращению ущерба;',
@@ -51,13 +62,13 @@ export const translations = {
     CLAUSE_4: '4. Исполнитель освобождается от материальной ответственности, если ущерб причинен не по его вине.',
     CLAUSE_5: '5. Действие настоящего договора распространяется на весь период работы с вверенными Исполнителю денежными средствами, имуществом и другими ценностями.',
     COPIES: 'Настоящий договор составлен в двух экземплярах: первый экземпляр — Обществу, второй экземпляр — Исполнителю.',
-    SOCIETY_LABEL: 'Общество: Потребительский кооператив',
+    SOCIETY_LABEL: 'Общество:',
     INN: 'ИНН',
     KPP: 'КПП',
     OGRN: 'ОГРН',
     LEGAL_ADDRESS: 'Юридический адрес:',
     COUNCIL_CHAIRMAN_LABEL: 'Председатель Совета:',
-    EXECUTOR_LABEL: 'Исполнитель: ФИО (полностью)',
+    EXECUTOR_LABEL: 'Исполнитель:',
     PASSPORT_SERIES_NUMBER: 'Паспорт серии: {0} № {1}',
     PASSPORT_ISSUED: 'Выдан: {0}, к/п {1}',
     PASSPORT_ISSUED_AT: 'Дата выдачи: {0}',
