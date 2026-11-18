@@ -13,5 +13,11 @@
   "hash": "BRANCH_MEETING_HASH_TEST",
   "branch_name": "РОМАШКА",
   "trustee": "ant",
-  "builder": "1.0"
+  "poa_number": "8",
+  "protocol_number": "12",
+  "protocol_date": "18.11.2026",
+  "trustee_poa_number": "7",
+  "trustee_poa_date": "18.11.2026",
+  "valid_until": "17.11.2027",
+  "builder": "1.1"
 }
