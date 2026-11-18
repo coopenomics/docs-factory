@@ -52,7 +52,7 @@ export const context = `<style> h1 {margin: 0px; text-align:center;}h3{margin: 0
 
 export const translations = {
   ru: {
-    BALLOT_TITLE: 'БЮЛЛЕТЕНЬ ДЛЯ ГОЛОСОВАНИЯ',
+    BALLOT_TITLE: 'Бюллетень для голосования',
     FROM_PARTICIPANT_LABEL: 'От Пайщика',
     REQUEST_VOTE_TEXT: 'Прошу учесть мой голос при голосовании по вопросам повестки собрания пайщиков кооперативного участка потребительского кооператива «{0}», а именно',
     DECISION_BY_QUESTION: 'РЕШЕНИЕ по {0} вопросу',

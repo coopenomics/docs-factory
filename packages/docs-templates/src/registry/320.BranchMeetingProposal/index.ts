@@ -43,7 +43,7 @@ export const context = `<style> h1 {margin: 0px; text-align:center;}h3{margin: 0
 
 export const translations = {
   ru: {
-    PROPOSAL_TITLE: 'ПРЕДЛОЖЕНИЕ ПОВЕСТКИ СОБРАНИЯ ПАЙЩИКОВ',
+    PROPOSAL_TITLE: 'Предложение повестки собрания пайщиков',
     AGENDA_QUESTIONS: 'ВОПРОСЫ ПОВЕСТКИ ДНЯ',
     PROJECT_DECISIONS: 'ПРОЕКТЫ РЕШЕНИЙ',
     PROJECT_DECISION_LABEL: 'ПРОЕКТ РЕШЕНИЯ по вопросу',

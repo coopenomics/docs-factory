@@ -29,7 +29,7 @@ export const context = `<style>.digital-document h1 {margin: 0px;text-align:cent
 
 export const translations = {
   ru: {
-    STATEMENT_TITLE: 'ЗАЯВЛЕНИЕ О ПРИЁМЕ ДОВЕРЕННЫМ ЛИЦОМ',
+    STATEMENT_TITLE: 'Заявление о приёме доверенным лицом',
     TO_CHAIRMAN: 'Председателю кооперативного участка',
     FROM_PARTICIPANT: 'от пайщика',
     REQUEST_TEXT: 'Прошу принять меня доверенным лицом кооперативного участка «{0}». С обязанностями доверенного лица ознакомлен(а) и согласен(на), договор о полной материальной ответственности принимаю.',
