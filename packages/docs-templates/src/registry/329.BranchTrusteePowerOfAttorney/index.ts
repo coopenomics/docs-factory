@@ -38,10 +38,12 @@ export interface Model {
   individual: IIndividualData
   branch_name: string
   branch_address: string
-  poa_number: string
-  protocol_number: string
-  protocol_date: string
-  valid_until: string
+  // Реквизиты, которые вписывает узел (версия сборщика 1.1); у документов
+  // версии 1.0 их нет.
+  poa_number?: string
+  protocol_number?: string
+  protocol_date?: string
+  valid_until?: string
   vars: IVars
 }
 

@@ -29,13 +29,13 @@ export const Schema: JSONSchemaType<Model> = {
     },
     branch_name: { type: 'string' },
     branch_address: { type: 'string' },
-    poa_number: { type: 'string' },
-    protocol_number: { type: 'string' },
-    protocol_date: { type: 'string' },
-    valid_until: { type: 'string' },
+    poa_number: { type: 'string', nullable: true },
+    protocol_number: { type: 'string', nullable: true },
+    protocol_date: { type: 'string', nullable: true },
+    valid_until: { type: 'string', nullable: true },
     vars: VarsSchema,
   },
-  required: ['meta', 'coop', 'individual', 'branch_name', 'branch_address', 'poa_number', 'protocol_number', 'protocol_date', 'valid_until', 'vars'],
+  required: ['meta', 'coop', 'individual', 'branch_name', 'branch_address', 'vars'],
   additionalProperties: true,
 }
 
