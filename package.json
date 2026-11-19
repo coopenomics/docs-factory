@@ -5,12 +5,12 @@
   "description": "Фабрика документов цифрового кооператива: сборка документов по шаблонам, сборщики всех видов документов, версии сборщиков",
   "author": "Alex Ant <chairman.voskhod@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/copenomics/@coopenomics/factory#readme",
+  "homepage": "https://github.com/coopenomics/docs-factory#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/coopenomics/docs-factory.git"
   },
-  "bugs": "https://github.com/copenomics/@coopenomics/factory/issues",
+  "bugs": "https://github.com/coopenomics/docs-factory/issues",
   "keywords": [],
   "sideEffects": false,
   "exports": {
