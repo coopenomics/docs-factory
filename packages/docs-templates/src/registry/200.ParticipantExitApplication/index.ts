@@ -43,10 +43,10 @@ padding-top: 30px;
 
 {% if type == 'individual' %}
 <h1 class="header">{% trans 'application_exit_individual' %}</h1>
-<p style="text-align: center" class="subheader">{% trans 'of_consumer_cooperative' %} {{ coop.full_name }}<p>
+<p style="text-align: center" class="subheader">{{ vars.full_abbr_genitive }} «{{ vars.name }}»<p>
 <p style="text-align: right">{{ created_at }}, {{ coop.city }}</p>
-<p>{% trans 'to_council_of' %} {{ coop.full_name }} {% trans 'from' %} {{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}, {% trans 'birthdate' %} {{ individual.birthdate }}, {% trans 'registration_address' %} {{ individual.full_address }}, {% trans 'phone_and_email_notice', individual.phone, individual.email %}{% if vars.passport_request == 'yes' %} {% trans 'passport' %} № {{ individual.passport.series }} {{ individual.passport.number }}, {% trans 'passport_code' %} {{ individual.passport.code }}, {% trans 'passport_issued' %} {{ individual.passport.issued_by }} {% trans 'passport_from' %} {{ individual.passport.issued_at }}.{% endif %}</p>
-<p>{% trans 'request_to_exit', coop.full_name, coop.details.ogrn, coop.details.inn, coop.details.kpp %}</p>
+<p>{% trans 'to_council_of' %} {{ vars.full_abbr_genitive }} «{{ vars.name }}» {% trans 'from' %} {{ individual.last_name }} {{ individual.first_name }} {{ individual.middle_name }}, {% trans 'birthdate' %} {{ individual.birthdate }}, {% trans 'registration_address' %} {{ individual.full_address }}, {% trans 'phone_and_email_notice', individual.phone, individual.email %}{% if vars.passport_request == 'yes' %} {% trans 'passport' %} № {{ individual.passport.series }} {{ individual.passport.number }}, {% trans 'passport_code' %} {{ individual.passport.code }}, {% trans 'passport_issued' %} {{ individual.passport.issued_by }} {% trans 'passport_from' %} {{ individual.passport.issued_at }}.{% endif %}</p>
+<p>{% trans 'request_to_exit', vars.full_abbr_genitive, coop.details.ogrn, coop.details.inn, coop.details.kpp, vars.name %}</p>
 <p>{% trans 'obligation_to_settle_individual' %}</p>
 <div class="signature">
 <p>{% trans 'signed_electronically' %}</p>
@@ -55,10 +55,10 @@ padding-top: 30px;
 
 {% elif type == 'entrepreneur' %}
 <h1 class="header">{% trans 'application_exit_entrepreneur' %}</h1>
-<p style="text-align: center" class="subheader">{% trans 'of_consumer_cooperative' %} {{ coop.full_name }}<p>
+<p style="text-align: center" class="subheader">{{ vars.full_abbr_genitive }} «{{ vars.name }}»<p>
 <p style="text-align: right">{{ created_at }}, {{ coop.city }}</p>
-<p>{% trans 'to_council_of' %} {{ coop.full_name }} {% trans 'from_entrepreneur' %} {{ entrepreneur.last_name }} {{ entrepreneur.first_name }} {{ entrepreneur.middle_name }}, {% trans 'birthdate' %} {{ entrepreneur.birthdate }}, {% trans 'registration_address' %} {{ entrepreneur.full_address }}, {% trans 'entrepreneur_details', entrepreneur.details.inn, entrepreneur.details.ogrn %}, {% trans 'phone_and_email_notice', entrepreneur.phone, entrepreneur.email %}</p>
-<p>{% trans 'request_to_exit', coop.full_name, coop.details.ogrn, coop.details.inn, coop.details.kpp %}</p>
+<p>{% trans 'to_council_of' %} {{ vars.full_abbr_genitive }} «{{ vars.name }}» {% trans 'from_entrepreneur' %} {{ entrepreneur.last_name }} {{ entrepreneur.first_name }} {{ entrepreneur.middle_name }}, {% trans 'birthdate' %} {{ entrepreneur.birthdate }}, {% trans 'registration_address' %} {{ entrepreneur.full_address }}, {% trans 'entrepreneur_details', entrepreneur.details.inn, entrepreneur.details.ogrn %}, {% trans 'phone_and_email_notice', entrepreneur.phone, entrepreneur.email %}</p>
+<p>{% trans 'request_to_exit', vars.full_abbr_genitive, coop.details.ogrn, coop.details.inn, coop.details.kpp, vars.name %}</p>
 <p>{% trans 'obligation_to_settle_individual' %}</p>
 <div class="signature">
 <p>{% trans 'signed_electronically' %}</p>
@@ -67,10 +67,10 @@ padding-top: 30px;
 
 {% elif type == 'organization' %}
 <h1 class="header">{% trans 'application_exit_legal_entity' %}</h1>
-<p style="text-align: center" class="subheader">{% trans 'of_consumer_cooperative' %} {{ coop.full_name }}<p>
+<p style="text-align: center" class="subheader">{{ vars.full_abbr_genitive }} «{{ vars.name }}»<p>
 <p style="text-align: right">{{ created_at }}, {{ coop.city }}</p>
-<p>{% trans 'to_council_of' %} {{ coop.full_name }} {% trans 'from_legal_entity' %} {{ organization.full_name }}, {% trans 'legal_address' %}: {{ organization.full_address }}, {% trans 'fact_address' %}: {{ organization.fact_address }}, {% trans 'legal_entity_details', organization.details.inn, organization.details.ogrn, organization.details.kpp %}, {% trans 'phone_and_email_notice', organization.phone, organization.email %}</p>
-<p>{% trans 'request_to_exit_legal_entity', organization.represented_by.position, organization.represented_by.last_name, organization.represented_by.first_name, organization.represented_by.middle_name, organization.represented_by.based_on, organization.full_name, coop.full_name %}</p>
+<p>{% trans 'to_council_of' %} {{ vars.full_abbr_genitive }} «{{ vars.name }}» {% trans 'from_legal_entity' %} {{ organization.full_name }}, {% trans 'legal_address' %}: {{ organization.full_address }}, {% trans 'fact_address' %}: {{ organization.fact_address }}, {% trans 'legal_entity_details', organization.details.inn, organization.details.ogrn, organization.details.kpp %}, {% trans 'phone_and_email_notice', organization.phone, organization.email %}</p>
+<p>{% trans 'request_to_exit_legal_entity', organization.represented_by.position, organization.represented_by.last_name, organization.represented_by.first_name, organization.represented_by.middle_name, organization.represented_by.based_on, organization.full_name, vars.full_abbr_genitive, vars.name %}</p>
 <p>{% trans 'obligation_to_settle_legal_entity' %}</p>
 <div class="signature">
 <p>{% trans 'signed_electronically' %}</p>
@@ -83,7 +83,6 @@ padding-top: 30px;
 export const translations = {
   ru: {
     from: 'от',
-    of_consumer_cooperative: 'Потребительского кооператива',
     to_council_of: 'В Совет',
     birthdate: 'дата рождения',
     registration_address: 'адрес регистрации (как в паспорте): ',
@@ -97,8 +96,8 @@ export const translations = {
     fact_address: 'фактический адрес',
     entrepreneur_details: 'ИНН {0}, ОГРНИП {1}',
     legal_entity_details: 'ИНН {0}, ОГРН {1}, КПП {2}',
-    request_to_exit: 'В соответствии с Уставом {0} (ОГРН {1}, ИНН {2}, КПП {3}) (далее по тексту Общество) прошу вывести меня из состава пайщиков Общества.',
-    request_to_exit_legal_entity: 'Заявитель, в лице представителя юридического лица — {0} {1} {2} {3}, действующего на основании {4}, в соответствии с Уставом Общества просит вывести {5} из состава пайщиков {6}.',
+    request_to_exit: 'В соответствии с Уставом {0} «{4}» (ОГРН {1}, ИНН {2}, КПП {3}) (далее по тексту Общество) прошу вывести меня из состава пайщиков Общества.',
+    request_to_exit_legal_entity: 'Заявитель, в лице представителя юридического лица — {0} {1} {2} {3}, действующего на основании {4}, в соответствии с Уставом Общества просит вывести {5} из состава пайщиков {6} «{7}».',
     obligation_to_settle_individual: 'Обязуюсь погасить все свои обязательства перед Обществом, при наличии таковых, а также получить возврат своих паевых взносов в связи с моим участием в хозяйственной деятельности и целевых потребительских программах Общества, предусмотренном Уставом Общества и его действующих Положений и в соответствии с действующим законодательством РФ.',
     obligation_to_settle_legal_entity: 'Заявитель обязуется погасить все свои обязательства перед Обществом, при наличии таковых, а также получить возврат своих паевых взносов в связи с участием в хозяйственной деятельности и целевых потребительских программах Общества, предусмотренном Уставом Общества и его действующих Положений и в соответствии с действующим законодательством РФ.',
     signed_electronically: 'Документ подписан электронной подписью.',
