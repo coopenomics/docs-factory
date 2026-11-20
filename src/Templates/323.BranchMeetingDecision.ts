@@ -48,6 +48,7 @@ export const Schema: JSONSchemaType<Model> = {
       items: ProtocolQuestionSchema,
       minItems: 1,
     },
+    voters_full_names: { type: 'array', items: { type: 'string' }, nullable: true },
     vars: VarsSchema,
   },
   required: ['meta', 'coop', 'protocol_number', 'chairman_full_name', 'open_at_datetime', 'close_at_datetime', 'current_quorum_percent', 'questions', 'vars'],
