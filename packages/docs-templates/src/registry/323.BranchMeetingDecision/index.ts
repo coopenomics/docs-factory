@@ -36,6 +36,9 @@ export interface Action extends IGenerate {
   close_at_datetime: string
   current_quorum_percent: number
   questions: IBranchProtocolQuestion[]
+  // username пайщиков, подавших бюллетень (с версии сборщика 1.1); ФИО резолвит фабрика.
+  // Список имён и так публичен в цепи (голоса по вопросам), в meta новых данных не прибавляет
+  voters?: string[]
 }
 
 export type Meta = IMetaDocument & Action
@@ -50,12 +53,14 @@ export interface Model {
   close_at_datetime: string
   current_quorum_percent: number
   questions: IBranchProtocolQuestion[]
+  // ФИО проголосовавших пайщиков — «Присутствовали пайщики» протокола методолога
+  voters_full_names?: string[]
   vars: IVars
 }
 
 export const title = 'Протокол решения собрания пайщиков'
 export const description = 'Форма протокола решения собрания пайщиков потребительского кооператива, утверждаемого председателем собрания'
-export const context = `<style> h1 {margin: 0px; text-align:center;}h3{margin: 0px;padding-top: 15px;text-align: center;}.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-bottom: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word; overflow-wrap: break-word; }th {background-color: #f4f4f4;width: 30% !important;max-width: 30% !important;}</style><div class="digital-document"><h1 class="header" style="text-align:center;">{% trans 'protocol_number', protocol_number %}</h1><p style="text-align:center" class="subheader">{% trans 'meeting_name' %}</p><p style="text-align:center">{{vars.full_abbr_genitive}} «{{vars.name}}»</p><p style="text-align: right">г. {{ coop.city }}, {{ created_at }}</p><table><tbody><tr><th>{% trans 'meeting_format' %}</th><td>{% trans 'meeting_format_value' %}</td></tr><tr><th>{% trans 'opening_datetime' %}</th><td>{{ open_at_datetime }}</td></tr><tr><th>{% trans 'closing_datetime' %}</th><td>{{ close_at_datetime }}</td></tr></tbody></table><p>{% trans 'quorum_available' %} {% trans 'quorum_percent' %} {{ current_quorum_percent }}% {% trans 'from_total_participants' %}.</p><h3 style="padding-top: 20px; padding-bottom: 10px; text-align: center;">{% trans 'agenda' %}</h3><table><tbody>{% for question in questions %}<tr><th>{{ question.number }}</th><td>{{ question.title }}</td></tr>{% if question.context %}<tr><th></th><td><em>{{ question.context }}</em></td></tr>{% endif %}{% endfor %}</tbody></table>{% for question in questions %}<h3 style="padding-top: 30px; padding-bottom: 10px; text-align: center;">{% trans 'decided_by_question', question.number %}:</h3><p>{{ question.decision }}</p><table><tbody><tr><th>{% trans 'votes_for' %}</th><td>{{ question.counter_votes_for }} ({{ question.votes_for_percent }}%)</td></tr><tr><th>{% trans 'votes_against' %}</th><td>{{ question.counter_votes_against }} ({{ question.votes_against_percent }}%)</td></tr><tr><th>{% trans 'votes_abstained' %}</th><td>{{ question.counter_votes_abstained }} ({{ question.votes_abstained_percent }}%)</td></tr><tr><th>{% trans 'decision_status' %}</th><td>{% if question.is_accepted %}{% trans 'decision_accepted' %}{% else %}{% trans 'decision_rejected' %}{% endif %}</td></tr></tbody></table>{% endfor %}<p style="padding-top: 20px;">{% trans 'closing_time', close_at_datetime %}</p><div class="signature" style="padding-top: 30px;"><p>{% trans 'chairman_meeting_signature' %} {{ chairman_full_name }}</p><p>{% trans 'signed_digitally' %}</p></div></div>`
+export const context = `<style> h1 {margin: 0px; text-align:center;}h3{margin: 0px;padding-top: 15px;text-align: center;}.digital-document {padding: 20px;white-space: pre-wrap;}table {width: 100%;border-collapse: collapse;margin-bottom: 20px;}th, td {border: 1px solid #ccc;padding: 8px;text-align: left;word-wrap: break-word; overflow-wrap: break-word; }th {background-color: #f4f4f4;width: 30% !important;max-width: 30% !important;}</style><div class="digital-document"><h1 class="header" style="text-align:center;">{% trans 'protocol_number', protocol_number %}</h1><p style="text-align:center" class="subheader">{% trans 'meeting_name' %}</p><p style="text-align:center">{{vars.full_abbr_genitive}} «{{vars.name}}»</p><p style="text-align: right">г. {{ coop.city }}, {{ created_at }}</p><table><tbody><tr><th>{% trans 'meeting_format' %}</th><td>{% trans 'meeting_format_value' %}</td></tr><tr><th>{% trans 'opening_datetime' %}</th><td>{{ open_at_datetime }}</td></tr><tr><th>{% trans 'closing_datetime' %}</th><td>{{ close_at_datetime }}</td></tr></tbody></table>{% if voters_full_names and voters_full_names.length %}<p>{% trans 'present_participants' %}</p>{% for voter in voters_full_names %}<p>{{ loop.index }}. {{ voter }}.</p>{% endfor %}{% endif %}<p>{% trans 'quorum_available' %} {% trans 'quorum_percent' %} {{ current_quorum_percent }}% {% trans 'from_total_participants' %}.</p><h3 style="padding-top: 20px; padding-bottom: 10px; text-align: center;">{% trans 'agenda' %}</h3><table><tbody>{% for question in questions %}<tr><th>{{ question.number }}</th><td>{{ question.title }}</td></tr>{% if question.context %}<tr><th></th><td><em>{{ question.context }}</em></td></tr>{% endif %}{% endfor %}</tbody></table>{% for question in questions %}<h3 style="padding-top: 30px; padding-bottom: 10px; text-align: center;">{% trans 'decided_by_question', question.number %}:</h3><p>{{ question.decision }}</p><table><tbody><tr><th>{% trans 'votes_for' %}</th><td>{{ question.counter_votes_for }} ({{ question.votes_for_percent }}%)</td></tr><tr><th>{% trans 'votes_against' %}</th><td>{{ question.counter_votes_against }} ({{ question.votes_against_percent }}%)</td></tr><tr><th>{% trans 'votes_abstained' %}</th><td>{{ question.counter_votes_abstained }} ({{ question.votes_abstained_percent }}%)</td></tr><tr><th>{% trans 'decision_status' %}</th><td>{% if question.is_accepted %}{% trans 'decision_accepted' %}{% else %}{% trans 'decision_rejected' %}{% endif %}</td></tr></tbody></table>{% endfor %}<p style="padding-top: 20px;">{% trans 'closing_time', close_at_datetime %}</p><div class="signature" style="padding-top: 30px;"><p>{% trans 'chairman_meeting_signature' %} {{ chairman_full_name }}</p><p>{% trans 'signed_digitally' %}</p></div></div>`
 
 export const translations = {
   ru: {
@@ -65,6 +70,7 @@ export const translations = {
     meeting_format_value: 'заочное',
     opening_datetime: 'Дата и время открытия собрания пайщиков',
     closing_datetime: 'Дата и время закрытия собрания пайщиков',
+    present_participants: 'Присутствовали пайщики:',
     quorum_available: 'Кворум для решения поставленных на повестку дня вопросов имеется. Собрание правомочно.',
     quorum_percent: 'Кворум составляет',
     from_total_participants: 'от общего числа участников собрания',
@@ -94,6 +100,7 @@ export const exampleData = {
   open_at_datetime: '15.03.2024 10:00',
   close_at_datetime: '15.03.2024 18:00',
   current_quorum_percent: 100,
+  voters_full_names: ['Иванов Петр Сидорович', 'Петров Иван Сергеевич', 'Сидорова Анна Петровна'],
   questions: [
     {
       number: '1',

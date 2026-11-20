@@ -116,6 +116,23 @@ describe('тест генератора документов кооперати�
     })
   })
 
+  it('генерируем протокол собрания пайщиков со списком проголосовавших (323)', async () => {
+    await testDocumentGeneration<Registry.BranchMeetingDecision.Action>({
+      registry_id: Registry.BranchMeetingDecision.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      lang: 'ru',
+      hash: branchHash,
+      protocol_number: '15-03-2024',
+      chairman: 'individual',
+      open_at_datetime: '15.03.2024 10:00',
+      close_at_datetime: '15.03.2024 18:00',
+      current_quorum_percent: 100,
+      questions: branchProtocolQuestions,
+      voters: ['individual', 'ant'],
+    })
+  })
+
   it('генерируем заявление председателя собрания в совет (324)', async () => {
     await testDocumentGeneration<Registry.BranchEstablishmentPetition.Action>({
       registry_id: Registry.BranchEstablishmentPetition.registry_id,

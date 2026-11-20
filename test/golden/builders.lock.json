@@ -94,6 +94,11 @@
     "export": "Factory",
     "sha256": "4cc1027351e5d20b8649c277c8ffb0f5d3a3a2623448ded04d44abfc2604fb9d"
   },
+  "323@1.1": {
+    "file": "src/Actions/323.BranchMeetingDecision.ts",
+    "export": "Factory_1_1",
+    "sha256": "961e1cf7d81add2938c731a070854dd17efe92753686af0dede314594abb2344"
+  },
   "324@1.0": {
     "file": "src/Actions/324.BranchEstablishmentPetition.ts",
     "export": "Factory",
