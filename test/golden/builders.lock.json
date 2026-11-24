@@ -69,15 +69,30 @@
     "export": "Factory",
     "sha256": "babf9c91e97fd3714772b822f9c33f0bf4ee6d6fe23fa97e2de8c0cf6455c6b0"
   },
+  "302@1.1": {
+    "file": "src/Actions/302.AnnualGeneralMeetingNotification.ts",
+    "export": "Factory_1_1",
+    "sha256": "cb8cccdd515b55de06f6120b1901752f9dc46edb56fa4a534db345ed3792f736"
+  },
   "303@1.0": {
     "file": "src/Actions/303.AnnualGeneralMeetingVotingBallot.ts",
     "export": "Factory",
     "sha256": "9c7774ed9367961909fb695362569ce1de35dfdc0a16d2f07b79f8b09a0cc47b"
   },
+  "303@1.1": {
+    "file": "src/Actions/303.AnnualGeneralMeetingVotingBallot.ts",
+    "export": "Factory_1_1",
+    "sha256": "8b2bd9222307f433715ea927794afb753faaa2f39f8138ca7c69514baae3c87d"
+  },
   "304@1.0": {
     "file": "src/Actions/304.AnnualGeneralMeetingDecision.ts",
     "export": "Factory",
     "sha256": "9cb6ba262150487a6b2a9a785fde9da3f985ca2ccb6a6a9be8372f7e97339c99"
+  },
+  "304@1.1": {
+    "file": "src/Actions/304.AnnualGeneralMeetingDecision.ts",
+    "export": "Factory_1_1",
+    "sha256": "e9f629cd411215635977dc2e91f5e7c65a965ff7c75f1cc74465852f0c5bff1e"
   },
   "320@1.0": {
     "file": "src/Actions/320.BranchMeetingProposal.ts",

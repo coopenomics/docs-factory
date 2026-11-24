@@ -95,3 +95,20 @@ export function userVote(question: MeetContract.Tables.Questions.IOutput, userna
     return 'against'
   return 'abstained'
 }
+
+/**
+ * Кооператив в форме собрания (компонент 76 «Общее собрание уполномоченных»).
+ *
+ * Шаблоны собрания выбирают текст «собрания пайщиков» или «собрания
+ * уполномоченных» по `coop.is_branched`. С выпуска формы собрания запись
+ * собрания в цепи несёт форму, закреплённую при одобрении советом (`form`), и
+ * документ следует ей: протокол собрания пайщиков остаётся протоколом собрания
+ * пайщиков, даже если к закрытию у кооператива стало три участка. Собрание,
+ * одобренное до появления формы, следует флагу кооператива, как прежде.
+ */
+export function meetCooperative<C extends { is_branched: boolean }>(coop: C, meet: object): C {
+  const form = (meet as { form?: { is_branched?: boolean | number | string } | null }).form
+  if (!form)
+    return coop
+  return { ...coop, is_branched: Boolean(Number(form.is_branched)) }
+}

@@ -2,7 +2,7 @@ import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { Registry } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import type { IGenerate, IGeneratedDocument } from '../src/Interfaces/Documents'
-import { coopname, deleteAllFiles, generator, testStorage } from './utils'
+import { TEST_TRUSTEES_MEET_HASH, coopname, deleteAllFiles, generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
 beforeAll(async () => {
@@ -120,5 +120,72 @@ describe('тест генератора документов общих собр
       username: 'individual',
       meet_hash: _testMeetHash,
     })
+  })
+})
+
+describe('документы собрания уполномоченных: форма из записи собрания (компонент 76)', async () => {
+  // Флаг кооператива в фикстурах — false, у собрания форма «уполномоченных»,
+  // закреплённая при одобрении советом. Версия 1.1 следует форме собрания.
+  const answers = [
+    { id: '21', number: '1', vote: 'for' as const },
+    { id: '22', number: '2', vote: 'against' as const },
+  ]
+
+  it('уведомление о собрании уполномоченных (302, версия 1.1)', async () => {
+    const document = await testDocumentGeneration<Registry.AnnualGeneralMeetingNotification.Action>({
+      registry_id: Registry.AnnualGeneralMeetingNotification.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      meet_hash: TEST_TRUSTEES_MEET_HASH,
+    })
+    expect(document.meta.builder).toBe('1.1')
+    expect(document.html).toContain('Общего Собрания Уполномоченных')
+  })
+
+  it('бюллетень собрания уполномоченных (303, версия 1.1)', async () => {
+    const document = await testDocumentGeneration<Registry.AnnualGeneralMeetingVotingBallot.Action>({
+      registry_id: Registry.AnnualGeneralMeetingVotingBallot.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      meet_hash: TEST_TRUSTEES_MEET_HASH,
+      answers,
+    })
+    expect(document.html).toContain('Общему Собранию Уполномоченных')
+    expect(document.html).toContain('Уполномоченных')
+  })
+
+  it('протокол собрания уполномоченных (304, версия 1.1)', async () => {
+    const document = await testDocumentGeneration<Registry.AnnualGeneralMeetingDecision.Action>({
+      registry_id: Registry.AnnualGeneralMeetingDecision.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      meet_hash: TEST_TRUSTEES_MEET_HASH,
+    })
+    expect(document.html).toContain('ОСУ-')
+    expect(document.html).toContain('от общего числа уполномоченных')
+  })
+
+  it('замороженная версия 1.0 протокола следует флагу кооператива, как до выпуска формы (304)', async () => {
+    const document = await testDocumentGeneration<Registry.AnnualGeneralMeetingDecision.Action>({
+      registry_id: Registry.AnnualGeneralMeetingDecision.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      meet_hash: TEST_TRUSTEES_MEET_HASH,
+      builder: '1.0',
+    } as Registry.AnnualGeneralMeetingDecision.Action)
+    expect(document.html).toContain('от общего числа пайщиков')
+    expect(document.html).not.toContain('ОСУ-')
+  })
+
+  it('собрание без формы в версии 1.1 следует флагу кооператива (304)', async () => {
+    const document = await generator.generate({
+      registry_id: Registry.AnnualGeneralMeetingDecision.registry_id,
+      coopname: 'voskhod',
+      username: 'individual',
+      meet_hash: ('test_meet_hash_12345').toUpperCase(),
+      skip_save: true,
+    } as Registry.AnnualGeneralMeetingDecision.Action)
+    expect(document.meta.builder).toBe('1.1')
+    expect(document.html).toContain('от общего числа пайщиков')
   })
 })
