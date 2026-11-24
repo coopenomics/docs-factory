@@ -11,5 +11,5 @@
   "block_num": 0,
   "timezone": "Europe/Moscow",
   "meet_hash": "TEST_MEET_HASH_12345",
-  "builder": "1.0"
+  "builder": "1.1"
 }
