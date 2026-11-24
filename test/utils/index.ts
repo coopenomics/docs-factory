@@ -56,9 +56,6 @@ export async function deleteAllFiles(folderPath: string) {
 /** Число повторов голосов в фикстуре — шаблонов в реестре при съёмке эталонов. */
 const GOLDEN_VOTE_ROUNDS = 92
 
-/** Хэш собрания уполномоченных в фикстурах цепи (компонент 76). */
-export const TEST_TRUSTEES_MEET_HASH = 'TEST_TRUSTEES_MEET_HASH_12345'
-
 export function seedChainFixtures(): void {
   resetChainFixtures()
 
@@ -399,27 +396,6 @@ export function seedChainFixtures(): void {
       status: 'active',
     },
   })
-
-  // Собрание уполномоченных (компонент 76): копия собрания выше с формой,
-  // закреплённой при одобрении советом. Флаг кооператива в фикстурах — false,
-  // поэтому документ версии 1.1 по нему показывает, что форма собрания главнее
-  // флага кооператива. Вопросы — копии вопросов первого собрания.
-  const trusteesMeetId = '2'
-  for (const delta of chainFixtures.deltas.filter(d => d.code === 'meet' && ((d.table === 'meets' && d.value.id === testMeetId) || (d.table === 'questions' && d.value.meet_id === testMeetId)))) {
-    const isMeet = delta.table === 'meets'
-    chainFixtures.deltas.push({
-      ...delta,
-      primary_key: isMeet ? trusteesMeetId : `${trusteesMeetId}${delta.primary_key}`,
-      value: isMeet
-        ? {
-            ...delta.value,
-            id: trusteesMeetId,
-            hash: TEST_TRUSTEES_MEET_HASH,
-            form: { is_branched: 1, branches_count: '3', fixed_at: '2024-12-16T00:00:00', voted_branches: [] },
-          }
-        : { ...delta.value, id: `${trusteesMeetId}${delta.value.id}`, meet_id: trusteesMeetId },
-    })
-  }
 
   // Добавляем authorize actions для decisions (нужны для meet 301, market актов)
   for (const decId of ['1', '2', '5']) {

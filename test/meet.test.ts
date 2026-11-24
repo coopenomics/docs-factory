@@ -2,7 +2,8 @@ import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { Registry } from '@coopenomics/docs-templates'
 import { Generator } from '../src'
 import type { IGenerate, IGeneratedDocument } from '../src/Interfaces/Documents'
-import { TEST_TRUSTEES_MEET_HASH, coopname, deleteAllFiles, generator, testStorage } from './utils'
+import { TEST_TRUSTEES_MEET_HASH } from '../src/Utils/mocks/tables/meet'
+import { coopname, deleteAllFiles, generator, testStorage } from './utils'
 import { testDocumentGeneration } from './utils/testDocument'
 
 beforeAll(async () => {
@@ -127,8 +128,8 @@ describe('документы собрания уполномоченных: фо
   // Флаг кооператива в фикстурах — false, у собрания форма «уполномоченных»,
   // закреплённая при одобрении советом. Версия 1.1 следует форме собрания.
   const answers = [
-    { id: '21', number: '1', vote: 'for' as const },
-    { id: '22', number: '2', vote: 'against' as const },
+    { id: '1', number: '1', vote: 'for' as const },
+    { id: '2', number: '2', vote: 'against' as const },
   ]
 
   it('уведомление о собрании уполномоченных (302, версия 1.1)', async () => {
