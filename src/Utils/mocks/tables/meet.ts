@@ -153,3 +153,28 @@ export const meetTableMock = {
   },
   match: ((_url: string, _params?: URLSearchParams) => false) as (url: string, params?: URLSearchParams) => boolean,
 } as any
+
+/**
+ * Собрание уполномоченных (компонент 76): форма закреплена при одобрении
+ * советом, а флаг кооператива в фикстурах — false. Документ версии 1.1 по
+ * такому собранию обязан следовать форме собрания. Вопросы — те же (id 14).
+ */
+export const TEST_TRUSTEES_MEET_HASH = 'TEST_TRUSTEES_MEET_HASH_12345'
+
+export const meetTrusteesTableMock = {
+  code: 'meet',
+  table: 'meets',
+  value: { 'value.hash': TEST_TRUSTEES_MEET_HASH },
+  data: {
+    results: [{
+      ...meetTableFull,
+      value: {
+        ...meetValue,
+        hash: TEST_TRUSTEES_MEET_HASH,
+        status: 'authorized',
+        form: { is_branched: 1, branches_count: '3', fixed_at: '2025-06-23T12:10:00', voted_branches: [] },
+      },
+    }],
+  },
+  match: ((_url: string, _params?: URLSearchParams) => false) as (url: string, params?: URLSearchParams) => boolean,
+} as any
